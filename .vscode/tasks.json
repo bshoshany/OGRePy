@@ -1,0 +1,53 @@
+{
+    "tasks": [
+        {
+            "args": [],
+            "command": "tasks/update_packages.ps1",
+            "detail": "Update Python packages in the current environment.",
+            "group": "test",
+            "label": "Upgrade packages",
+            "presentation": {
+                "clear": false,
+                "echo": true,
+                "focus": true,
+                "panel": "shared",
+                "reveal": "always",
+                "showReuseMessage": true
+            },
+            "type": "shell"
+        },
+        {
+            "args": [],
+            "command": "tasks/cleanup.ps1",
+            "detail": "Clean up cache folders.",
+            "group": "test",
+            "label": "Clean up",
+            "presentation": {
+                "clear": false,
+                "echo": true,
+                "focus": true,
+                "panel": "shared",
+                "reveal": "always",
+                "showReuseMessage": true
+            },
+            "type": "shell"
+        },
+        {
+            "args": [],
+            "command": "tasks/compile_docs.ps1",
+            "detail": "Compile the Markdown documentation to a Jupyter notebook.",
+            "group": "test",
+            "label": "Compile docs",
+            "presentation": {
+                "clear": false,
+                "echo": true,
+                "focus": true,
+                "panel": "shared",
+                "reveal": "always",
+                "showReuseMessage": true
+            },
+            "type": "shell"
+        },
+    ],
+    "version": "2.0.0"
+}

@@ -1,5 +1,6 @@
 r"""
 # OGRePy: An Object-Oriented General Relativity Package for Python
+v1.1.0 (2024-09-08)
 
 By **Barak Shoshany**\
 Email: <baraksh@gmail.com>\

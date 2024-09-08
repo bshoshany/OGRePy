@@ -2,7 +2,7 @@
 
 <#
 .SYNOPSIS
-OGRePy: An Object-Oriented General Relativity Package for Python by Barak Shoshany (baraksh@gmail.com) (https://baraksh.com/) v1.0.1 (2024-09-04)
+OGRePy: An Object-Oriented General Relativity Package for Python by Barak Shoshany (baraksh@gmail.com) (https://baraksh.com/) v1.1.0 (2024-09-08)
 .DESCRIPTION
 This script updates all Python packages in the current environment. If the virtual environment .OGRePy-env exists, it will be activated, otherwise the global environment will be updated.
 .NOTES
@@ -16,15 +16,22 @@ Function Write-Text()
     Write-Host @args -ForegroundColor 'Yellow'
 }
 
-$Venv = '.OGRePy-env\Scripts\Activate.ps1'
-If (Test-Path $Venv)
+$Found = $False
+$Venvs = Get-ChildItem -Recurse -File -Filter 'Activate.ps1'
+if (($Venvs | Measure-Object).Count -gt 0)
 {
-    Write-Text 'Activating virtual environment...'
-    & $Venv
+    $Venv = $Venvs[0]
+    If (Test-Path $Venv)
+    {
+        Write-Text "Activating virtual environment $Venv..."
+        & $Venv
+        $Found = $True
+    }
 }
-Else
+
+If (-not $Found)
 {
-    Write-Text 'Virtual environment not found, updating global packages.'
+    Write-Text 'No virtual environments found, updating global packages.'
 }
 
 Write-Text 'Upgrading pip...'
@@ -51,4 +58,10 @@ Else
         Write-Text "[Package: $($Parts[0]) | Installed: $($Parts[1]) | Latest: $($Parts[2]) | Type: $($Parts[3])]"
         pip install --upgrade $Parts[0]
     }
+}
+
+If ($Found)
+{
+    Write-Text "Deactivating virtual environment $Venv..."
+    deactivate
 }

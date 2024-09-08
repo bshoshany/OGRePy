@@ -24,7 +24,7 @@ classifiers = [
     "Topic :: Scientific/Engineering",
     "Typing :: Typed",
 ]
-dependencies = ["ipykernel>=6.29", "sympy>=1.13"]
+dependencies = ["ipykernel>=6.9.2", "sympy>=1.12"]
 description = "An Object-Oriented General Relativity Package for Python"
 keywords = [
     "differential geometry",
@@ -40,7 +40,7 @@ maintainers = [{ name = "Barak Shoshany", email = "baraksh@gmail.com" }]
 name = "OGRePy"
 readme = "README.md"
 requires-python = ">=3.12"
-version = "1.0.1"
+version = "1.1.0"
 
 [project.urls]
 Changelog = "https://github.com/bshoshany/OGRePy/blob/master/CHANGELOG.md"
@@ -53,7 +53,7 @@ Source = "https://github.com/bshoshany/OGRePy"
 include = ["OGRePy"]
 
 [tool.setuptools.package-data]
-"*" = ["py.typed"]
+"OGRePy" = ["docs/*"]
 
 [tool.pyright]
 analyzeUnannotatedFunctions = true
@@ -64,8 +64,8 @@ enableReachabilityAnalysis = true
 enableTypeIgnoreComments = true
 executionEnvironments = [
     { root = "OGRePy" },
-    { root = "docs", reportAttributeAccessIssue = "none", reportUnknownArgumentType = "none", reportUnknownLambdaType = "none", reportUnknownVariableType = "none", reportUnusedCallResult = "none", reportUnusedExpression = "none" },
-    { root = "temp", reportAttributeAccessIssue = "none", reportPrivateUsage = "none", reportUnknownArgumentType = "none", reportUnknownLambdaType = "none", reportUnknownVariableType = "none", reportUnusedCallResult = "none", reportUnusedExpression = "none", reportUnusedImport = "none" },
+    { root = "OGRePy/docs", reportAttributeAccessIssue = "none", reportUnknownArgumentType = "none", reportUnknownLambdaType = "none", reportUnknownVariableType = "none", reportUnusedCallResult = "none", reportUnusedExpression = "none" },
+    { root = "misc", reportAttributeAccessIssue = "none", reportPrivateUsage = "none", reportUnknownArgumentType = "none", reportUnknownLambdaType = "none", reportUnknownVariableType = "none", reportUnusedCallResult = "none", reportUnusedExpression = "none", reportUnusedImport = "none" },
 ]
 pythonPlatform = "All"
 pythonVersion = "3.12"
@@ -189,6 +189,7 @@ ignore = [
     "PLR0913",
     "PLR2004",
     "RUF009",
+    "S310",
     "SLF001",
     "TCH003",
     "TD002",
@@ -209,7 +210,8 @@ unfixable = []
     "PLW0131",
 ]
 "abc.py" = ["E741"]
-"temp/**" = ["B018", "F401", "T201"]
+"misc/**" = ["B018", "E402", "F401", "T201"]
+"tasks/**" = ["BLE001", "INP001", "S603", "S607", "T201"]
 
 [tool.pylint.main]
 analyse-fallback-blocks = false
@@ -337,8 +339,10 @@ logging-modules = ["logging"]
 [tool.pylint."messages control"]
 confidence = []
 disable = [
+    "broad-exception-caught",
     "consider-using-enumerate",
     "expression-not-assigned",
+    "import-error",
     "invalid-unary-operand-type",
     "missing-module-docstring",
     "named-expr-without-context",

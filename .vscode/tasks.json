@@ -17,8 +17,10 @@
             "type": "shell"
         },
         {
-            "args": [],
-            "command": "tasks/cleanup.ps1",
+            "args": [
+                "tasks/cleanup.py"
+            ],
+            "command": "${command:python.interpreterPath}",
             "detail": "Clean up cache folders.",
             "group": "test",
             "label": "Clean up",
@@ -33,9 +35,11 @@
             "type": "shell"
         },
         {
-            "args": [],
-            "command": "tasks/compile_docs.ps1",
-            "detail": "Compile the Markdown documentation to a Jupyter notebook.",
+            "args": [
+                "tasks/compile_docs.py"
+            ],
+            "command": "${command:python.interpreterPath}",
+            "detail": "Compile the Markdown documentation.",
             "group": "test",
             "label": "Compile docs",
             "presentation": {

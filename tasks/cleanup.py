@@ -17,11 +17,23 @@ Copyright (c) 2024 [Barak Shoshany](https://baraksh.com/). Licensed under the [M
 If you use this package in published software or research, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
 """
 
-# Import SymPy (for convenience, so we don't have to import it to the notebook separately).
-import sympy as s
+import pathlib
+import shutil
 
-# Import all public OGRePy objects.
-from ._core import Coordinates, CovariantD, Metric, OGRePyError, PartialD, Tensor, __version__, calc, diag, doc, func, info, options, release_date, sym, syms, update_check, welcome
 
-# The names that will be exported if using `from OGRePy import *`. Contains exactly all the names imported above.
-__all__: list[str] = ["s", "Coordinates", "CovariantD", "Metric", "OGRePyError", "PartialD", "Tensor", "__version__", "calc", "diag", "doc", "func", "info", "options", "release_date", "sym", "syms", "update_check", "welcome"]
+def remove_folder_if_exists(
+    *folders: str,
+) -> None:
+    """
+    Remove the given folder, if it exists.
+    #### Parameters:
+    * `folders`: The paths of the folders to remove.
+    """
+    for folder in folders:
+        if pathlib.Path(folder).exists():
+            print(f"Removing folder {folder}...")
+            shutil.rmtree(folder)
+
+
+# Clean up the cache folders.
+remove_folder_if_exists("OGRePy/__pycache__", "OGRePy/docs/.ipynb_checkpoints")

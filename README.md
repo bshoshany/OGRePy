@@ -1,9 +1,11 @@
+<!-- remove-after-compile -->
 [![Author: Barak Shoshany](https://img.shields.io/badge/author-Barak_Shoshany-009933)](https://baraksh.com/)
 [![License: MIT](https://img.shields.io/github/license/bshoshany/OGRePy)](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt)
 [![Language: Python 3.12](https://img.shields.io/badge/Language-Python_3.12-yellow)](https://python.org/)
 [![GitHub release](https://img.shields.io/github/v/release/bshoshany/OGRePy?color=660099)](https://github.com/bshoshany/OGRePy/releases)
 [![PyPI - Version](https://img.shields.io/pypi/v/OGRePy)](https://pypi.org/project/OGRePy/)
 [![Open in Visual Studio Code](https://img.shields.io/badge/Open_in_Visual_Studio_Code-007acc)](https://vscode.dev/github/bshoshany/OGRePy)
+<!-- /remove-after-compile -->
 
 # OGRePy: An Object-Oriented General Relativity Package for Python
 
@@ -15,13 +17,15 @@ GitHub: <https://github.com/bshoshany>
 GitHub repository: <https://github.com/bshoshany/OGRePy>\
 PyPi project: <https://pypi.org/project/OGRePy/>
 
-This is the complete documentation for v1.0.1 of the library, released on 2024-09-04.
+This is the complete documentation for v1.1.0 of the library, released on 2024-09-08.
 
+<!-- remove-after-compile -->
 <div style="color: red">
 
-**Note: While this Markdown document can be read on its own, it is meant to be compiled into a Jupyter notebook so that the output of the executed statements will be shown. Some parts will not make sense without seeing the output. The file [`docs/OGRePy_Documentation.ipynb`](https://github.com/bshoshany/OGRePy/blob/master/docs/OGRePy_Documentation.ipynb) is the compiled notebook version of this Markdown documentation, including all cell outputs.**
+**Note: While this Markdown document can be read on its own, it is meant to be compiled into a Jupyter notebook so that the output of the executed statements will be shown. Some parts will not make sense without seeing the output. The files [`OGRePy/docs/OGRePy_Documentation.ipynb`](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.ipynb), [`OGRePy/docs/OGRePy_Documentation.html`](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.html), and [`OGRePy/docs/OGRePy_Documentation.pdf`](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.pdf) are the compiled notebook versions of this Markdown documentation, including all cell outputs.**
 
 </div>
+<!-- /remove-after-compile -->
 
 * [Introduction](#introduction)
     * [Summary](#summary)
@@ -93,9 +97,9 @@ OGRePy will automatically choose which representation to use for each tensor bas
 
 Transformations between representations are done behind the scenes; all the user has to do is specify which metric to use for raising and lowering indices, and how to transform between the coordinate systems being used. This information only needs to be given once and for all when first defining the tensors and coordinate systems, and will be used automatically from that point on.
 
-This also means that there is no room for user error. The user cannot mistakenly perform "illegal" operations such as $\sout{2A^{\mu\nu}+B_{\mu\lambda}C_{\lambda\nu}}$. Instead, the user simply inputs the names of the tensors, the order (but **not** the configuration) of indices for each, and the operations to perform - and the correct combination $2A^{\mu\nu}+B^{\mu}{}_{\lambda}C^{\lambda\nu}$ will be automatically deduced.
+This also means that there is no room for user error. The user cannot mistakenly perform "illegal" operations such as $2A^{\mu\nu}+B_ {\mu\lambda}C_ {\lambda\nu}$. Instead, the user simply inputs the names of the tensors, the order (but **not** the configuration) of indices for each, and the operations to perform - and the correct combination $2A^{\mu\nu}+B^{\mu}{}_ {\lambda}C^{\lambda\nu}$ will be automatically deduced.
 
-OGRePy is a Python port of the popular Mathematica package [OGRe](https://github.com/bshoshany/OGRe), first released in February 2021, used by many general relativity researchers worldwide. The Python port uses the same robust and performance-oriented algorithms, and retains the package's core design principles. It was made to be as flexible and powerful as possible, while also being simple to learn and easy to use, and suitable for both experienced and novice researchers. OGRePy uses [SymPy](https://www.sympy.org/) to facilitate symbolic computation and [Jupyter](https://jupyter.org/) as a notebook interface.
+OGRePy is a Python port of the popular Mathematica package [OGRe](https://github.com/bshoshany/OGRe), first released in February 2021, used by many general relativity researchers worldwide. The Python port uses the same robust and performance-oriented algorithms, and retains the package's core design principles. It was made to be as flexible and powerful as possible, while also being simple to learn and easy to use, and suitable for both experienced and novice researchers. OGRePy uses [SymPy](https://www.sympy.org/) to facilitate symbolic computations and [Jupyter](https://jupyter.org/) as a notebook interface.
 
 The Python port was specifically designed to mimic as much of the original Mathematica package's syntax as possible, while also greatly improving on that syntax in many ways due to the fact that Python, unlike Mathematica, is a truly object-oriented language. The documentation for both packages was also kept as similar in structure and scope as possible, with the same practical examples. This means that anyone who is familiar with the Mathematica version should easily be able to use the Python version, and vice versa.
 
@@ -111,7 +115,7 @@ The Python port was specifically designed to mimic as much of the original Mathe
 * Easily keep track of all tensors created in a notebook session, including the relations between them - for example, see which metrics were created and which tensors are associated with each metric.
 * Export tensor components in TeX or Mathematica format.
 * Designed with speed and performance in mind, using optimized algorithms developed specifically for this package.
-* Clear and detailed documentation, with many examples, in both [Markdown](https://github.com/bshoshany/OGRePy/blob/master/README.md) and [Jupyter notebook](https://github.com/bshoshany/OGRePy/blob/master/docs/OGRePy_Documentation.ipynb) format.
+* Clear and detailed documentation, with many examples, in [Jupyter Notebook](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.ipynb), [HTML](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.html), and [PDF](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.pdf) formats.
 * Open source. The code is extensively documented; please feel free to fork and modify it as you see fit.
 * Under continuous and active development. Bug reports and feature requests are welcome, and should be made via [GitHub issues](https://github.com/bshoshany/OGRePy/issues).
 
@@ -133,7 +137,7 @@ Since Mathematica is not an object-oriented language, the original OGRe package 
 
 To install OGRePy from [PyPI](https://pypi.org/project/OGRePy/) using `pip`, simply run the following command in the terminal:
 
-```none
+```
 pip install OGRePy
 ```
 
@@ -180,11 +184,11 @@ import OGRePy as T
 
 All of OGRePy's functions are now accessible via the `T` namespace. While it is not common practice in Python to import packages as single letters, OGRePy uses this convention because in the original [Mathematica version of OGRe](https://github.com/bshoshany/OGRe), all module names started with a capital T (which stands for "Tensor"). However, you can change that to another namespace if you prefer, for example `import OGRePy as gr`.
 
-If desired, the welcome message can be disabled by defining `OGREPY_DISABLE_WELCOME = True` in the notebook before importing the package. If you changed your mind later and you want to see the welcome message (for example, if you want a link to the GitHub repository), use the `welcome()` function:
+If desired, the welcome message can be disabled by defining `OGREPY_DISABLE_WELCOME = True` in the notebook before importing the package. Alternatively, you could set the environment variable `OGREPY_DISABLE_WELCOME` to `True`, which allows you to disable it permanently. If you changed your mind later and you want to see the welcome message (for example, if you want a link to the documentation), execute the command `T.welcome()`.
 
-```python
-T.welcome()
-```
+OGRePy also automatically checks for updates from [PyPI](https://pypi.org/project/OGRePy/) when it is imported. This can be disabled by defining `OGREPY_DISABLE_UPDATE_CHECK = True` in the notebook, or setting the environment variable `OGREPY_DISABLE_UPDATE_CHECK` to `True`, before importing the package. In that case, you can still check for updates manually if you wish, using `T.update_check()`.
+
+However, note that this check is performed asynchronously, so it does not increase the load time of the package, and you can continue working while the check is being performed. If the welcome message is disabled, the startup update check is performed in "quiet mode", meaning that it only notifies you if a new version is available, but not if you are running the latest version.
 
 ### Getting help
 
@@ -207,6 +211,8 @@ T.doc(T.welcome)
 ```python
 T.doc(T.doc)
 ```
+
+The documentation files [`OGRePy_Documentation.ipynb`](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.ipynb), [`OGRePy_Documentation.html`](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.html), and [`OGRePy_Documentation.pdf`](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.pdf) are bundled with the package, so you can view them at any time - even offline - by simply clicking the links in the welcome message.
 
 ## Creating and displaying tensor objects
 
@@ -290,7 +296,7 @@ If you are an advanced user who prefers to see the full traceback and/or catch t
 
 To finish defining a (Riemannian or pseudo-Riemannian) manifold, we need to define its metric tensor. Like any other tensor in OGRePy, the metric tensor is an abstract tensor that has multiple representations. We "jump start" the tensor by providing its components in one particular representation, and all the other representations will be calculated automatically.
 
-In the case of a metric tensor, the defining representation must always be the one with two indices down: $g_{\mu\nu}$. However, it can be given in any coordinate system. In OGRePy, metrics are represented as objects of the class `Metric`. Therefore, as with coordinates, defining a metric is a simple matter of constructing a new `Metric` object. The constructor for this class is defined as follows:
+In the case of a metric tensor, the defining representation must always be the one with two indices down: $g_ {\mu\nu}$. However, it can be given in any coordinate system. In OGRePy, metrics are represented as objects of the class `Metric`. Therefore, as with coordinates, defining a metric is a simple matter of constructing a new `Metric` object. The constructor for this class is defined as follows:
 
 ```python
 T.doc(T.Metric)
@@ -522,7 +528,7 @@ As always with the `options` object, to reset the `index_letters` property to it
 del T.options.index_letters
 ```
 
-Note that `list()` always uses the coordinate symbols themselves for the indices (e.g. $\eta_{tt}$, $\eta_{xx}$, etc.), so it is not affected by `T.options.index_letters`.
+Note that `list()` always uses the coordinate symbols themselves for the indices (e.g. $\eta_ {tt}$, $\eta_ {xx}$, etc.), so it is not affected by `T.options.index_letters`.
 
 ### Creating tensors in a given manifold
 
@@ -534,7 +540,7 @@ T.doc(T.Tensor)
 
 In OGRePy, all tensor objects must have an **associated metric** - except coordinate objects, and the metric tensors themselves. This is because OGRePy automatically raises and lowers indices as appropriate for various operations such as adding and contracting tensors, and it cannot do so without knowing which metric to use. Even scalars, which have no indices, should still be associated to a specific metric - since they can multiply other tensors, and you cannot multiply tensors from different manifolds together.
 
-The index configuration of the tensor is a tuple. The number of indices is the rank of the tensor. Each element in the tuple corresponds to one index, with +1 specifying an upper index and -1 specifying a lower index. For example, `(-1, -1)` corresponds to a tensor such as the metric $g_{\mu\nu}$, which has two lower indices, while `(1, -1, -1, -1)` corresponds to a tensor such as the Riemann tensor $R^{\rho}{}_{\sigma\mu\nu}$, which has one upper index followed by three lower indices.
+The index configuration of the tensor is a tuple. The number of indices is the rank of the tensor. Each element in the tuple corresponds to one index, with +1 specifying an upper index and -1 specifying a lower index. For example, `(-1, -1)` corresponds to a tensor such as the metric $g_ {\mu\nu}$, which has two lower indices, while `(1, -1, -1, -1)` corresponds to a tensor such as the Riemann tensor $R^{\rho}{}_ {\sigma\mu\nu}$, which has one upper index followed by three lower indices.
 
 The components of the tensor can be given in several equivalent forms: a list, a SymPy `Array` object, or (for rank 2 tensors) a SymPy `Matrix` object. Usually, a list is the simplest option if we are specifying the components explicitly. (For advanced users: The components can, more generally, be any SymPy `NDimArray`, including mutable and/or sparse arrays, but OGRePy always stores the components as an immutable dense array, no matter what form the input was originally in.)
 
@@ -607,19 +613,27 @@ FourVelocity
 
 Raising and lowering indices is one of the most basic tensor operations. For example, if we have a vector represented with one upper index, $v^{\nu}$, we can turn it into a covector, which is represented with one lower index, by **contracting** it with the metric:
 
-$$v_{\mu} = g_{\mu\nu} v^{\nu}.$$
+$$
+v_ {\mu} = g_ {\mu\nu} v^{\nu}.
+$$
 
 This is called "lowering an index". Here and in the rest of this documentation, we will be using the **Einstein summation convention**, where the same index repeated **exactly twice**, once as an upper index and once as a lower index, implies summation over that index. In this case, the implied summation is over $\nu \in {0, 1, 2, 3}$:
 
-$$v_{\mu} = \sum_{\nu=0}^{3} g_{\mu\nu} v^{\nu} = g_{\mu 0} v^{0} + g_{\mu 1} v^{1} + g_{\mu 2} v^{2} + g_{\mu 3} v^{3}.$$
+$$
+v_ {\mu} = \sum_ {\nu=0}^{3} g_ {\mu\nu} v^{\nu} = g_ {\mu 0} v^{0} + g_ {\mu 1} v^{1} + g_ {\mu 2} v^{2} + g_ {\mu 3} v^{3}.
+$$
 
-Such a sum over an index is called a contraction, and it is a generalization of the inner product, as we will describe in more details below. Conversely, if we have a covector $w_{\mu}$, we can raise its index by contracting it with the inverse metric:
+Such a sum over an index is called a contraction, and it is a generalization of the inner product, as we will describe in more details below. Conversely, if we have a covector $w_ {\mu}$, we can raise its index by contracting it with the inverse metric:
 
-$$w^{\mu} = g^{\mu\nu} w_{\nu}.$$
+$$
+w^{\mu} = g^{\mu\nu} w_ {\nu}.
+$$
 
 This works the same for indices of higher-rank tensors. For example, if we have a tensor of rank 2 represented with two upper indices, $T^{\mu\lambda}$, we can lower either one or both of its indices:
 
-$$T^{\mu}{}_{\nu} = g_{\nu\lambda} T^{\mu\lambda},\quad T_{\mu\nu} = g_{\mu\rho} g_{\nu\lambda} T^{\rho\lambda}.$$
+$$
+T^{\mu}{}_ {\nu} = g_ {\nu\lambda} T^{\mu\lambda},\quad T_ {\mu\nu} = g_ {\mu\rho} g_ {\nu\lambda} T^{\rho\lambda}.
+$$
 
 In OGRePy, since tensor objects are **abstract tensors**, independent of any specific index configuration, **there is no notion of raising or lowering the indices of a tensor object**. Instead, one simply request to **display** the components of the tensor with the desired index configuration, without modifying the object itself. This works with both the `show()` and `list()` methods, by simply providing as an argument the list of indices in the format $(\pm 1, \pm 1, ...)$, as when we created a new tensor.
 
@@ -637,7 +651,9 @@ PerfectFluid.list(indices=(1, -1))
 
 The components of the representation of the metric with two upper indices are the components of the inverse metric, since
 
-$$g_{\mu\lambda} g^{\lambda\nu} = \delta_{\mu}^{\nu}.$$
+$$
+g_ {\mu\lambda} g^{\lambda\nu} = \delta_ {\mu}^{\nu}.
+$$
 
 Therefore, a quick way to show the components of the inverse metric is to display it with the index configuration `(1, 1)`:
 
@@ -670,15 +686,19 @@ The components of any tensor may be transformed from one coordinate system $x^{\
 * For every lower index $\mu$, add a factor of $\partial x^{\mu} / \partial x^{\mu'}$ (i.e. the derivative of the old coordinates with respect to the new, or the **Jacobian**).
 * For every upper index $\mu$, add a factor of $\partial x^{\mu'} / \partial x^{\mu}$ (i.e. the derivative of the new coordinates with respect to the old, or the inverse of the Jacobian).
 
-For example, given a tensor with components $T_{\alpha\beta}$ in a coordinate system $x^{\mu}$, we can transform to components $T_{\alpha'\beta'}$ in another coordinate system $x^{\mu'}$ as follows:
+For example, given a tensor with components $T_ {\alpha\beta}$ in a coordinate system $x^{\mu}$, we can transform to components $T_ {\alpha'\beta'}$ in another coordinate system $x^{\mu'}$ as follows:
 
-$$T_{\alpha'\beta'}(x^{\mu'}) = \frac{\partial x^{\alpha}}{\partial x^{\alpha'}} / \frac{\partial x^{\beta}}{\partial x^{\beta'}}$$
+$$
+T_ {\alpha'\beta'}(x^{\mu'}) = \frac{\partial x^{\alpha}}{\partial x^{\alpha'}} / \frac{\partial x^{\beta}}{\partial x^{\beta'}}
+$$
 
-For a general rank $(p, q)$ tensor with $p$ upper indices $\alpha_{1}, \ldots, \alpha_{p}$ and $q$ lower indices $\beta_{1}, \ldots, \beta_{q}$, the transformation takes the form
+For a general rank $(p, q)$ tensor with $p$ upper indices $\alpha_ {1}, \ldots, \alpha_ {p}$ and $q$ lower indices $\beta_ {1}, \ldots, \beta_ {q}$, the transformation takes the form
 
-$$T_{\beta_{1}^{\prime}\cdots\beta_{q}^{\prime}}^{\alpha_{1}^{\prime}\cdots\alpha_{p}^{\prime}}(x^{\mu'})=\left(\frac{\partial x^{\alpha_{1}^{\prime}}}{\partial x^{\alpha_{1}}}\cdots\frac{\partial x^{\alpha_{p}^{\prime}}}{\partial x^{\alpha_{p}}}\right)\left(\frac{\partial x^{\beta_{1}^{\prime}}}{\partial x^{\beta_{1}}}\cdots\frac{\partial x^{\beta_{q}^{\prime}}}{\partial x^{\beta_{q}}}\right)T_{\beta_{1}\cdots\beta_{q}}^{\alpha_{1}\cdots\alpha_{p}}(x^{\mu})$$
+$$
+T_ {\beta_ {1}^{\prime}\cdots\beta_ {q}^{\prime}}^{\alpha_ {1}^{\prime}\cdots\alpha_ {p}^{\prime}}(x^{\mu'})=\left(\frac{\partial x^{\alpha_ {1}^{\prime}}}{\partial x^{\alpha_ {1}}}\cdots\frac{\partial x^{\alpha_ {p}^{\prime}}}{\partial x^{\alpha_ {p}}}\right)\left(\frac{\partial x^{\beta_ {1}^{\prime}}}{\partial x^{\beta_ {1}}}\cdots\frac{\partial x^{\beta_ {q}^{\prime}}}{\partial x^{\beta_ {q}}}\right)T_ {\beta_ {1}\cdots\beta_ {q}}^{\alpha_ {1}\cdots\alpha_ {p}}(x^{\mu})
+$$
 
-As a mnemonic for this formula, recall that two indices may only be contracted if one of them is an upper index and the other is a lower index. If an index is in the denominator of a derivative, then its role is reversed (upper $\leftrightarrow$ lower). Thus the old (non-primed) and new (primed) indices can only be in places that allow properly contracting the Jacobian or inverse Jacobian with the tensor. For example, $\alpha_{1}$ is an upper index in $T$ and therefore must be contracted with a lower index. Thus, $\partial x^{\alpha_{1}}$ must be in the denominator, to lower its index and allow it to be contracted with the tensor.
+As a mnemonic for this formula, recall that two indices may only be contracted if one of them is an upper index and the other is a lower index. If an index is in the denominator of a derivative, then its role is reversed (upper $\leftrightarrow$ lower). Thus the old (non-primed) and new (primed) indices can only be in places that allow properly contracting the Jacobian or inverse Jacobian with the tensor. For example, $\alpha_ {1}$ is an upper index in $T$ and therefore must be contracted with a lower index. Thus, $\partial x^{\alpha_ {1}}$ must be in the denominator, to lower its index and allow it to be contracted with the tensor.
 
 As we saw above, OGRePy automatically knows how to raise or lower indices as needed using the appropriate metric. Similarly, any operation that requires transforming to another coordinate system will preform the transformation automatically behind the scenes. However, for this to happen, OGRePy needs to know the appropriate transformation rules. These are defined between the tensor objects representing the coordinates, which were created as `Coordinates` objects. The rules for transforming from a source coordinate system to a target coordinate system are stored within the tensor object representing the source. This is done using the method `set_coord_transformation()`. To illustrate, let us define transformations from `Cartesian` to `Spherical` and back:
 
@@ -912,7 +932,7 @@ The following constraints apply to addition of tensors:
 * You may not add two tensors with different ranks, since that is not a well-defined operation.
 * As stated above, both tensors must have the same indices up to permutation. $A^{\mu\nu} + B^{\mu\nu}$ and $A^{\mu\nu} + B^{\nu\mu}$ (with inverted indices on the second tensor) are both okay, but $A^{\mu\nu} + B^{\alpha\beta}$ doesn't make sense, as it has more free indices than the rank of the result (that is, the result will be of the form $T^{\mu\nu\alpha\beta}$ instead of $T^{\mu\nu}$).
 
-As an example, let us add the Minkowski metric $\eta_{\mu\nu}$ and the perfect fluid stress tensor $T_{\mu\nu}$. First we import symbols from `OGRePy.abc` to use as indices, then we perform the actual sum:
+As an example, let us add the Minkowski metric $\eta_ {\mu\nu}$ and the perfect fluid stress tensor $T_ {\mu\nu}$. First we import symbols from `OGRePy.abc` to use as indices, then we perform the actual sum:
 
 ```python
 from OGRePy.abc import mu, nu
@@ -929,7 +949,9 @@ result
 
 With this symbol, the tensor equation we calculated becomes:
 
-$$S_{\mu\nu} = \eta_{\mu\nu} + T_{\mu\nu}.$$
+$$
+S_ {\mu\nu} = \eta_ {\mu\nu} + T_ {\mu\nu}.
+$$
 
 The order of indices we specify for each tensor matters. To give an example, let us define the following non-symmetric tensor:
 
@@ -993,7 +1015,7 @@ NonSymmetric["ab"]
 
 Multiplication of tensor by scalar in OGRePy is represented by a product of the form `scalar * tensor(index1, index2, ...)`, where `tensor` is the tensor object to be multiplied, `(index1, index2, ...)` is an index specification as for addition, and `scalar` is the scalar to multiply by. Note that `scalar` should be a number or SymPy expression, and **not** a tensor object of rank 0. To multiply a tensor by a tensor of rank 0, use contraction instead, as detailed in the next section.
 
-As an example, let us multiply the Minkowski metric $\eta_{\mu\nu}$ by 2:
+As an example, let us multiply the Minkowski metric $\eta_ {\mu\nu}$ by 2:
 
 ```python
 2 * Minkowski(mu, nu)
@@ -1011,45 +1033,63 @@ The most complicated tensor operation is **contraction**, a generalization of th
 
 The simplest example of contraction is the **vector inner product**, which is defined as the contraction of a vector (one upper index) with a covector (one lower index):
 
-$$v^{\mu} w_{\mu} = g_{\mu\nu} v^{\mu} w^{\nu} = g(\mathbf{v},\mathbf{w}).$$
+$$
+v^{\mu} w_ {\mu} = g_ {\mu\nu} v^{\mu} w^{\nu} = g(\mathbf{v},\mathbf{w}).
+$$
 
 The middle part of this equality comes from the fact that, as explained above, when we lower an index on $w^{\nu}$, we use the metric:
 
-$$w_{\mu} = g_{\mu\nu} w^{\nu}.$$
+$$
+w_ {\mu} = g_ {\mu\nu} w^{\nu}.
+$$
 
 This, in turn, justifies the notation $g(\mathbf{v},\mathbf{w})$ on the right-hand side, as this is, in fact, an inner product of two vectors using the metric $g$ (in index-free notation).
 
 Contraction of indices in higher-rank tensors is simply a generalization of the inner product, for example:
 
-$$A^{\mu\alpha} B_{\alpha\nu} = g_{\alpha\beta} A^{\mu\alpha} B^{\beta}{}_{\nu}.$$
+$$
+A^{\mu\alpha} B_ {\alpha\nu} = g_ {\alpha\beta} A^{\mu\alpha} B^{\beta}{}_ {\nu}.
+$$
 
 We can also contract more than one index:
 
-$$A^{\mu\nu} B_{\mu\nu} = g_{\mu\alpha} g_{\nu\beta} A^{\mu\nu}B^{\alpha\beta}.$$
+$$
+A^{\mu\nu} B_ {\mu\nu} = g_ {\mu\alpha} g_ {\nu\beta} A^{\mu\nu}B^{\alpha\beta}.
+$$
 
 This simply amounts to the fact that lowering both indices of $B^{\alpha\beta}$ involves contracting each index with the metric. We can even contract two indices **of the same tensor**:
 
-$$A^{\mu}{}_{\mu} = g_{\mu\nu}A^{\mu\nu}.$$
+$$
+A^{\mu}{}_ {\mu} = g_ {\mu\nu}A^{\mu\nu}.
+$$
 
 This is called **taking the trace**. Furthermore, it is also possible to contract pairs of indices from more than two tensors at the same time:
 
-$$A^{\mu\nu} B_{\nu\rho} C^{\rho\sigma} = g_{\nu\alpha} g_{\rho\beta} A^{\mu\nu} B^{\alpha\beta} C^{\rho\sigma}.$$
+$$
+A^{\mu\nu} B_ {\nu\rho} C^{\rho\sigma} = g_ {\nu\alpha} g_ {\rho\beta} A^{\mu\nu} B^{\alpha\beta} C^{\rho\sigma}.
+$$
 
-However, such operations can always be broken down into individual contractions of pairs of tensors. For example, in this case, one could first contract $B_{\nu\rho}$ with $C^{\rho\sigma}$ and then contract the result with $A^{\mu\nu}$ - which is indeed how this kind of contraction will be performed in OGRePy in practice:
+However, such operations can always be broken down into individual contractions of pairs of tensors. For example, in this case, one could first contract $B_ {\nu\rho}$ with $C^{\rho\sigma}$ and then contract the result with $A^{\mu\nu}$ - which is indeed how this kind of contraction will be performed in OGRePy in practice:
 
-$$ A^{\mu\nu} B_{\nu\rho} C^{\rho\sigma} = A^{\mu\nu} \left( B_{\nu\rho} C^{\rho\sigma} \right).$$
+$$
+ A^{\mu\nu} B_ {\nu\rho} C^{\rho\sigma} = A^{\mu\nu} \left( B_ {\nu\rho} C^{\rho\sigma} \right).
+$$
 
-In a contraction, there are two types of indices: **contracted indices**, which are summed upon, and **free indices**, which are not summed upon. The rank of the tensor that results from the contraction is the number of free indices. So for example, in the expression $A^{\mu\alpha} B_{\alpha\nu}$ we have one contracted index, $\alpha$, and two free indices, $\mu$ and $\nu$. Therefore, the resulting tensor is of rank two:
+In a contraction, there are two types of indices: **contracted indices**, which are summed upon, and **free indices**, which are not summed upon. The rank of the tensor that results from the contraction is the number of free indices. So for example, in the expression $A^{\mu\alpha} B_ {\alpha\nu}$ we have one contracted index, $\alpha$, and two free indices, $\mu$ and $\nu$. Therefore, the resulting tensor is of rank two:
 
-$$T^{\mu}{}_{\nu} = A^{\mu\alpha} B_{\alpha\nu}.$$
+$$
+T^{\mu}{}_ {\nu} = A^{\mu\alpha} B_ {\alpha\nu}.
+$$
 
 ### Taking traces and contracting tensors: OGRePy syntax
 
-Contraction of tensors in OGRePy is represented by an expression of the form `tensor1(index1, index2, ...) @ tensor2(index1, index2, ...)`, where `tensor1` and `tensor2` are the tensor objects to be contracted, and `(index1, index2, ...)` are the index specifications for each tensor. Any matching indices in both index specifications will be contracted. This means that, for example, $v^{\mu} w_{\mu}$ is calculated using `v(mu) @ w(mu)` and $A^{\mu\nu} B_{\nu\rho} C^{\rho\sigma}$ is calculated using `A(mu, nu) @ B(nu, rho) @ C(rho, sigma)`. Note that the user doesn't need to worry about the contracted indices being one upper and one lower, which is a common source of errors when contracting tensors by hand; the order of the indices, and whether the same index repeats twice, is all that matters.
+Contraction of tensors in OGRePy is represented by an expression of the form `tensor1(index1, index2, ...) @ tensor2(index1, index2, ...)`, where `tensor1` and `tensor2` are the tensor objects to be contracted, and `(index1, index2, ...)` are the index specifications for each tensor. Any matching indices in both index specifications will be contracted. This means that, for example, $v^{\mu} w_ {\mu}$ is calculated using `v(mu) @ w(mu)` and $A^{\mu\nu} B_ {\nu\rho} C^{\rho\sigma}$ is calculated using `A(mu, nu) @ B(nu, rho) @ C(rho, sigma)`. Note that the user doesn't need to worry about the contracted indices being one upper and one lower, which is a common source of errors when contracting tensors by hand; the order of the indices, and whether the same index repeats twice, is all that matters.
 
 As a first example, let us create the stress-energy tensor for a perfect fluid with a 4-velocity $u^{\mu}$. This is defined as follows:
 
-$$T^{\mu\nu} = (\rho + p) u^{\mu} u^{\nu} + p g^{\mu\nu}.$$
+$$
+T^{\mu\nu} = (\rho + p) u^{\mu} u^{\nu} + p g^{\mu\nu}.
+$$
 
 Even though this does not involve any contractions, it still counts as a "trivial" contraction, since two tensors (the 4-velocities) are juxtaposed next to each other to create another tensor. This is also known as an **outer product**. Therefore, it uses the same `@` operator syntax as any other contraction, except that there are **no matching indices**. Note that this expression involves not just contraction (in the first term), but also multiplication by scalar (in both terms), and addition of the two terms together. Again, OGRePy takes care of everything behind the scene, so this just works:
 
@@ -1103,9 +1143,9 @@ Of course, this also works for tensors with more than two indices, as we will se
 
 ## Derivatives and curvature tensors
 
-The **partial derivative** $\partial_{\mu}$ is represented in OGRePy using the class `PartialD`. It can be contracted with other tensors using the usual OGRePy contraction notation - including an appropriate index specification - to calculate gradients and divergences.
+The **partial derivative** $\partial_ {\mu}$ is represented in OGRePy using the class `PartialD`. It can be contracted with other tensors using the usual OGRePy contraction notation - including an appropriate index specification - to calculate gradients and divergences.
 
-The **gradient** of a tensor is the partial derivative $\partial_{\mu}$ acting on the tensor with a free index, e.g. $\partial_{\mu}\phi$ for a tensor, $\partial_{\mu} u^{\nu}$ for a vector, or $\partial_{\mu} T^{\nu\lambda}$ for a rank-2 tensor, resulting in a tensor of **one rank higher** (due to the extra index). In OGRePy, this is done by contracting the `PartialD` object from the left with the tensor, using the contraction operator `@`. For example, we can calculate the gradient $\partial_{\mu} K$ of the Kretschmann scalar as follows:
+The **gradient** of a tensor is the partial derivative $\partial_ {\mu}$ acting on the tensor with a free index, e.g. $\partial_ {\mu}\phi$ for a tensor, $\partial_ {\mu} u^{\nu}$ for a vector, or $\partial_ {\mu} T^{\nu\lambda}$ for a rank-2 tensor, resulting in a tensor of **one rank higher** (due to the extra index). In OGRePy, this is done by contracting the `PartialD` object from the left with the tensor, using the contraction operator `@`. For example, we can calculate the gradient $\partial_ {\mu} K$ of the Kretschmann scalar as follows:
 
 ```python
 T.PartialD(mu) @ SchwarzschildKretschmann()
@@ -1117,7 +1157,7 @@ And here is the gradient of the Schwarzschild metric:
 ~(T.PartialD(mu) @ Schwarzschild("alpha beta"))
 ```
 
-The **divergence** of a tensor is the contraction of the partial derivative $\partial_{\mu}$ with one of the tensor's indices, e.g. $\partial_{\mu} u^{\mu}$ for a vector or $\partial_{\mu} T^{\mu\nu}$ for a rank-2 tensor, resulting in a tensor of **one rank lower**. To illustrate, let us create the position vector of a particle in Minkowski space:
+The **divergence** of a tensor is the contraction of the partial derivative $\partial_ {\mu}$ with one of the tensor's indices, e.g. $\partial_ {\mu} u^{\mu}$ for a vector or $\partial_ {\mu} T^{\mu\nu}$ for a rank-2 tensor, resulting in a tensor of **one rank lower**. To illustrate, let us create the position vector of a particle in Minkowski space:
 
 ```python
 Position = T.Tensor(
@@ -1153,9 +1193,11 @@ In all other cases, if the user creates an arbitrary tensor using partial deriva
 
 The **Christoffel symbols** are a very important tensor-like object in differential geometry. They are the components of the **Levi-Civita connection**, which is the unique torsion-free connection that preserves the metric. The Christoffel symbols are defined as follows:
 
-$$\Gamma_{\mu\nu}^{\lambda} = \frac{1}{2} g^{\lambda\sigma} \left( \partial_{\mu} g_{\nu\sigma} + \partial_{\nu} g_{\sigma\mu} - \partial_{\sigma} g_{\mu\nu} \right).$$
+$$
+\Gamma_ {\mu\nu}^{\lambda} = \frac{1}{2} g^{\lambda\sigma} \left( \partial_ {\mu} g_ {\nu\sigma} + \partial_ {\nu} g_ {\sigma\mu} - \partial_ {\sigma} g_ {\mu\nu} \right).
+$$
 
-Each of the terms inside the parentheses is a gradient of the metric, with different indices. For example, the first term $\partial_{\mu} g_{\nu\sigma}$ is represented in OGRePy as `T.PartialD(mu) @ metric(nu, sigma)` where `metric` is the tensor object representing the metric. Since OGRePy allows us to easily perform an arbitrary number of contraction, addition, multiplication by scalar, and partial derivative operations, we can calculate the Christoffel symbols of the Schwarzschild metric directly as follows: (We used SymPy's `Rational` class to create a symbolic 1/2 in the front, otherwise it would have been a numeric 0.5)
+Each of the terms inside the parentheses is a gradient of the metric, with different indices. For example, the first term $\partial_ {\mu} g_ {\nu\sigma}$ is represented in OGRePy as `T.PartialD(mu) @ metric(nu, sigma)` where `metric` is the tensor object representing the metric. Since OGRePy allows us to easily perform an arbitrary number of contraction, addition, multiplication by scalar, and partial derivative operations, we can calculate the Christoffel symbols of the Schwarzschild metric directly as follows: (We used SymPy's `Rational` class to create a symbolic 1/2 in the front, otherwise it would have been a numeric 0.5)
 
 ```python
 from OGRePy.abc import lamda, sigma
@@ -1168,7 +1210,9 @@ WrongSchwarzschildChristoffel.default_indices = (1, -1, -1)
 
 However, there is a problem; as we mentioned above, **the Christoffel symbols are not the components of a tensor**, meaning that the Levi-Civita connection does not transform as a tensor does under a coordinate transformation. Indeed, by transforming the metric in the definition, one can show that
 
-$$\Gamma_{\mu'\nu'}^{\lambda'} = \frac{\partial x^{\mu}}{\partial x^{\mu'}} \frac{\partial x^{\nu}}{\partial x^{\nu'}} \frac{\partial x^{\lambda'}}{\partial x^{\lambda}} \Gamma_{\mu\nu}^{\lambda} + \frac{\partial x^{\lambda'}}{\partial x^{\lambda}} \frac{\partial^{2} x^{\lambda}}{\partial x^{\mu'} \partial x^{\nu'}}.$$
+$$
+\Gamma_ {\mu'\nu'}^{\lambda'} = \frac{\partial x^{\mu}}{\partial x^{\mu'}} \frac{\partial x^{\nu}}{\partial x^{\nu'}} \frac{\partial x^{\lambda'}}{\partial x^{\lambda}} \Gamma_ {\mu\nu}^{\lambda} + \frac{\partial x^{\lambda'}}{\partial x^{\lambda}} \frac{\partial^{2} x^{\lambda}}{\partial x^{\mu'} \partial x^{\nu'}}.
+$$
 
 The first term is the familiar transformation rule for a tensor, with one factor of the Jacobian per index as usual. However, there is also an extra second term, meaning that the Christoffel symbols do not transform like a tensor.
 
@@ -1267,28 +1311,28 @@ Its Christoffel symbols can be easily calculated using `christoffel()`:
 
 ### The Riemann tensor
 
-The **Riemann curvature tensor** $R^{\rho}{}_{\sigma\mu\nu}$ can be calculated from the Christoffel symbols using the definition:
+The **Riemann curvature tensor** $R^{\rho}{}_ {\sigma\mu\nu}$ can be calculated from the Christoffel symbols using the definition:
 
-$$R^{\rho}{}_{\sigma\mu\nu} = \partial_{\mu}\Gamma^{\rho}_{\nu\sigma} - \partial_{\nu}\Gamma^{\rho}_{\mu\sigma} + \Gamma^{\rho}_{\mu\lambda} \Gamma^{\lambda}_{\nu\sigma} - \Gamma^{\rho}_{\nu\lambda} \Gamma^{\lambda}_{\mu\sigma}$$
+$$
+R^{\rho}{}_ {\sigma\mu\nu} = \partial_ {\mu}\Gamma^{\rho}_ {\nu\sigma} - \partial_ {\nu}\Gamma^{\rho}_ {\mu\sigma} + \Gamma^{\rho}_ {\mu\lambda} \Gamma^{\lambda}_ {\nu\sigma} - \Gamma^{\rho}_ {\nu\lambda} \Gamma^{\lambda}_ {\mu\sigma}
+$$
 
 Even though it contains partial derivatives, it nonetheless transforms like a tensor under a change of coordinates, because the extra transformation terms exactly cancel each other. To calculate this tensor, we can simply write down the formula explicitly with the correct indices contracted:
 
 ```python
-SchwarzschildRiemann = (
+~(SchwarzschildRiemann := (
     T.PartialD(mu) @ Schwarzschild.christoffel(rho, nu, sigma) - T.PartialD(nu) @ Schwarzschild.christoffel(rho, mu, sigma) + Schwarzschild.christoffel(rho, mu, lamda) @ Schwarzschild.christoffel(lamda, nu, sigma) - Schwarzschild.christoffel(rho, nu, lamda) @ Schwarzschild.christoffel(lamda, mu, sigma)
-)
+))
 ```
 
-Notice that this time we used the `christoffel()` method with arguments corresponding to an index specification; this is simply a shortcut for using the `()` operator on the resulting tensor, as we have done above.
-
-It would be more instructive to use `list()` to display the components, but we should change the symbol to $R$ first, since the current symbol contain the entire formula and would be very cumbersome to display multiple times:
+Notice that this time we used the `christoffel()` method with arguments corresponding to an index specification; this is simply a shortcut for using the `()` operator on the resulting tensor, as we have done above. Let us change the symbol to $R$, since the current symbol contains the entire formula, and is very cumbersome to display multiple times:
 
 ```python
 SchwarzschildRiemann.symbol = "R"
 ~SchwarzschildRiemann
 ```
 
-Here we run into another issue: we wanted $R^{\rho}{}_{\sigma\mu\nu}$, but what we actually got was $R_{\mu}^{\rho}{}_{\nu\sigma}$, since this is the order of indices from left to right in the definition. There are two ways to fix this in OGRePy. One is to use the `permute()` method. We simply need to call `permute()` with $\mu \rho \nu \sigma$ as the old indices and $\rho \sigma \mu \nu$ as the new indices to fix the issue:
+Here we run into another issue: we wanted $R^{\rho}{}_ {\sigma\mu\nu}$, but what we actually got was $R_ {\mu}^{\rho}{}_ {\nu\sigma}$, since this is the order of indices from left to right in the definition. There are two ways to fix this in OGRePy. One is to use the `permute()` method. We simply need to call `permute()` with $\mu \rho \nu \sigma$ as the old indices and $\rho \sigma \mu \nu$ as the new indices to fix the issue:
 
 ```python
 SchwarzschildRiemann.permute(old=[mu, rho, nu, sigma], new=[rho, sigma, mu, nu])
@@ -1301,7 +1345,7 @@ The other way to fix this is to wrap the original calculation inside the `calc()
 
 ### Exact sign checks with `list()`
 
-The sharp-eyed reader may have noticed that, when we used `list()` on the Schwarzschild Riemann tensor above, it listed, for example, the components $R^{t}{}_{rtr}$ and $R^{t}{}_{rrt}$ separately, even though they are the negatives of each other. Unfortunately, SymPy's comparison operation is very rudimentary, comparing the general structure of the expression rather than an actual mathematical comparison. This can be seen on even simpler comparisons - for example, the following comparison will yield `False` even though the two expressions are clearly mathematically equal:
+The sharp-eyed reader may have noticed that, when we used `list()` on the Schwarzschild Riemann tensor above, it listed, for example, the components $R^{t}{}_ {rtr}$ and $R^{t}{}_ {rrt}$ separately, even though they are the negatives of each other. Unfortunately, SymPy's comparison operation is very rudimentary, comparing the general structure of the expression rather than an actual mathematical comparison. This can be seen on even simpler comparisons - for example, the following comparison will yield `False` even though the two expressions are clearly mathematically equal:
 
 ```python
 expr1 = 1 / (1 - x)
@@ -1325,7 +1369,9 @@ You can see that now `list()` correctly identifies all of the components that ar
 
 The Riemann tensor with all its indices lowered satisfies the following symmetry and anti-symmetry relations:
 
-$$R_{\rho\sigma\mu\nu} = -R_{\sigma\rho\mu\nu} = -R_{\rho\sigma\nu\mu} = R_{\mu\nu\rho\sigma}$$
+$$
+R_ {\rho\sigma\mu\nu} = -R_ {\sigma\rho\mu\nu} = -R_ {\rho\sigma\nu\mu} = R_ {\mu\nu\rho\sigma}
+$$
 
 We can verify this for the Schwarzschild Riemann tensor using `list()` with `exact=True`:
 
@@ -1365,7 +1411,9 @@ In this documentation, we will continue to create variables for curvature tensor
 
 The Kretschmann scalar is a curvature invariant calculated by contracting all the indices of the Riemann tensor with itself:
 
-$$K = R_{\rho\sigma\nu\mu} R^{\rho\sigma\nu\mu}.$$
+$$
+K = R_ {\rho\sigma\nu\mu} R^{\rho\sigma\nu\mu}.
+$$
 
 Recall that above, we gave the Kretschmann scalar for the Schwarzschild metric as an example of a scalar. Now that we have the Riemann tensor, and the ability to contract tensors, we can actually calculate the Kretschmann scalar from scratch:
 
@@ -1379,9 +1427,11 @@ This method follows the same caching algorithm as `christoffel()` and `riemann()
 
 ### The Ricci tensor and scalar
 
-The **Ricci tensor** $R_{\mu\nu}$ is the trace of the first and third indices of the Riemann tensor:
+The **Ricci tensor** $R_ {\mu\nu}$ is the trace of the first and third indices of the Riemann tensor:
 
-$$R_{\mu\nu} = R^{\lambda}{}_{\mu\lambda\nu}.$$
+$$
+R_ {\mu\nu} = R^{\lambda}{}_ {\mu\lambda\nu}.
+$$
 
 Therefore, we can calculate it by taking the trace, with the usual OGRePy syntax. For the Schwarzschild metric, the Ricci tensor vanishes:
 
@@ -1397,7 +1447,9 @@ We can also use the convenience method `ricci_tensor()` of the `Metric` class. F
 
 The **Ricci scalar** is the trace of the Ricci tensor:
 
-$$R = R^{\lambda}{}_{\lambda} = g^{\mu\nu} R_{\mu\nu}$$
+$$
+R = R^{\lambda}{}_ {\lambda} = g^{\mu\nu} R_ {\mu\nu}
+$$
 
 We can calculate it from the Ricci tensor by taking the trace:
 
@@ -1413,9 +1465,11 @@ FLRW.ricci_scalar()
 
 ### The Einstein tensor
 
-The Einstein tensor $G_\mu\nu} is given by:
+The Einstein tensor $G_ {\mu\nu}$ is given by:
 
-$$G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} R g_{\mu\nu}.$$
+$$
+G_ {\mu\nu} = R_ {\mu\nu} - \frac{1}{2} R g_ {\mu\nu}.
+$$
 
 As with all other curvature tensors, we can calculate it by combining the previously calculated tensors with the usual syntax:
 
@@ -1431,23 +1485,25 @@ Or we can use the built-in module `einstein()`:
 
 ### Covariant derivatives
 
-The partial derivative has limited use in general relativity, as **it does not transform like a tensor**. Therefore, it is only used in special cases, such as calculating the Christoffel symbols and the Riemann tensor. The **covariant derivative** $\nabla_{\mu}$ is a generalization of the partial derivative, which does transform like a tensor (as long as it acts on a proper tensor). It is defined as follows:
+The partial derivative has limited use in general relativity, as **it does not transform like a tensor**. Therefore, it is only used in special cases, such as calculating the Christoffel symbols and the Riemann tensor. The **covariant derivative** $\nabla_ {\mu}$ is a generalization of the partial derivative, which does transform like a tensor (as long as it acts on a proper tensor). It is defined as follows:
 
-* On a scalar $\Phi$, the covariant derivative acts as $\nabla_{\mu} \Phi = \partial_{\mu} \Phi$.
-* On a vector $v^{\mu}$, the covariant derivative acts as $\nabla_{\mu} v^{\nu} = \partial_{\mu} v^{\nu} + \Gamma^{\nu}_{\mu\lambda} v^{\lambda}$.
-* On a covector $w_{\mu}$, the covariant derivative acts as $\nabla_{\mu} w_{\nu} = \partial_{\mu} w_{\nu} - \Gamma^{\lambda}_{\mu\nu} w_{\lambda}$.
+* On a scalar $\Phi$, the covariant derivative acts as $\nabla_ {\mu} \Phi = \partial_ {\mu} \Phi$.
+* On a vector $v^{\mu}$, the covariant derivative acts as $\nabla_ {\mu} v^{\nu} = \partial_ {\mu} v^{\nu} + \Gamma^{\nu}_ {\mu\lambda} v^{\lambda}$.
+* On a covector $w_ {\mu}$, the covariant derivative acts as $\nabla_ {\mu} w_ {\nu} = \partial_ {\mu} w_ {\nu} - \Gamma^{\lambda}_ {\mu\nu} w_ {\lambda}$.
 
-More generally, on a rank $(p, q)$ tensor with components $T^{\nu_{1} \cdots \nu_{p}}{}_{\sigma_{1} \cdots \sigma_{q}}$, the covariant derivative $\nabla_{\mu} T^{\nu_{1} \cdots \nu_{p}}{}_{\sigma_{1} \cdots \sigma_{q}}$ is defined as follows:
+More generally, on a rank $(p, q)$ tensor with components $T^{\nu_ {1} \cdots \nu_ {p}}{}_ {\sigma_ {1} \cdots \sigma_ {q}}$, the covariant derivative $\nabla_ {\mu} T^{\nu_ {1} \cdots \nu_ {p}}{}_ {\sigma_ {1} \cdots \sigma_ {q}}$ is defined as follows:
 
-* The first term will be the partial derivative $\partial_{\mu} T^{\nu_{1} \cdots \nu_{p}}{}_{\sigma_{1} \cdots \sigma_{q}}$.
-* We **add** one term $\Gamma^{\nu_{i}}_{\mu\lambda} T^{\nu_{1} \cdots \lambda \cdots \nu_{p}}{}_{\sigma_{1} \cdots \sigma_{q}}$ for each **upper** index $\nu_{i}$.
-* We **subtract** one term $\Gamma^{\lambda}_{\mu\sigma_{i}} T^{\nu_{1} \cdots \nu_{p}}{}_{\sigma_{1} \cdots \lambda \cdots \sigma_{q}}$ for each **lower** index $\sigma_{i}$.
+* The first term will be the partial derivative $\partial_ {\mu} T^{\nu_ {1} \cdots \nu_ {p}}{}_ {\sigma_ {1} \cdots \sigma_ {q}}$.
+* We **add** one term $\Gamma^{\nu_ {i}}_ {\mu\lambda} T^{\nu_ {1} \cdots \lambda \cdots \nu_ {p}}{}_ {\sigma_ {1} \cdots \sigma_ {q}}$ for each **upper** index $\nu_ {i}$.
+* We **subtract** one term $\Gamma^{\lambda}_ {\mu\sigma_ {i}} T^{\nu_ {1} \cdots \nu_ {p}}{}_ {\sigma_ {1} \cdots \lambda \cdots \sigma_ {q}}$ for each **lower** index $\sigma_ {i}$.
 
 Note that even though the covariant derivative is made from ingredients that do not transform like tensors - the partial derivative and the Christoffel symbols - the unwanted terms in the transformations of these ingredients cancel each other exactly, so that in the end, the entire sum does transform like a tensor.
 
 As usual, we can, of course, write down the covariant derivative manually. For example, the covariant divergence of the metric is:
 
-$$\nabla_{\mu} g_{\alpha\beta} = \partial_{\mu} g_{\alpha\beta} - \Gamma^{\lambda}_{\mu\alpha} g_{\lambda\beta} - \Gamma^{\lambda}_{\mu\beta} g_{\alpha\lambda}.$$
+$$
+\nabla_ {\mu} g_ {\alpha\beta} = \partial_ {\mu} g_ {\alpha\beta} - \Gamma^{\lambda}_ {\mu\alpha} g_ {\lambda\beta} - \Gamma^{\lambda}_ {\mu\beta} g_ {\alpha\lambda}.
+$$
 
 It should vanish, by definition, for any metric; this is what we meant when we said the Levi-Civita connection **preserves** the metric. Indeed, we have for the Schwarzschild metric:
 
@@ -1465,11 +1521,15 @@ Much more conveniently, the covariant derivative is represented in OGRePy using 
 
 The covariant divergence of the Einstein tensor is:
 
-$$\nabla_{\mu} G^{\mu\nu} = \partial_{\mu} G^{\mu\nu} + \Gamma^{\mu}_{\mu\lambda} G^{\lambda\nu} + \Gamma^{\nu}_{\mu\lambda} G^{\mu\lambda}.$$
+$$
+\nabla_ {\mu} G^{\mu\nu} = \partial_ {\mu} G^{\mu\nu} + \Gamma^{\mu}_ {\mu\lambda} G^{\lambda\nu} + \Gamma^{\nu}_ {\mu\lambda} G^{\mu\lambda}.
+$$
 
 Note that it involves a contraction in the index $\mu$, which becomes a trace in the first Christoffel symbol. This expression vanishes because of the **Bianchi identity**:
 
-$$\nabla_{\mu} R^{\mu\nu} = \frac{1}{2} \nabla^{\nu} R \quad \Longrightarrow \quad \nabla_{\mu} G^{\mu\nu} = 0.$$
+$$
+\nabla_ {\mu} R^{\mu\nu} = \frac{1}{2} \nabla^{\nu} R \quad \Longrightarrow \quad \nabla_ {\mu} G^{\mu\nu} = 0.
+$$
 
 To calculate it in OGRePy, we simply write:
 
@@ -1479,13 +1539,17 @@ To calculate it in OGRePy, we simply write:
 
 Finally, for a non-trivial result, let us recall that the stress-energy tensor should be **conserved**:
 
-$$\nabla_{\mu} T^{\mu\nu} = \partial_{\mu} T^{\mu\nu} + \Gamma^{\mu}_{\mu\lambda} T^{\lambda\nu} + \Gamma^{\nu}_{\mu\lambda} T^{\mu\lambda} = 0.$$
+$$
+\nabla_ {\mu} T^{\mu\nu} = \partial_ {\mu} T^{\mu\nu} + \Gamma^{\mu}_ {\mu\lambda} T^{\lambda\nu} + \Gamma^{\nu}_ {\mu\lambda} T^{\mu\lambda} = 0.
+$$
 
-This follows from the fact that $\nabla_{\mu} G^{\mu\nu} = 0$, combined with the **Einstein equation**:
+This follows from the fact that $\nabla_ {\mu} G^{\mu\nu} = 0$, combined with the **Einstein equation**:
 
-$$G_{\mu\nu} = \kappa T_{\mu\nu},$$
+$$
+G_ {\mu\nu} = \kappa T_ {\mu\nu},
+$$
 
-where $\kappa = 8 \pi G$ and $G$ is Newton's gravitational constant. However, unlike $\nabla_{\mu} G^{\mu\nu} = 0$, the relation $\nabla_{\mu} T^{\mu\nu} = 0$ is **not** an identity; it is an **energy-momentum conservation equation**. To derive the equation for the FLRW metric, let us first define the rest-frame fluid 4-velocity in this spacetime:
+where $\kappa = 8 \pi G$ and $G$ is Newton's gravitational constant. However, unlike $\nabla_ {\mu} G^{\mu\nu} = 0$, the relation $\nabla_ {\mu} T^{\mu\nu} = 0$ is **not** an identity; it is an **energy-momentum conservation equation**. To derive the equation for the FLRW metric, let us first define the rest-frame fluid 4-velocity in this spacetime:
 
 ```python
 RestVelocity = T.Tensor(metric=FLRW, coords=Spherical, indices=(1,), components=[1, 0, 0, 0], symbol="u")
@@ -1510,7 +1574,9 @@ Finally, we take the covariant derivative of the stress tensor:
 
 From demanding that the $t$ component vanishes, we get the following equation:
 
-$$\dot{\rho} = -3 (\rho + p) \frac{\dot{a}}{a}.$$
+$$
+\dot{\rho} = -3 (\rho + p) \frac{\dot{a}}{a}.
+$$
 
 We see that in an expanding universe, energy is not conserved, but rather, the energy density changes with time in a way that depends on the scale factor. If the universe is not expanding, that is, $\dot{a} = 0$, then energy will be conserved.
 
@@ -1520,7 +1586,9 @@ We see that in an expanding universe, energy is not conserved, but rather, the e
 
 Consider a **curve**, which is a function $x^{\mu}(\lambda)$ on the manifold where $\lambda$ is called the **curve parameter**. The **curve Lagrangian** of a metric is defined as the norm-squared of the tangent to the curve:
 
-$$L=g_{\mu\nu} \dot{x}^{\mu} \dot{x}^{\nu},$$
+$$
+L=g_ {\mu\nu} \dot{x}^{\mu} \dot{x}^{\nu},
+$$
 
 where $\dot{x}^{\mu}$ is the first derivative of $x^{\mu}$ with respect to the curve parameter $\lambda$ (in Newton dot notation). We can calculate it using the method `lagrangian()` of the `Metric` class. For example:
 
@@ -1550,7 +1618,9 @@ Minkowski.lagrangian().components()
 
 By applying the **Euler-Lagrange equations** to the curve Lagrangian:
 
-$$\frac{\mathrm{d}}{\mathrm{d}\lambda} \left( \frac{\partial L}{\partial\dot{x}^{\mu}} \right) - \frac{\partial L}{\partial x^{\mu}} = 0,$$
+$$
+\frac{\mathrm{d}}{\mathrm{d}\lambda} \left( \frac{\partial L}{\partial\dot{x}^{\mu}} \right) - \frac{\partial L}{\partial x^{\mu}} = 0,
+$$
 
 we can obtain the geodesic equations for our spacetime. This is done using the method `geodesic_from_lagrangian()` of the `Metric` class. For the Minkowski metric, the geodesic equations are:
 
@@ -1610,9 +1680,11 @@ And finally, here they are for the Alcubierre metric:
 
 The latter is a good example of how we can solve the geodesic equations by inspection. Indeed, it is easy to see that
 
-$$\dot{x}^{\mu} = (1, 0, 0, vf)$$
+$$
+\dot{x}^{\mu} = (1, 0, 0, vf)
+$$
 
-is a solution to this system of equations, since then we have $\dot{x} = \dot{y} = 0$ and $(f v \dot{t} - \dot{z}) = 0$, and both terms in each equation vanish (the last term in the first equation will reduce to $\partial_{\lambda}(-1)$, which is of course zero). We can check this solution by replacing the coordinate functions with their solutions; since we will be left with $\partial_{\lambda}(-1)$ in the first equation, we must also activate the derivative.
+is a solution to this system of equations, since then we have $\dot{x} = \dot{y} = 0$ and $(f v \dot{t} - \dot{z}) = 0$, and both terms in each equation vanish (the last term in the first equation will reduce to $\partial_ {\lambda}(-1)$, which is of course zero). We can check this solution by replacing the coordinate functions with their solutions; since we will be left with $\partial_ {\lambda}(-1)$ in the first equation, we must also activate the derivative.
 
 However, for this we have to write the coordinates explicitly as functions of the curve parameter, even when they are arguments of a function; for example, $v(t)$ should be instead be $v(t(\lambda))$. Luckily, OGRePy offers several ways to simplify this process. The `Coordinates` class contains the method `of_param()`, which returns the coordinates as functions of the curve parameter:
 
@@ -1676,7 +1748,9 @@ This solution indicates that we are traveling with velocity $v$ in the $z$ direc
 
 Another way of obtaining the geodesic equations is using the covariant derivative, and thus the Christoffel symbols:
 
-$$\dot{x}^{\rho} \nabla_{\rho} \dot{x}^{\sigma} = 0 \quad \Longrightarrow \quad \ddot{x}^{\sigma} + \Gamma^{\sigma}_{\mu\nu} \dot{x}^{\mu} \dot{x}^{\nu} = 0.$$
+$$
+\dot{x}^{\rho} \nabla_ {\rho} \dot{x}^{\sigma} = 0 \quad \Longrightarrow \quad \ddot{x}^{\sigma} + \Gamma^{\sigma}_ {\mu\nu} \dot{x}^{\mu} \dot{x}^{\nu} = 0.
+$$
 
 In OGRePy, we can calculate the left-hand side of this equation using the `geodesic_from_christoffel()` method of the `Metric` class. For example:
 
@@ -1695,7 +1769,9 @@ The best thing to do is to try both methods and see which one produces simpler o
 
 If the metric is a spacetime metric, it is often convenient to obtain the geodesic equations in terms of the time parameter, instead of an affine curve parameter. It can be shown that the geodesic equations in terms of the time coordinate are given by
 
-$$\frac{\mathrm{d}^{2} x^{\sigma}}{\mathrm{d} t^{2}} + \left( \Gamma^{\sigma}_{\mu\nu} - \Gamma^{0}_{\mu\nu} \frac{\mathrm{d} x^{\sigma}}{\mathrm{d} t} \right) \frac{\mathrm{d} x^{\mu}}{\mathrm{d} t} \frac{\mathrm{d} x^{\nu}}{\mathrm{d} t} = 0,$$
+$$
+\frac{\mathrm{d}^{2} x^{\sigma}}{\mathrm{d} t^{2}} + \left( \Gamma^{\sigma}_ {\mu\nu} - \Gamma^{0}_ {\mu\nu} \frac{\mathrm{d} x^{\sigma}}{\mathrm{d} t} \right) \frac{\mathrm{d} x^{\mu}}{\mathrm{d} t} \frac{\mathrm{d} x^{\nu}}{\mathrm{d} t} = 0,
+$$
 
 where we are assuming the time coordinate is $t$ and it is the first (zero) coordinate. These equations can be obtained using the `geodesic_time_param()` method of the `Metric` class. Note that `geodesic_time_param()` assumes time is the first coordinate, but the coordinate does not need to have the symbol $t$. As an example, the equations for the FLRW metric in Cartesian coordinates in terms of a curve parameter are:
 
@@ -1733,33 +1809,34 @@ FLRW_eq.subs({dot[y]: 0, dot[z]: 0})
 
 The solution can be obtained using `dsolve()` in terms of an integral over $a(t)$, passing $x(t)$ in the second argument as the function to solve for. The command to do that is `all_solutions = T.s.Array(T.s.dsolve(FLRWEq.subs({dot[y]: 0, dot[z]: 0}), param[x]))`, but I did not include it in the notebook because it takes a very long time to run. The solution found by SymPy is (after some beautification):
 
-$$x(t) = C_{1} \pm \int \frac{1}{a(t) \sqrt{1 + C_{2} a^{2}(t)}} \mathrm{d}t$$
+$$
+x(t) = C_ {1} \pm \int \frac{1}{a(t) \sqrt{1 + C_ {2} a^{2}(t)}} \mathrm{d}t
+$$
 
 We can use the `rhs` property to obtain the right-hand side of the equation, selecting the positive solution (at position 1 of the array): `all_solutions[1].rhs`. By taking the derivative with respect to $t$, `all_solutions[1].rhs.diff(t)`, we can get the coordinate velocity $\dot{x}$ along $x$:
 
-$$\dot{x}(t) = \frac{1}{a(t) \sqrt{1 + C_{2} a^{2}(t)}}$$
+$$
+\dot{x}(t) = \frac{1}{a(t) \sqrt{1 + C_ {2} a^{2}(t)}}
+$$
 
 ### Changing the curve parameter
 
-By default, the curve parameter is $\lambda$. However, sometimes we want to use another parameter - for example $\tau$ for proper time. To change the parameter, we can set `T.options.curve_parameter` to a symbol of our choice, whether as a string or a SymPy `Symbol`. As an example, let us change it to $\tau$:
-
-```python
-T.options.curve_parameter = "tau"
-```
-
-Note, however, that this **does not change the curve parameter retroactively in tensors previously calculated**. The curve parameter should instead be changed at the beginning of the session, before calculating any tensors which use it, such as Lagrangians or geodesic equations. Indeed, the curve parameter for the Minkowski Lagrangian, which we already calculated, is still $\lambda$:
+By default, the curve parameter is $\lambda$. This can be seen by extracting the components of a tensor that uses the curve parameter, such as the Lagrangian:
 
 ```python
 Minkowski.lagrangian().components()
 ```
 
-But for newly calculated Lagrangians, it will be $\tau$:
+However, sometimes we want to use another parameter - for example, $\tau$ for proper time. To change the parameter, we can set `T.options.curve_parameter` to a symbol of our choice, whether as a string, a TeX symbol, or a SymPy `Symbol`. As an example, let us change it to $\tau$:
 
 ```python
-T.Metric(
-    coords=Cartesian,
-    components=T.diag(-1, 1, 1, 1),
-).lagrangian().components()
+T.options.curve_parameter = "tau"
+```
+
+Changing the curve parameter applies retroactively to any tensors previously calculated. Behind the scenes, the curve parameter is stored only as a placeholder, which is replaced dynamically with the user's chosen symbol when the components are displayed with `show()` or `list()` or extracted with `components()`. If we now display the components of the Lagrangian again, the curve parameter will be changed to $\tau$:
+
+```python
+Minkowski.lagrangian().components()
 ```
 
 ## About the project
@@ -1772,11 +1849,11 @@ This package is under continuous and active development. If you encounter any bu
 
 Contributions are always welcome. However, I release my projects in cumulative updates after editing and testing them locally on my system, so **my policy is to never accept any pull requests**. If you open a pull request, and I decide to incorporate your suggestion into the project, I will first modify your code to comply with the project's coding conventions (formatting, syntax, naming, comments, programming practices, etc.), and perform some tests to ensure that the change doesn't break anything. I will then merge it into the next release of the project, possibly together with some other changes. The new release will also include a note in `CHANGELOG.md` with a link to your pull request, and modifications to the documentation in `README.md` as needed.
 
-To create a development environment for this package, download the source code directly from the [GitHub repository](https://github.com/bshoshany/OGRePy), then create a virtual environment in the root folder of the repository [as explained above](#installing-in-a-virtual-environment), activate it, and run `pip install ipykernel sympy` to install the dependent packages.
+To create a development environment for this package, download the source code directly from the [GitHub repository](https://github.com/bshoshany/OGRePy), then create a virtual environment in the root folder of the repository [as explained above](#installing-in-a-virtual-environment), activate it, and run `pip install jupyterlab jupytext playwright sympy` to install the development packages, then run `playwright install` to install the browser binaries for HTML to PDF conversion (if desired).
 
-For your convenience, a PowerShell script, [update_packages.ps1](https://github.com/bshoshany/OGRePy/blob/master/tasks/update_packages.ps1), is provided in the GitHub repository to allow easily updating all outdated packages. Another script, [compile_docs.ps1](https://github.com/bshoshany/OGRePy/blob/master/tasks/compile_docs.ps1), is used to compile the documentation in `README.md` to a Jupyter notebook and run the notebook. Finally, [cleanup.ps1](https://github.com/bshoshany/OGRePy/blob/master/tasks/cleanup.ps1), is used to clean up Python and Jupyter cache folders.
+For your convenience, a PowerShell script, [update_packages.ps1](https://github.com/bshoshany/OGRePy/blob/master/tasks/update_packages.ps1), is provided in the GitHub repository to allow easily updating all outdated packages. A Python script, [compile_docs.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/compile_docs.py), is used to compile the documentation in `README.md` to `.ipynb`, `.html`, and `.pdf` formats. Finally, [cleanup.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/cleanup.py) is used to clean up Python and Jupyter cache folders.
 
-This package was developed in [Visual Studio Code](https://code.visualstudio.com/). The `.vscode` folder is provided in the GitHub repository for your convenience, including tasks for running the above PowerShell scripts. It is highly recommended to install the following linters:
+This package was developed in [Visual Studio Code](https://code.visualstudio.com/). The `.vscode` folder is provided in the GitHub repository for your convenience, including tasks for running the above scripts. It is highly recommended to install the following linters:
 
 * [Pyright](https://github.com/microsoft/pyright): install the Pylance [VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance).
 * [Ruff](https://github.com/astral-sh/ruff): `pip install ruff` and install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff).
@@ -1800,4 +1877,4 @@ If you use this package in published software or research, please provide a link
 
 ### Other projects to check out
 
-This package is a Python port of [OGRe](https://github.com/bshoshany/OGRe): An Object-Oriented General Relativity Package for Mathematica. You may also be interested in [`BS::thread_pool`](https://github.com/bshoshany/thread-pool): a fast, lightweight, and easy-to-use C++17 thread pool library.
+This package is a Python port of [OGRe](https://github.com/bshoshany/OGRe): An Object-Oriented General Relativity Package for Mathematica. You may also be interested in [`BS::thread_pool`](https://github.com/bshoshany/thread-pool): a fast, lightweight, and easy-to-use C++17 thread pool library for high-performance scientific computing.

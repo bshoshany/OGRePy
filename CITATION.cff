@@ -1,0 +1,23 @@
+authors:
+  - email: baraksh@gmail.com
+    family-names: Shoshany
+    given-names: Barak
+    orcid: https://orcid.org/0000-0003-2222-127X
+cff-version: 1.2.0
+doi: 10.48550/arXiv.2409.03803
+license: MIT
+message: If you use this package in published research, please cite it as follows.
+preferred-citation:
+  authors:
+    - family-names: Shoshany
+      given-names: Barak
+  doi: 10.48550/arXiv.2409.03803
+  journal: arXiv
+  title: 'OGRePy: An Object-Oriented General Relativity Package for Python'
+  type: article
+  url: https://arxiv.org/abs/2409.03803
+  year: 2024
+repository-code: https://github.com/bshoshany/OGRePy
+title: 'OGRePy: An Object-Oriented General Relativity Package for Python'
+type: software
+url: https://github.com/bshoshany/OGRePy

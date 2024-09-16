@@ -9,10 +9,24 @@ GitHub repository: <https://github.com/bshoshany/OGRePy>\
 PyPi project: <https://pypi.org/project/OGRePy/>
 
 * [Version history](#version-history)
+    * [v1.2.0 (2024-09-15)](#v120-2024-09-15)
     * [v1.1.0 (2024-09-08)](#v110-2024-09-08)
     * [v1.0.1 (2024-09-04)](#v101-2024-09-04)
 
 ## Version history
+
+### v1.2.0 (2024-09-15)
+
+* New features:
+    * Tensor objects can now be compared using the `T.compare()` function. Two tensors are considered equal if their components are the same, and they are associated with the same metric.
+    * OGRePy now correctly displays Markdown and TeX output in JupyterLite.
+    * Tensor components in OGRePy are now **immutable**, meaning that they are specified once and for all and cannot be changed. This is done for consistency and simplicity. This means that `permute()` now returns a new tensor with its indices permuted instead of modifying the original tensor. Similarly, `simplify()` now returns a new tensor with its components simplified of simplifying the original tensor.
+* Citing the package:
+    * This package now has an [arXiv paper](https://arxiv.org/abs/2409.03803)! If you use this package in published research, please cite it as follows:
+        * Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [doi:10.48550/arXiv.2409.03803](https://doi.org/10.48550/arXiv.2409.03803), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (September 2024)
+    * Added a `CITATION.cff` file (in YAML format) to the GitHub repository. This should add [an option to get a citation in different formats](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-citation-files) directly from GitHub repository by clicking on "cite this repository" on the sidebar to the right.
+    * Added a `CITATION.bib` file (in BibTeX format) to the GitHub repository. You can use it to easily cite this package in your papers.
+    * For your convenience, the citing information can always be obtained by executing the function `T.cite()`.
 
 ### v1.1.0 (2024-09-08)
 

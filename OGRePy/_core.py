@@ -1,6 +1,6 @@
 r"""
 # OGRePy: An Object-Oriented General Relativity Package for Python
-v1.1.0 (2024-09-08)
+v1.2.0 (2024-09-15)
 
 By **Barak Shoshany**\
 Email: <baraksh@gmail.com>\
@@ -14,7 +14,26 @@ Based on the Mathematica package [OGRe](https://github.com/bshoshany/OGRe) by Ba
 
 Copyright (c) 2024 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
 
-If you use this package in published software or research, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
+If you use this package in software of any kind, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
+
+If you use this package in published research, please cite it as follows:
+
+* Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [doi:10.48550/arXiv.2409.03803](https://doi.org/10.48550/arXiv.2409.03803), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (September 2024)
+
+You can use the following BibTeX entry:
+
+```bibtex
+@article{Shoshany2024_OGRePy,
+    archiveprefix = {arXiv},
+    author        = {Barak Shoshany},
+    doi           = {10.48550/arXiv.2409.03803},
+    eprint        = {2409.03803},
+    title         = {{OGRePy: An Object-Oriented General Relativity Package for Python}},
+    year          = {2024}
+}
+```
+
+If you found this project useful, please consider [starring it on GitHub](https://github.com/bshoshany/OGRePy/stargazers)! This allows me to see how many people are using my code, and motivates me to keep working to improve it.
 """
 
 
@@ -87,8 +106,8 @@ class OGRePyError(Exception):
 ####################
 
 
-__version__: str = "1.1.0"
-release_date: str = "2024-09-08"
+__version__: str = "1.2.0"
+release_date: str = "2024-09-15"
 
 
 ####################
@@ -97,8 +116,8 @@ release_date: str = "2024-09-08"
 
 
 def calc(
-    *,
     formula: Tensor,
+    *,
     symbol: str | s.Symbol = r"\square",
     permute: list[str | s.Symbol] | str | None = None,
 ) -> Tensor:
@@ -111,14 +130,86 @@ def calc(
     #### Returns:
     The result of the tensor calculation as a `Tensor` object with the desired symbol and index permutation.
     """
+    # Check that the object is in fact a tensor.
+    _check_type(formula, Tensor, "The input must be a tensor.")
     # Validate the symbol.
     symbol = _validate_symbol(symbol, formula.rank())
     # Create a new tensor with the same properties and components as the source tensor.
     new: Tensor = Tensor(metric=formula.metric(), indices=formula.default_indices, coords=formula.default_coords, components=formula._get_components(indices=formula.default_indices, coords=formula.default_coords), symbol=symbol)  # pyright: ignore [reportPrivateUsage]
-    # Permute the indices if necessary.
-    if permute is not None and permute != formula.index_letters():
-        new.permute(new=permute, old=formula.index_letters())
-    return new
+    # Return the tensor, permuting its indices if necessary.
+    return new.permute(new=permute, old=formula.index_letters()) if permute is not None and permute != formula.index_letters() else new
+
+
+def cite() -> None:
+    """
+    Display information on how to cite this package in published research.
+    """
+    _display_markdown(
+        inspect.cleandoc("""
+        If you use this package in published research, please cite it as follows:
+
+        * Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [doi:10.48550/arXiv.2409.03803](https://doi.org/10.48550/arXiv.2409.03803), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (September 2024)
+
+        You can use the following BibTeX entry:
+
+        ```bibtex
+        @article{Shoshany2024_OGRePy,
+            archiveprefix = {arXiv},
+            author        = {Barak Shoshany},
+            doi           = {10.48550/arXiv.2409.03803},
+            eprint        = {2409.03803},
+            title         = {{OGRePy: An Object-Oriented General Relativity Package for Python}},
+            year          = {2024}
+        }
+        ```
+
+        Thank you for citing my work! :)
+        """),
+    )
+
+
+def compare(
+    first: Tensor,
+    second: Tensor,
+    *,
+    indices: IndexConfiguration | None = None,
+    coords: Coordinates | None = None,
+    exact: bool = False,
+) -> bool:
+    """
+    Compare the components of two tensors.
+    #### Parameters:
+    * `first`: The first tensor to compare.
+    * `second`: The second tensor to compare.
+    * `indices` (optional): A tuple of integers specifying the index configuration of the representation to use. Each integer in the tuple can be either +1 for an upper index or -1 for a lower index. If not specified, the first tensor's default index configuration will be used.
+    * `coords` (optional): An OGRePy `Coordinates` object specifying the coordinate system of the representation to use. If not specified, the first tensor's default coordinate system will be used.
+    * `exact` (optional): Whether to check if two components are the same by simple comparison (`False`, the default) or by simplifying the sum of the components (`True`). Note that setting this to `True` may increase processing time for large tensors with complicated components.
+    #### Returns:
+    `True` if the components of the first and second tensors in the chosen representation are the same, or `False` otherwise.
+    """
+    # Validate the input.
+    msg: str = "The objects to compare must be tensors."
+    _check_type(first, Tensor, msg)
+    _check_type(second, Tensor, msg)
+    _check_type(exact, bool, "The parameter `exact` must be either `True` or `False`.")
+    use_indices: IndexConfiguration = _validate_indices(indices) if indices is not None else first.default_indices
+    use_coords: Coordinates = _validate_coordinates(coords) if coords is not None else first.default_coords
+    # If comparing an object to itself, return `True`.
+    if first is second:
+        return True
+    # Tensors of different ranks or dimensions are obviously not equal.
+    if first.rank() != second.rank() or first.dim() != second.dim():
+        return False
+    # Tensors with different metrics are considered not equal, since even if they happen to have the same components in one index representation, they will have different components in another representation. We check this only if neither of the tensors being compared is itself a metric, to avoid infinite recursion. Note that the metrics are compared using the same method, so if two tensors have the same components and are associated with different `Metric` objects that also have the same components, the tensors are considered equal.
+    if not isinstance(first, Metric) and not isinstance(second, Metric) and not compare(first.metric(), second.metric()):
+        return False
+    # Get the components of both tensors in the chosen index configuration and coordinate system.
+    first_components: s.Array = first.components(indices=use_indices, coords=use_coords, warn=False)
+    second_components: s.Array = second.components(indices=use_indices, coords=use_coords, warn=False)
+    # Generate an array of differences, flattening it to simplify the comparison. `len(first_components)` will be the total number of elements in the array, that is, dim**rank.
+    difference: s.Array = (first_components - second_components).reshape(len(first_components))
+    # Either compare all the components as is to 0, or simplify them first and then compare to 0. To improve performance, instead of simplifying the entire array and only then checking that all the elements are zero, we go through the elements one by one and check that they simplify to zero, so that as soon as we discover a non-zero element we can return `False` without processing the remaining elements.
+    return all((_simplify(element) if exact else element) == 0 for element in difference)
 
 
 def diag(
@@ -302,7 +393,7 @@ def welcome() -> None:
             """),
         )
         # If we're not in a notebook, warn that the package should be used inside a notebook.
-        if not _in_notebook():
+        if not _in_notebook:
             _display_markdown("WARNING: No notebook interface detected! This package was designed to be used inside a Jupyter notebook in Visual Studio Code or JupyterLab.")
 
 
@@ -676,12 +767,12 @@ class Coordinates:
         # Store the dimension of the coordinate systems.
         dim: int = self.dim()
         # To calculate the Jacobian, we loop over all possible combinations of both coordinate systems and store the derivatives of each source coordinate with respect to each target coordinate. Note that it is possible for the rules to not include a specific source coordinate. Presumably, in that case, the same coordinate appears in the target system (e.g. t when the coordinate transformation is only spatial), so the derivative will be 1. Therefore, if the coordinate does not exist in the dictionary, we just use the coordinate itself.
-        self._jacobians[target] = _simplify_array(s.Array([[s.diff(rules.get(source_symbols[i], source_symbols[i]), target_symbols[j]) for j in range(dim)] for i in range(dim)]))
+        self._jacobians[target] = _array_simplify(s.Array([[s.diff(rules.get(source_symbols[i], source_symbols[i]), target_symbols[j]) for j in range(dim)] for i in range(dim)]))
         # The inverse Jacobian is just the inverse of the Jacobian matrix.
-        self._inverse_jacobians[target] = _simplify_array(s.Array(cast(s.Matrix, s.Matrix(self._jacobians[target]).inv())))
+        self._inverse_jacobians[target] = _array_simplify(s.Array(cast(s.Matrix, s.Matrix(self._jacobians[target]).inv())))
         # The "Christoffel Jacobian" is the extra second-derivative term in the coordinate transformation of the Christoffel symbols.
-        second_derivative: s.Array = _simplify_array(s.Array([[[s.diff(rules.get(source_symbols[i], source_symbols[i]), target_symbols[j], target_symbols[k]) for k in range(dim)] for j in range(dim)] for i in range(dim)]))
-        self._christoffel_jacobians[target] = _simplify_array(_contract((self._inverse_jacobians[target], ["lambda'", "lambda"]), (second_derivative, ["lambda", "mu'", "nu'"]))[0])
+        second_derivative: s.Array = _array_simplify(s.Array([[[s.diff(rules.get(source_symbols[i], source_symbols[i]), target_symbols[j], target_symbols[k]) for k in range(dim)] for j in range(dim)] for i in range(dim)]))
+        self._christoffel_jacobians[target] = _array_simplify(_contract((self._inverse_jacobians[target], ["lambda'", "lambda"]), (second_derivative, ["lambda", "mu'", "nu'"]))[0])
 
 
 class CovariantD:
@@ -883,7 +974,7 @@ class Tensor:
         components = _validate_components(components=components, num_coords=num_coords, num_indices=num_indices)
         # Simplify the components, depending on the `simplify` argument.
         if simplify is True:
-            components = _simplify_array(components)
+            components = _array_simplify(components)
         # Store the components.
         self._store_components(indices=self._default_indices, coords=self._default_coords, components=components)
         # When validating the symbol, we also convert it from a `Symbol` to a TeX string if necessary, and add index placeholders if the user did not supply them.
@@ -913,7 +1004,7 @@ class Tensor:
         second_letters: IndexSpecification = other._check_index_letters()
         # Check that both tensors are associated with the same metric.
         if self._metric is not other._metric:
-            _handle_error(f"The tensors cannot be added, as they are associated with different metrics, {self._metric} and {other._metric}.")
+            _handle_error(f"The tensors cannot be added, as they are associated with different metrics, `{self._metric}` and `{other._metric}`.")
         # Check that both tensors have the same rank.
         rank: int = self.rank()
         if rank != other.rank():
@@ -940,7 +1031,7 @@ class Tensor:
         # Add the two tensors by adding the components directly.
         result: s.Array = first_components + second_components
         # Simplify and store the result in a new tensor object.
-        output_tensor: Tensor = Tensor(metric=self._metric, coords=use_coords, indices=use_indices, components=_simplify_array(result))
+        output_tensor: Tensor = Tensor(metric=self._metric, coords=use_coords, indices=use_indices, components=_array_simplify(result))
         # Specify the index letters for the resulting tensor before returning it, in case we are chaining multiple operations.
         output_tensor._calc_letters = first_letters
         # Create a symbol for the new tensor, keeping all existing index placeholders. Note that this will create duplicate placeholders, e.g. `S[0][1] + T[0][1]`, which will result in the correct notation S_ab + T_ab.
@@ -1020,7 +1111,7 @@ class Tensor:
         second_letters: IndexSpecification = other._check_index_letters()
         # Check that both tensors are associated with the same metric.
         if self._metric is not other._metric:
-            _handle_error(f"The tensors cannot be contracted, as they are associated with different metrics, {self._metric} and {other._metric}.")
+            _handle_error(f"The tensors cannot be contracted, as they are associated with different metrics, `{self._metric}` and `{other._metric}`.")
         # If either of the tensors is a scalar, simply do multiplication of tensor by scalar, and then modify the symbol of the output tensor so it contains the symbol of the scalar instead of the value of the scalar.
         if self.rank() == 0:
             out_tensor: Tensor = other.__mul__(self._get_components(indices=self._default_indices, coords=self._default_coords)[0])
@@ -1062,7 +1153,7 @@ class Tensor:
         # Perform the contraction.
         result: TensorWithIndexSpecification = _contract((first_components, [*first_letters]), (second_components, [*second_letters]))
         # Simplify and store the result in a new tensor object.
-        output_tensor: Tensor = Tensor(metric=self._metric, coords=use_coords, indices=out_indices, components=_simplify_array(result[0]))
+        output_tensor: Tensor = Tensor(metric=self._metric, coords=use_coords, indices=out_indices, components=_array_simplify(result[0]))
         # Specify the index letters for the resulting tensor before returning it, in case we are chaining multiple operations.
         output_tensor._calc_letters = result[1]
         # Increase the numbering of the free indices in the second tensor's symbol so they start after the last number in the first tensor's symbol. For example, if we had 2 free indices [0] and [1] in the first symbol, then [0] in the second symbol will be increased to [2], and so on. (This assumes indices are consecutive and always start from 0, but that is a class invariant.)
@@ -1105,7 +1196,7 @@ class Tensor:
         # The components that will be multiplied are the ones corresponding to the default representation of the tensor.
         components: s.Array = self._get_components(indices=self._default_indices, coords=self._default_coords)
         # Multiply each component of the tensor by the scalar, simplify, and store the result in a new tensor object.
-        output_tensor: Tensor = Tensor(metric=self._metric, coords=self._default_coords, indices=self._default_indices, components=_simplify_array(cast(s.Array, components * other)))
+        output_tensor: Tensor = Tensor(metric=self._metric, coords=self._default_coords, indices=self._default_indices, components=_array_simplify(cast(s.Array, components * other)))
         # Specify the index letters for the resulting tensor before returning it, in case we are chaining multiple operations.
         output_tensor._calc_letters = letters
         # Create a TeX symbol for the scalar. We use a dirty trick: multiply by a dummy symbol so that SymPy will add parentheses if necessary, then simply remove the dummy symbol. This also turns -1 into -, which is desirable. However, it turns 1/2 into /2, which is not desirable, so we fix that with a replacement.
@@ -1336,7 +1427,7 @@ class Tensor:
         components: s.Array = self._calc_representation(indices=use_indices, coords=use_coords)
         # If this is a type of tensor that uses a curve parameter, replace any instance of the curve parameter placeholder with the selected curve parameter.
         if isinstance(self, CleanupCurveParameter):
-            components = _subs_array(components, {_curve_parameter_placeholder: options.curve_parameter})
+            components = _array_subs(components, {_curve_parameter_placeholder: options.curve_parameter})
         return components
 
     def dim(
@@ -1436,9 +1527,9 @@ class Tensor:
         new: IndexSpecification | list[str | s.Symbol] | str,
         *,
         old: IndexSpecification | list[str | s.Symbol] | str | None = None,
-    ) -> None:
+    ) -> Self:
         r"""
-        Permute the indices of this tensor.
+        Return this tensor with its indices permuted. The original tensor remains unchanged.
         #### Parameters:
         * `new`: A list of one or more strings or SymPy `Symbol` objects indicating the new index specification. `Symbol` objects will be converted into TeX strings, e.g. Symbol("mu") will be converted to "\mu". Strings must be given in the same format as SymPy's `symbols()` function, that is, a space- or comma-separated list of one or more letters or TeX codes. For example, "mu nu" will be converted to two strings, "\mu" and "\nu". The list will splice in any symbols, even if two or more symbols are defined together. For example, if `a` is a SymPy `Symbol` and the input is [a, "b", "c d"], the output will be ["a", "b", "c", "d"]. A single string of space- or comma-separated symbols can also be entered instead of a list.
         * `old` (optional): A list of one or more strings or SymPy `Symbol` objects, or a single string, similarly indicating the old index specification. For example, if `old` is `"a b c"` and `new` is `"a c b"`, then the second and third indices will be exchanged. If `old` is omitted, the index specification stored in this tensor, either as a result of the calculation that created it or explicitly via the `()` function call operator, will be used.
@@ -1449,7 +1540,7 @@ class Tensor:
             if self._calc_letters is not None:
                 old_letters = self._calc_letters
             else:
-                _handle_error("Cannot find an existing index specification. Please specify the old specification explicitly as a second argument.")
+                _handle_error("Cannot find an existing index specification. Please specify the old specification explicitly using the `old=` keyword.")
         else:
             old_letters = _validate_permutation(old, self.rank())
         new_letters: IndexSpecification = _validate_permutation(new, self.rank())
@@ -1463,10 +1554,13 @@ class Tensor:
         for (indices, coords), components in self._components.items():
             new_indices: IndexConfiguration = tuple(indices[replacements[i]] for i in range(len(indices)))
             new_components[(new_indices, coords)] = cast(s.Array, s.permutedims(components, index_order_old=old_letters, index_order_new=new_letters))
-        # Permute the default indices as well.
-        self._default_indices = tuple(self._default_indices[replacements[i]] for i in range(len(self._default_indices)))
-        # Store the result.
-        self._components = new_components
+        # Figure out what the default indices will be after the permutation.
+        new_default_indices: IndexConfiguration = tuple(self._default_indices[replacements[i]] for i in range(len(self._default_indices)))
+        # Create a new tensor object to store the result.
+        output_tensor: Self = self.__class__(metric=self._metric, coords=self._default_coords, indices=new_default_indices, components=new_components[(new_default_indices, self._default_coords)], symbol=self._symbol, simplify=False)
+        # Replace the entire components dictionary of the new tensor with the permuted components.
+        output_tensor._components = new_components
+        return output_tensor
 
     def rank(
         self: Self,
@@ -1500,14 +1594,19 @@ class Tensor:
 
     def simplify(
         self: Self,
-    ) -> None:
+    ) -> Self:
         """
-        Simplify all previously-calculated representations of this tensor using the simplification function defined by `options.simplify_func`. To be used if the function has changed after the components have already been calculated; has no effect otherwise.
+        Simplify all previously-calculated representations of this tensor using the simplification function defined by `options.simplify_func`, and return the result as a new tensor. The original tensor remains unchanged. To be used if the function has changed after the components have already been calculated; has no effect otherwise.
         """
+        # Create a copy of this tensor.
+        result: Self = copy(self)
+        # Calculate the new (simplified) components.
         new_components: Components = {}
         for (indices, coords), components in self._components.items():
-            new_components[(indices, coords)] = _simplify_array(components)
-        self._components = new_components
+            new_components[(indices, coords)] = _array_simplify(components)
+        # Store the simplified components in the new tensor and return it.
+        result._components = new_components
+        return result
 
     def tex_components(
         self: Self,
@@ -1570,6 +1669,7 @@ class Tensor:
         """
         # Process the input.
         (use_coords, use_indices, components) = self._process_show_list(indices=indices, coords=coords, replace=replace, function=function, simplify=simplify)
+        _check_type(exact, bool, "The parameter `exact` must be either `True` or `False`.")
         # Create a dictionary where each key is a unique, non-zero SymPy expression, and each key's value is a list of all the tensor components, in coordinate-index notation (e.g.: g^{xy}) encoded in TeX, which correspond to that expression or its negative. Note that we use a defaultdict so that accessing a missing key will automatically create an empty list.
         non_zero: collections.defaultdict[s.Basic, list[str]] = collections.defaultdict(list)
         # Store the tensor's rank for later use,
@@ -1724,15 +1824,15 @@ class Tensor:
         param: s.Symbol = coord_symbols[0] if isinstance(self, CleanupTimeParameter) else options.curve_parameter
         if isinstance(self, CleanupCurveParameter | CleanupTimeParameter):
             # If this is a type of tensor that uses a parameter, replace any instance of the coordinate functions in terms of the parameter with the ordinary coordinate symbols, and similarly for their first and second derivatives.
-            components = _subs_array(components, coords.of_param_rdict(param) | coords.of_param_newton_dot(param))
+            components = _array_subs(components, coords.of_param_rdict(param) | coords.of_param_newton_dot(param))
         # If a single-letter function has only coordinate symbols as its arguments, show only the name of the function, without the arguments.
-        components = _subs_array(components, {f: sym(str(f.func)) for f in components.atoms(s.Function) if all(arg in coord_symbols for arg in f.args) and len(str(f.func)) == 1})
+        components = _array_subs(components, {f: sym(str(f.func)) for f in components.atoms(s.Function) if all(arg in coord_symbols for arg in f.args) and len(str(f.func)) == 1})
         if isinstance(self, CleanupCurveParameter | CleanupTimeParameter):
             # Replace any derivative with respect to the curve parameter with a more compact partial derivative symbol, and enclose the argument in parentheses (which SymPy doesn't do for some reason).
-            components = _subs_array(components, {f: sym(r"\partial_{" + _to_tex(param) + r"} \left(" + _to_tex(f.args[0]) + r"\right)") for f in components.atoms(s.Derivative) if f.args[1] == (param, 1)})
+            components = _array_subs(components, {f: sym(r"\partial_{" + _to_tex(param) + r"} \left(" + _to_tex(f.args[0]) + r"\right)") for f in components.atoms(s.Derivative) if f.args[1] == (param, 1)})
         # For all tensors, replace any derivative with respect to the coordinate symbols with a more compact partial derivative symbol.
         for x in coord_symbols:
-            components = _subs_array(components, {f: sym(r"\partial_{" + _to_tex(x) + r"} " + _to_tex(f.args[0])) for f in components.atoms(s.Derivative) if f.args[1] == (x, 1)})
+            components = _array_subs(components, {f: sym(r"\partial_{" + _to_tex(x) + r"} " + _to_tex(f.args[0])) for f in components.atoms(s.Derivative) if f.args[1] == (x, 1)})
         return components
 
     def _get_components(
@@ -1776,16 +1876,18 @@ class Tensor:
         components: s.Array = self._calc_representation(indices=use_indices, coords=use_coords)
         # If this is a type of tensor that uses a curve parameter, replace any instance of the curve parameter placeholder with the selected curve parameter.
         if isinstance(self, CleanupCurveParameter):
-            components = _subs_array(components, {_curve_parameter_placeholder: options.curve_parameter})
+            components = _array_subs(components, {_curve_parameter_placeholder: options.curve_parameter})
         # Apply the function, if any.
         if function is not None:
-            components = _map_function(components, function)
+            if not callable(function):
+                _handle_error("The function must be a callable object.")
+            components = _array_map(components, function)
         # Make the replacements, if any.
         if replace is not None:
             components = _make_replacement(components, replace)
         # Simplify the components, if desired.
         if simplify is True:
-            components = _simplify_array(components)
+            components = _array_simplify(components)
         # Clean up the notation.
         components = self._cleanup_notation(components=components, coords=use_coords)
         # Return the results.
@@ -1871,7 +1973,7 @@ class Tensor:
         # Calculate the trace by contracting on the repeated indices.
         result: TensorWithIndexSpecification = _contract((components, [*all_letters]))
         # Simplify and store the result in a new tensor object.
-        output_tensor: Tensor = Tensor(metric=self._metric, coords=self._default_coords, indices=out_indices, components=_simplify_array(result[0]))
+        output_tensor: Tensor = Tensor(metric=self._metric, coords=self._default_coords, indices=out_indices, components=_array_simplify(result[0]))
         # Specify the index letters for the resulting tensor before returning it, in case we are chaining multiple operations.
         output_tensor._calc_letters = result[1]
         # Create a symbol for the new tensor.
@@ -1930,7 +2032,7 @@ class Tensor:
             # Contract the Jacobians with the tensor. Note: Unlike in `_transform_indices()`, here we do not need to permute the indices, since we are contracting all the indices and in their original order, so e.g. T_ac = J_ab J_cd T^bd already has the correct index order by design.
             result: TensorWithIndexSpecification = _contract(*jacobians, (components, sum_vars))
             # The contracted tensor will still be expressed using the old coordinate symbols, so we express it using the new coordinate symbols by applying the transformation rules. Then we simplify and store the result.
-            self._store_components(indices=indices, coords=target_coords, components=_simplify_array(_subs_array(result[0], rules)))
+            self._store_components(indices=indices, coords=target_coords, components=_array_simplify(_array_subs(result[0], rules)))
 
     def _transform_indices(
         self: Self,
@@ -1977,7 +2079,7 @@ class Tensor:
         # Permute the indices to the desired configuration.
         permuted: s.Array = cast(s.Array, s.permutedims(result[0], index_order_old=result[1], index_order_new=permute_vars))
         # Simplify and store the result.
-        self._store_components(indices=target_indices, coords=coords, components=_simplify_array(permuted))
+        self._store_components(indices=target_indices, coords=coords, components=_array_simplify(permuted))
 
     def _validate_or_default_coords(
         self: Self,
@@ -2086,7 +2188,7 @@ class Christoffel(Tensor, FixedDefaultIndices):
         # Calculate the Christoffel symbols by contracting the sum of partial derivatives of the metric with half the inverse metric.
         result: s.Array = _contract((half_inverse_metric, ["lamda", "sigma"]), (sum_partial_metric._calc_representation(indices=(-1, -1, -1), coords=coords), ["mu", "nu", "sigma"]))[0]
         # Simplify and return the result.
-        return _simplify_array(result)
+        return _array_simplify(result)
 
     @override
     def _transform_coordinates(
@@ -2216,11 +2318,11 @@ class GeodesicFromChristoffel(Tensor, CleanupCurveParameter, FixedDefaultIndices
         # Create an acceleration vector whose components are the second derivatives of the coordinate symbols as functions of the curve parameter.
         accel: s.Array = s.Array(coords.of_param_ddot(_curve_parameter_placeholder))
         # Obtain the Christoffel symbols, and replace any instance of the coordinate symbols with coordinate functions of the curve parameter.
-        christoffel_with_param: s.Array = _subs_array(metric.christoffel()._calc_representation(indices=(+1, -1, -1), coords=coords), coords.of_param_dict(_curve_parameter_placeholder))
+        christoffel_with_param: s.Array = _array_subs(metric.christoffel()._calc_representation(indices=(+1, -1, -1), coords=coords), coords.of_param_dict(_curve_parameter_placeholder))
         # Calculate the geodesic equations by contracting the Christoffel symbols with two tangent vectors and adding to the acceleration vector.
         result: s.Array = accel + _contract((christoffel_with_param, ["sigma", "mu", "nu"]), (tangent, ["mu"]), (tangent, ["nu"]))[0]
         # Simplify and return the result.
-        return _simplify_array(result)
+        return _array_simplify(result)
 
     @override
     def _transform_coordinates(
@@ -2301,7 +2403,7 @@ class GeodesicFromLagrangian(Tensor, CleanupCurveParameter, FixedDefaultIndices)
         # Calculate the geodesic equation vector from the full Euler-Lagrange equation.
         result: s.Array = euler_lagrange_x - euler_lagrange_x_dot_diff
         # Simplify and return the result, making sure to pass `doit=False` so the derivatives with respect to the curve parameter will not be evaluated.
-        return _simplify_array(result, doit=False)
+        return _array_simplify(result, doit=False)
 
     @override
     def _transform_coordinates(
@@ -2380,7 +2482,7 @@ class GeodesicTimeParam(Tensor, CleanupTimeParameter, FixedDefaultIndices):
         # Obtain the Christoffel symbols, and replace any instance of the spatial coordinate symbols with coordinate functions of time.
         param_dict: dict[s.Symbol, AppliedUndef] = coords.of_param_dict(time)
         del param_dict[time]
-        christoffel_with_param: s.Array = _subs_array(metric.christoffel()._calc_representation(indices=(+1, -1, -1), coords=coords), param_dict)
+        christoffel_with_param: s.Array = _array_subs(metric.christoffel()._calc_representation(indices=(+1, -1, -1), coords=coords), param_dict)
         # We also need the Christoffel symbols with 0 in the first index, which is a rank-2 tensor.
         christoffel_zero: s.Array = cast(s.Array, christoffel_with_param[0, :, :])
         # Contract the Christoffel symbols with the tangent vector and subtract from the Christoffel symbols with 0 in the first index to get the term in the parentheses in the equation (see `Metric.geodesic_time_param()` docs), which is a rank-3 tensor.
@@ -2388,7 +2490,7 @@ class GeodesicTimeParam(Tensor, CleanupTimeParameter, FixedDefaultIndices):
         # Calculate the geodesic equations by contracting the parentheses with two tangent vectors and adding to the acceleration vector.
         result: s.Array = accel + _contract((parentheses, ["sigma", "mu", "nu"]), (tangent, ["mu"]), (tangent, ["nu"]))[0]
         # Simplify and return the result.
-        return _simplify_array(result)
+        return _array_simplify(result)
 
     @override
     def _transform_coordinates(
@@ -2513,11 +2615,11 @@ class Lagrangian(Tensor, CleanupCurveParameter, FixedDefaultIndices):
         # Create a tangent vector whose components are the first derivatives of the coordinate symbols as functions of the curve parameter.
         tangent: s.Array = s.Array(coords.of_param_dot(_curve_parameter_placeholder))
         # Obtain the metric components, and replace any instance of the coordinate symbols with coordinate functions of the curve parameter.
-        metric_with_param: s.Array = _subs_array(metric._calc_representation(indices=(-1, -1), coords=coords), coords.of_param_dict(_curve_parameter_placeholder))
+        metric_with_param: s.Array = _array_subs(metric._calc_representation(indices=(-1, -1), coords=coords), coords.of_param_dict(_curve_parameter_placeholder))
         # Calculate the Lagrangian by taking the norm squared of the tangent vector.
         result: s.Array = _contract((metric_with_param, ["mu", "nu"]), (tangent, ["mu"]), (tangent, ["nu"]))[0]
         # Simplify and return the result.
-        return _simplify_array(result)
+        return _array_simplify(result)
 
     @override
     def _transform_coordinates(
@@ -2982,8 +3084,7 @@ class Riemann(Tensor, FixedDefaultIndices):
         #### Returns:
         The calculated components.
         """
-        riemann: Tensor = PartialD("mu") @ metric.christoffel("rho nu sigma") - PartialD("nu") @ metric.christoffel("rho mu sigma") + metric.christoffel("rho mu lamda") @ metric.christoffel("lamda nu sigma") - metric.christoffel("rho nu lamda") @ metric.christoffel("lamda mu sigma")
-        riemann.permute("rho sigma mu nu")
+        riemann: Tensor = (PartialD("mu") @ metric.christoffel("rho nu sigma") - PartialD("nu") @ metric.christoffel("rho mu sigma") + metric.christoffel("rho mu lamda") @ metric.christoffel("lamda nu sigma") - metric.christoffel("rho nu lamda") @ metric.christoffel("lamda mu sigma")).permute("rho sigma mu nu")
         return riemann._calc_representation(indices=(+1, -1, -1, -1), coords=coords)
 
 
@@ -3008,6 +3109,56 @@ def _add_parentheses(
     The string with parentheses added if needed.
     """
     return symbol if " + " not in symbol else f"({symbol})"
+
+
+def _array_map(
+    array: s.Array,
+    function: Callable[..., Any],
+) -> s.Array:
+    """
+    Map a function to the components of the given SymPy `Array`.
+    #### Parameters:
+    * `components`: The array to map the function to.
+    * `function`: A function to apply to the components.
+    #### Returns:
+    The array with the function mapped.
+    """
+    return cast(s.Array, array.applyfunc(function))
+
+
+def _array_simplify(
+    array: s.Array,
+    **kwargs: object,
+) -> s.Array:
+    """
+    Simplify a SymPy `Array` using the function specified by `options.simplify_func`.
+    #### Parameters:
+    * `array`: The array to simplify.
+    * `kwargs` (optional): Zero or more keyword arguments to pass to the function.
+    #### Returns:
+    The simplified array.
+    """
+    # We apply the simplification function independently to each element for two reasons:
+    # 1. SymPy doesn't seem to pass arguments (such as `doit=False`) if `simplify()` is called on an `Array`.
+    # 2. A user-supplied function may not be able to handle arrays on its own.
+    return _array_map(array, functools.partial(options.simplify_func, **kwargs))
+
+
+def _array_subs(
+    array: s.Array,
+    *args: object,
+    **kwargs: object,
+) -> s.Array:
+    """
+    Perform a substitution in a SymPy `Array`.
+    #### Parameters:
+    * `array`: The array to perform the substitution in.
+    * `args` (optional): Zero or more positional arguments to pass to the `subs()` function.
+    * `kwargs` (optional): Zero or more keyword arguments to pass to the `subs()` function.
+    #### Returns:
+    The array with the substitution performed.
+    """
+    return cast(s.Array, array.subs(*args, **kwargs))
 
 
 def _check_dict_type(
@@ -3153,7 +3304,7 @@ def _display_markdown(
     #### Parameters:
     * `text`: The Markdown code to print.
     """
-    if _in_notebook():
+    if _in_notebook:
         _ = display(Markdown(_format_with_css(text)))
     else:
         print(text)  # noqa: T201
@@ -3220,19 +3371,6 @@ def _handle_error(
         _display_markdown(f'{icon}<span style="color: #cf514b;"><b>OGRePy:</b> {error}</span>')
         raise NoTracebackError
     raise OGRePyError(error)
-
-
-def _in_notebook() -> bool:
-    """
-    Check if this code is running inside a Jupyter notebook.
-    #### Returns:
-    `True` if this code is running inside a Jupyter notebook, `False` otherwise.
-    """
-    # Calling `get_ipython()` should result in one of the following classes:
-    # * `NoneType` (i.e. it just returns `None`) if using pure Python, without IPython.
-    # * `TerminalInteractiveShell` if using IPython in the terminal.
-    # * `ZMQInteractiveShell` if using IPython in a notebook interface.
-    return get_ipython().__class__.__name__ == "ZMQInteractiveShell"
 
 
 def _list_aliases(
@@ -3323,25 +3461,7 @@ def _make_replacement(
     """
     # Validate the input.
     _check_type(replace, dict, "The list of replacements must be a dictionary.")
-    return _subs_array(components, replace)
-
-
-def _map_function(
-    components: s.Array,
-    function: Callable[..., Any],
-) -> s.Array:
-    """
-    Map a function to the given components.
-    #### Parameters:
-    * `components`: The components to process, as a SymPy `Array`.
-    * `function`: A function to apply to the components.
-    #### Returns:
-    The components with the function mapped.
-    """
-    # Validate the input.
-    if not callable(function):
-        _handle_error("The function must be a callable object.")
-    return cast(s.Array, components.applyfunc(function))
+    return _array_subs(components, replace)
 
 
 def _permute_placeholders(
@@ -3350,7 +3470,7 @@ def _permute_placeholders(
     new: IndexSpecification,
 ) -> str:
     """
-    Permute the index placeholder in the given symbol.
+    Permute the free index placeholder in the given symbol.
     #### Parameters:
     * `symbol`: The symbol string.
     #### Returns:
@@ -3361,7 +3481,7 @@ def _permute_placeholders(
     for i, letter in enumerate(old):
         replacements[str(i)] = str(new.index(letter))
     # Perform the replacements and return the new symbol.
-    return re.sub(rf"({"|".join(replacements.keys())})", lambda match: replacements[match[0]], symbol)
+    return re.sub(r"(?<=\[)(\d)(?=\])", lambda match: replacements[match[1]], symbol)
 
 
 def _reverse_dict(
@@ -3395,41 +3515,6 @@ def _simplify(
     return options.simplify_func(expression, **kwargs)
 
 
-def _simplify_array(
-    array: s.Array,
-    **kwargs: object,
-) -> s.Array:
-    """
-    Simplify a SymPy `Array` using the function specified by `options.simplify_func`.
-    #### Parameters:
-    * `array`: The array to simplify.
-    * `kwargs` (optional): Zero or more keyword arguments to pass to the function.
-    #### Returns:
-    The simplified array.
-    """
-    # We apply the simplification function independently to each element for two reasons:
-    # 1. SymPy doesn't seem to pass arguments (such as `doit=False`) if `simplify()` is called on an `Array`.
-    # 2. A user-supplied function may not be able to handle arrays on its own.
-    return cast(s.Array, array.applyfunc(functools.partial(options.simplify_func, **kwargs)))
-
-
-def _subs_array(
-    array: s.Array,
-    *args: object,
-    **kwargs: object,
-) -> s.Array:
-    """
-    Perform a substitution in a SymPy `Array`.
-    #### Parameters:
-    * `array`: The array to perform the substitution in.
-    * `args` (optional): Zero or more positional arguments to pass to the `subs()` function.
-    * `kwargs` (optional): Zero or more keyword arguments to pass to the `subs()` function.
-    #### Returns:
-    The array with the substitution performed.
-    """
-    return cast(s.Array, array.subs(*args, **kwargs))
-
-
 def _to_tex(
     expression: s.Basic,
 ) -> str:
@@ -3443,6 +3528,21 @@ def _to_tex(
     # * `inv_trig_style="power"` will make inverse trig functions be displayed with a power of -1.
     # * `mat_delim="("` will make matrix delimiters be displayed as round brackets.
     return cast(str, s.latex(expression, diff_operator="rd", inv_trig_style="power", mat_delim="("))
+
+
+def _try_pool_submit(
+    function: Callable[..., Any],
+    /,
+    *args: object,
+    **kwargs: object,
+) -> None:
+    """
+    Try to submit a task to a thread pool for asynchronous execution. If it doesn't work (e.g. if we're in an interface that doesn't support threading, such as JupyterLite), fall back to synchronous execution.
+    """
+    try:
+        _ = concurrent.futures.ThreadPoolExecutor().submit(function, *args, **kwargs)
+    except RuntimeError:
+        function(*args, **kwargs)
 
 
 def _unique_free_placeholders(
@@ -3898,11 +3998,15 @@ type Components = dict[tuple[IndexConfiguration, Coordinates], s.Array]
 #####################
 
 
-# Create a thread pool executor for later use.
-_pool = concurrent.futures.ThreadPoolExecutor()
-
 # The symbol to use as curve parameter placeholder.
 _curve_parameter_placeholder: s.Symbol = sym("[curve]")
+
+# Check if we are running in a notebook interface and store the result for later use. Calling `get_ipython()` should result in one of the following classes:
+# * `NoneType` (i.e. it just returns `None`) if using pure Python, without IPython.
+# * `TerminalInteractiveShell` if using IPython in the terminal.
+# * `ZMQInteractiveShell` if using IPython in a notebook interface, which means we can display Markdown; in the previous two cases, `_display_markdown` will just display the output `<IPython.core.display.Markdown object>`, so we must use `print()` instead.
+# * `Interpreter` if using JupyterLite / Pyodide, which also allows Markdown.
+_in_notebook: bool = get_ipython().__class__.__name__ in ["ZMQInteractiveShell", "Interpreter"]
 
 
 ########################
@@ -3918,4 +4022,4 @@ if not disable_welcome:
 # Check for package updates, but not if `OGREPY_DISABLE_UPDATE_CHECK = True` was defined in the notebook or the environment variable `OGREPY_DISABLE_UPDATE_CHECK` was set to "True" before importing the package.If the welcome message is disabled, this is done quietly (only notifies if a new version of the package is available).
 disable_update_check: bool = __main__.__dict__.get("OGREPY_DISABLE_UPDATE_CHECK", False) is True or os.environ.get("OGREPY_DISABLE_UPDATE_CHECK", "False") == "True"
 if not disable_update_check:
-    _ = _pool.submit(update_check, quiet=disable_welcome)
+    _try_pool_submit(update_check, quiet=disable_welcome)

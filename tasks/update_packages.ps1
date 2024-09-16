@@ -2,9 +2,9 @@
 
 <#
 .SYNOPSIS
-OGRePy: An Object-Oriented General Relativity Package for Python by Barak Shoshany (baraksh@gmail.com) (https://baraksh.com/) v1.1.0 (2024-09-08)
+OGRePy: An Object-Oriented General Relativity Package for Python by Barak Shoshany (baraksh@gmail.com) (https://baraksh.com/) v1.2.0 (2024-09-15)
 .DESCRIPTION
-This script updates all Python packages in the current environment. If the virtual environment .OGRePy-env exists, it will be activated, otherwise the global environment will be updated.
+This script updates all Python packages in the current environment. If a virtual environment is found, it will be activated, otherwise the global environment will be updated.
 .NOTES
 Copyright (c) 2024 Barak Shoshany. Licensed under the MIT license. If you found this project useful, please consider starring it on GitHub! If you use this package in published software or research, please provide a link to the GitHub repository <https://github.com/bshoshany/OGRePy> in the source code and documentation.
 .LINK

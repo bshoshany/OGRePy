@@ -1,7 +1,11 @@
 <!-- remove-after-compile -->
 [![Author: Barak Shoshany](https://img.shields.io/badge/author-Barak_Shoshany-009933)](https://baraksh.com/)
+[![DOI: 10.48550/arXiv.2409.03803](https://img.shields.io/badge/DOI-10.48550%2FarXiv.2409.03803-b31b1b)](https://doi.org/10.48550/arXiv.2409.03803)
+[![arXiv:2409.03803](https://img.shields.io/badge/arXiv-2409.03803-b31b1b)](https://arxiv.org/abs/2409.03803)
 [![License: MIT](https://img.shields.io/github/license/bshoshany/OGRePy)](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt)
 [![Language: Python 3.12](https://img.shields.io/badge/Language-Python_3.12-yellow)](https://python.org/)
+[![GitHub stars](https://img.shields.io/github/stars/bshoshany/OGRePy?style=flat&color=009999)](https://github.com/bshoshany/OGRePy/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/bshoshany/OGRePy?style=flat&color=009999)](https://github.com/bshoshany/OGRePy/forks)
 [![GitHub release](https://img.shields.io/github/v/release/bshoshany/OGRePy?color=660099)](https://github.com/bshoshany/OGRePy/releases)
 [![PyPI - Version](https://img.shields.io/pypi/v/OGRePy)](https://pypi.org/project/OGRePy/)
 [![Open in Visual Studio Code](https://img.shields.io/badge/Open_in_Visual_Studio_Code-007acc)](https://vscode.dev/github/bshoshany/OGRePy)
@@ -17,7 +21,7 @@ GitHub: <https://github.com/bshoshany>
 GitHub repository: <https://github.com/bshoshany/OGRePy>\
 PyPi project: <https://pypi.org/project/OGRePy/>
 
-This is the complete documentation for v1.1.0 of the library, released on 2024-09-08.
+This is the complete documentation for **v1.2.0** of the package, released on **2024-09-15**.
 
 <!-- remove-after-compile -->
 <div style="color: red">
@@ -54,6 +58,7 @@ This is the complete documentation for v1.1.0 of the library, released on 2024-0
     * [Customizing the simplification function](#customizing-the-simplification-function)
     * [Getting information about tensors](#getting-information-about-tensors)
     * [Getting the components of a tensor](#getting-the-components-of-a-tensor)
+    * [Comparing tensors](#comparing-tensors)
 * [Calculations with tensors](#calculations-with-tensors)
     * [Addition of tensors](#addition-of-tensors)
     * [More on index specifications](#more-on-index-specifications)
@@ -808,9 +813,11 @@ For example, you may want to customize the arguments passed to simplify (such as
 
 In extreme situations, you may even want to cancel simplification altogether, if it is taking too long, which can be achieved using `T.options.simplify_func = lambda x: x` - that is, replacing the simplification function with the identity function.
 
+As usual with the `options` object, you may restore the simplification function to the default, SymPy's `simplify()`, with the command `del T.options.simplify_func`.
+
 Note that changing the simplification function will **not** automatically apply it to any existing tensors. The reason is that when OGRePy calculates the components of a tensor in a particular representation, it calculates them **once and for all**, and then saves them in the object's data to be reused later. This is done to improve performance, so that the components don't have to be recalculated every time they are needed.
 
-We can force re-simplification of the stored components of a specific tensor using the method `simplify()`. As usual with the `options` object, you may restore the simplification function to the default, SymPy's `simplify()`, with the command `del T.options.simplify_func`.
+We can force re-simplification of the stored components of a specific tensor using the method `simplify()`. This will return a new tensor with its components simplified; the original tensor will remain unchanged. However, you can write `MyTensor = MyTensor.simplify()` to store the simplified tensor under the same name.
 
 ### Getting information about tensors
 The `info()` method can be used to display the information encoded in a tensor object in human-readable form. Here is an example:
@@ -912,6 +919,51 @@ In the case of a coordinate system, that is, a `Coordinates` object, `components
 ```python
 Spherical.components()
 ```
+
+### Comparing tensors
+
+`Tensor` objects can be compared using the function `T.compare()`. Two tensors are considered equal if:
+
+1. Their components are the same, and
+2. They are associated with the same metric.
+
+Internally, the comparison is only done in a single representation (if not specified, the default representation of the first tensor will be used), because if the two tensors have the same metric then it is guaranteed that if they are equal in one representation, they will be equal in all representations.
+
+Conversely, tensors with different metrics are always considered not equal, since even if they happen to have the same components in one representation, they will necessarily have different components in another representation. (Also, if two tensors have different metrics then they exist on different manifolds, and therefore cannot be compared.)
+
+As an example, let us create copies of the Minkowski metric and the perfect fluid tensor, and then compare the latter with the original perfect fluid tensor:
+
+```python
+Minkowski2 = T.Metric(
+    coords=Cartesian,
+    components=T.diag(-1, 1, 1, 1),
+    symbol="eta",
+)
+
+PerfectFluid2 = T.Tensor(
+    metric=Minkowski2,
+    coords=Cartesian,
+    indices=(1, 1),
+    components=T.diag(rho, p, p, p),
+    symbol="T",
+)
+
+T.compare(PerfectFluid, PerfectFluid2)
+```
+
+We see that the tensors `PerfectFluid` and `PerfectFluid2` are considered equal, because they have the same components, and their metrics have the same components (and are thus considered equal as well).
+
+It is important to know the difference between the `T.compare()` function, which compares the components of different tensor objects, and the `==` or `is` operators, which for `Tensor` objects merely check if two variables point to the same object. Even though `T.compare(PerfectFluid, PerfectFluid2)` is `True`, we can see that `PerfectFluid == PerfectFluid2` and `PerfectFluid is PerfectFluid2` are both `False`:
+
+```python
+PerfectFluid == PerfectFluid2
+```
+
+```python
+PerfectFluid is PerfectFluid2
+```
+
+You may be wondering why the `==` operator is equivalent to the `is` operator, and not to the `T.compare()` function. The reason is that the `==` operator would be ambiguous in this case, as only the components are compared, so two objects will be considered equal even if the symbol, default indices, or default coordinates are different. (Furthermore, in Python, overloading the `==` operator would cause issues when using tensors as dictionary keys or set elements, since these containers are implemented as hash tables.)
 
 ## Calculations with tensors
 
@@ -1224,7 +1276,13 @@ Due to the extra transformation term, the tensor object `WrongSchwarzschildChris
 ~Schwarzschild.christoffel()
 ```
 
-These are the same components we got before, but now they will transform properly. In addition, the tensor object automatically has the correct index configuration `(1, -1, -1)`.
+These are the same components we got before, as can be seen by explicitly comparing the components of the two tensor objects using the `T.compare()` operator:
+
+```python
+T.compare(Schwarzschild.christoffel(), WrongSchwarzschildChristoffel)
+```
+
+However, this comparison is only done in the default coordinate system, which is `Spherical`. The crucial difference between `WrongSchwarzschildChristoffel` and `Schwarzschild.christoffel()` is that `WrongSchwarzschildChristoffel` has the correct components **only** in spherical coordinates, while `Schwarzschild.christoffel()` is guaranteed to have the correct components in any coordinate system. In addition, `Schwarzschild.christoffel()` automatically has the correct index configuration `(1, -1, -1)`.
 
 For maximal clarity, let us demonstrate the discrepancy in the coordinate transformation with a simple test metric:
 
@@ -1335,9 +1393,11 @@ SchwarzschildRiemann.symbol = "R"
 Here we run into another issue: we wanted $R^{\rho}{}_ {\sigma\mu\nu}$, but what we actually got was $R_ {\mu}^{\rho}{}_ {\nu\sigma}$, since this is the order of indices from left to right in the definition. There are two ways to fix this in OGRePy. One is to use the `permute()` method. We simply need to call `permute()` with $\mu \rho \nu \sigma$ as the old indices and $\rho \sigma \mu \nu$ as the new indices to fix the issue:
 
 ```python
-SchwarzschildRiemann.permute(old=[mu, rho, nu, sigma], new=[rho, sigma, mu, nu])
+SchwarzschildRiemann = SchwarzschildRiemann.permute(old=[mu, rho, nu, sigma], new=[rho, sigma, mu, nu])
 ~SchwarzschildRiemann
 ```
+
+Note that `permute()` creates a new tensor which is equal to the original tensor but with permuted indices; it does not change the original tensor. Tensor components in OGRePy are **immutable**, meaning that they are specified once and for all and cannot be changed. Therefore, the only way to permute the indices, which changes the tensor's components, is to create a new tensor with the permuted components.
 
 Now we have obtained the correct expression for the Riemann tensor of the Schwarzschild metric. In fact, we did not have to specify the old indices explicitly; since `SchwarzschildRiemann` is the result of a tensor calculation, it actually remembers the index specification it obtained as a result of the calculation, and this will be used automatically if the `old` argument is not specified.
 
@@ -1873,7 +1933,28 @@ I would like to thank my student Jared Wogan, whose undergraduate research proje
 
 Copyright (c) 2024 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
 
-If you use this package in published software or research, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
+If you use this package in software of any kind, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
+
+If you use this package in published research, please cite it as follows:
+
+* Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [doi:10.48550/arXiv.2409.03803](https://doi.org/10.48550/arXiv.2409.03803), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (September 2024)
+
+You can use the following BibTeX entry:
+
+```bibtex
+@article{Shoshany2024_OGRePy,
+    archiveprefix = {arXiv},
+    author        = {Barak Shoshany},
+    doi           = {10.48550/arXiv.2409.03803},
+    eprint        = {2409.03803},
+    title         = {{OGRePy: An Object-Oriented General Relativity Package for Python}},
+    year          = {2024}
+}
+```
+
+For your convenience, this citing information can always be obtained by executing the function `T.cite()`.
+
+Please note that the paper on [arXiv](https://arxiv.org/abs/2409.03803) is not up to date with the latest version of the package. It is only intended to facilitate discovery of this package by scientists, and to enable citing it in scientific research. Documentation for the latest version is always available in the [the GitHub repository](https://github.com/bshoshany/OGRePy).
 
 ### Other projects to check out
 

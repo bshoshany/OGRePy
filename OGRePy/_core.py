@@ -1,6 +1,6 @@
 r"""
 # OGRePy: An Object-Oriented General Relativity Package for Python
-v1.2.0 (2024-09-15)
+v1.3.0 (2025-02-04)
 
 By **Barak Shoshany**\
 Email: <baraksh@gmail.com>\
@@ -12,7 +12,7 @@ PyPi project: <https://pypi.org/project/OGRePy/>
 
 Based on the Mathematica package [OGRe](https://github.com/bshoshany/OGRe) by Barak Shoshany.
 
-Copyright (c) 2024 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
+Copyright (c) 2025 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
 
 If you use this package in software of any kind, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
 
@@ -56,6 +56,7 @@ import inspect
 import itertools
 import json
 import os
+import pathlib
 import re
 import sys
 import urllib.request
@@ -106,8 +107,8 @@ class OGRePyError(Exception):
 ####################
 
 
-__version__: str = "1.2.0"
-release_date: str = "2024-09-15"
+__version__: str = "1.3.0"
+release_date: str = "2025-02-04"
 
 
 ####################
@@ -250,11 +251,11 @@ def doc(
         try:
             signature: str = str(inspect.signature(obj)).replace("'", "")
         except (ValueError, TypeError):
-            _handle_error(f"Could not find call signature for `{name if name != "" else "this object"}`.")
+            _handle_error(f"Could not find call signature for `{name if name != '' else 'this object'}`.")
         # Print the object's name, then its signature, then the docstring itself. Types in the signature will be surrounded by single quotes, so we eliminate those before printing.
         _display_markdown('<div style="border: 1px solid; margin: auto; padding: 1em; width: 90%">\n\n`' + name + signature + "`\n\n" + docs + "\n\n</div>")
     else:
-        _handle_error(f"Could not find documentation for `{name if name != "" else "this object"}`.")
+        _handle_error(f"Could not find documentation for `{name if name != '' else 'this object'}`.")
 
 
 def func(
@@ -378,10 +379,13 @@ def welcome() -> None:
     Print the welcome message.
     """
     with importlib.resources.as_file(importlib.resources.files().joinpath("docs/OGRePy_Documentation")) as file:
-        # Create links to the bundled documentation files.
-        ipynb_link: str = f"""<a href="{file.with_suffix(".ipynb").as_posix()}">.ipynb</a>"""
-        pdf_link: str = f"""<a href="{file.with_suffix(".pdf").as_posix()}">.pdf</a>"""
-        html_link: str = f"""<a href="#" onclick="window.open('{file.with_suffix(".html").as_uri()}', '_blank')">.html</a>"""
+        # Create links to the bundled documentation files. However, if the files cannot be found, link to the files on the GitHub repository instead.
+        ipynb_file: pathlib.Path = file.with_suffix(".ipynb")
+        ipynb_link: str = f"""<a href="{ipynb_file.as_posix() if ipynb_file.exists() else "https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.ipynb"}">.ipynb</a>"""
+        pdf_file: pathlib.Path = file.with_suffix(".pdf")
+        pdf_link: str = f"""<a href="{pdf_file.as_posix() if pdf_file.exists() else "https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.pdf"}">.pdf</a>"""
+        html_file: pathlib.Path = file.with_suffix(".html")
+        html_link: str = f"""<a href="#" onclick="window.open('{html_file.as_uri() if html_file.exists() else "https://raw.githack.com/bshoshany/OGRePy/master/OGRePy/docs/OGRePy_Documentation.html"}', '_blank')">.html</a>"""
         # Display the welcome message.
         _display_markdown(
             inspect.cleandoc(rf"""
@@ -537,7 +541,7 @@ class Coordinates:
         text: str = f"* **Name**: {_lookup_names_string(self)}\n"
         text += f"* **Class**: {type(self).__name__}\n"
         text += f"* **Dimensions**: {self.dim()}\n"
-        text += f"* **Default Coordinates For**: {", ".join(_using_coords(self))}\n"
+        text += f"* **Default Coordinates For**: {', '.join(_using_coords(self))}\n"
         _display_markdown(text)
 
     def inverse_jacobian(
@@ -1053,14 +1057,14 @@ class Tensor:
         calc_letters: IndexSpecification = _collect_tex_symbols(*letters)
         # Check that the index specification matches the rank of the tensor.
         if len(calc_letters) != self.rank():
-            _handle_error(f"{f"The index specification\n${"".join(calc_letters)}$\n" if len(calc_letters) > 0 else "The empty index specification "}does not match the rank of the tensor. The number of indices should be {self.rank()}.")
+            _handle_error(f"{f'The index specification\n${"".join(calc_letters)}$\n' if len(calc_letters) > 0 else 'The empty index specification '}does not match the rank of the tensor. The number of indices should be {self.rank()}.")
         # Check for duplicate index letters.
         tally: dict[str, int] = {letter: calc_letters.count(letter) for letter in set(calc_letters)}
         max_duplicates: int = max(tally.values()) if len(tally) > 0 else 0
         if max_duplicates > 2:
             # We can't have more than 2 instances of the same index.
             invalid_indices: IndexSpecification = [letter for letter, count in tally.items() if count > 2]
-            _handle_error(f"The index specification\n${"".join(calc_letters)}$\nis invalid, as it contains more than two instances of the {"index" if len(invalid_indices) == 1 else "indices"} \n${", ".join(invalid_indices)}$\n.")  # noqa: RET503
+            _handle_error(f"The index specification\n${''.join(calc_letters)}$\nis invalid, as it contains more than two instances of the {'index' if len(invalid_indices) == 1 else 'indices'} \n${', '.join(invalid_indices)}$\n.")  # noqa: RET503
         elif max_duplicates == 2:
             # If any indices appear exactly twice, we need to trace them.
             trace_letters: IndexSpecification = [letter for letter, count in tally.items() if count == 2]
@@ -1161,7 +1165,7 @@ class Tensor:
         # Count how many summation indices there already are in the first tensor's symbol (from previous contractions).
         contract_count: int = len(_unique_summation_placeholders(self._symbol))
         # Increase the numbering of the summation indices as well.
-        second_symbol = _summation_pattern.sub(lambda match: f"[{match[1] if match[1] else ""}{int(match[2]) + contract_count}{match[3] if match[3] else ""}]", second_symbol)
+        second_symbol = _summation_pattern.sub(lambda match: f"[{match[1] if match[1] else ''}{int(match[2]) + contract_count}{match[3] if match[3] else ''}]", second_symbol)
         # Add the number of contractions in the second symbol to the total count.
         contract_count += len(_unique_summation_placeholders(second_symbol))
         # Join the symbols of the two tensors to create a new symbol for the output tensor, with consecutive summation index placeholders.
@@ -1420,7 +1424,7 @@ class Tensor:
             if coords is None:
                 warning = f"Using default coordinate system {_lookup_names_string(use_coords)}"
             if indices is None:
-                warning += f"{"Using" if warning == "" else " and"} default index configuration {use_indices}"
+                warning += f"{'Using' if warning == '' else ' and'} default index configuration {use_indices}"
             if warning != "":
                 _display_markdown(f"**OGRePy**: {warning}.")
         # Retrieve the components, calculating them if they have not already been calculated.
@@ -1469,7 +1473,7 @@ class Tensor:
             text += f"* **Metric**: {_lookup_names_string(self._metric)}\n"
         else:
             used_by: list[str] = _using_metric(self)
-            text += f"* **Associated Metric For**: {", ".join(used_by) if len(used_by) > 0 else "None"}\n"
+            text += f"* **Associated Metric For**: {', '.join(used_by) if len(used_by) > 0 else 'None'}\n"
         _display_markdown(text)
 
     def list(
@@ -1715,7 +1719,7 @@ class Tensor:
         out: str = r"\begin{align*}" + "\n"
         # Create an equation for each unique element. Note that in an {align*} environment, \\ indicates the end of a line and & indicates the position where the equations will be vertically aligned.
         for key, value in non_zero.items():
-            out += rf"    {" = ".join(value)} &= {_to_tex(key)} \\" + "\n"
+            out += rf"    {' = '.join(value)} &= {_to_tex(key)} \\" + "\n"
         # Remove the last end of line indicator (otherwise there will be an extra empty line) and end the {align*} environment, then return the generated TeX code.
         return out[:-3] + "\n" + r"\end{align*}"
 
@@ -1831,9 +1835,10 @@ class Tensor:
             # Replace any derivative with respect to the curve parameter with a more compact partial derivative symbol, and enclose the argument in parentheses (which SymPy doesn't do for some reason).
             components = _array_subs(components, {f: sym(r"\partial_{" + _to_tex(param) + r"} \left(" + _to_tex(f.args[0]) + r"\right)") for f in components.atoms(s.Derivative) if f.args[1] == (param, 1)})
         # For all tensors, replace any derivative with respect to the coordinate symbols with a more compact partial derivative symbol.
-        for x in coord_symbols:
-            components = _array_subs(components, {f: sym(r"\partial_{" + _to_tex(x) + r"} " + _to_tex(f.args[0])) for f in components.atoms(s.Derivative) if f.args[1] == (x, 1)})
-        return components
+        return _array_subs(
+            components,
+            {f: sym(r"\partial_{" + _to_tex(x) + ((r"^{" + str(f.args[1][1]) + r"}") if f.args[1][1] > 1 else "") + r"} " + _to_tex(f.args[0])) for x in coord_symbols for f in components.atoms(s.Derivative) if f.args[1][0] == x and f.args[1][1] > 0},
+        )
 
     def _get_components(
         self: Self,
@@ -3389,7 +3394,7 @@ def _list_aliases(
         return f"`{names[0]}`"
     if len(names) == 2:
         return f"`{names[0]}` (alias: `{names[1]}`)"
-    return f"`{names[0]}` (aliases: `{"`, `".join(names[1:])}`)"
+    return f"`{names[0]}` (aliases: `{'`, `'.join(names[1:])}`)"
 
 
 def _list_references(
@@ -3412,11 +3417,11 @@ def _list_references(
         if isinstance(ref, Coordinates):
             using: list[str] = _using_coords(ref)
             if len(using) > 0:
-                text += f", default for: `{"`, `".join(using)}`"
+                text += f", default for: `{'`, `'.join(using)}`"
         elif isinstance(ref, Metric):
             using: list[str] = _using_metric(ref)
             if len(using) > 0:
-                text += f", used by: `{"`, `".join(using)}`"
+                text += f", used by: `{'`, `'.join(using)}`"
         text += "\n"
     return text
 
@@ -3624,7 +3629,7 @@ def _using_object(
     # Create a list of relevant tensors, including aliases if any.
     using: list[str] = []
     for tensor, names in tensor_reverse.items():
-        if isinstance(obj, Coordinates) and obj is tensor.default_coords or isinstance(obj, Metric) and obj is tensor.metric():
+        if (isinstance(obj, Coordinates) and obj is tensor.default_coords) or (isinstance(obj, Metric) and obj is tensor.metric()):
             using.append(_list_aliases(names))
     return using
 
@@ -3734,13 +3739,13 @@ def _validate_permutation(
     letters: IndexSpecification = _collect_tex_symbols(*index_spec)
     # Check that the index specifications matches the rank of the tensor.
     if len(letters) != rank:
-        _handle_error(f"The index specification\n${"".join(letters)}$\ndoes not match the rank of the tensor. The number of indices should be {rank}.")
+        _handle_error(f"The index specification\n${''.join(letters)}$\ndoes not match the rank of the tensor. The number of indices should be {rank}.")
     # Check for duplicate index letters.
     tally: dict[str, int] = {letter: letters.count(letter) for letter in set(letters)}
     max_duplicates: int = max(tally.values()) if len(tally) > 0 else 0
     if max_duplicates > 1:
         invalid_indices: IndexSpecification = [letter for letter, count in tally.items() if count > 1]
-        _handle_error(f"The index specification\n${"".join(letters)}$\nis invalid, as it contains more than one instance of the {"index" if len(invalid_indices) == 1 else "indices"} \n${", ".join(invalid_indices)}$\n.")
+        _handle_error(f"The index specification\n${''.join(letters)}$\nis invalid, as it contains more than one instance of the {'index' if len(invalid_indices) == 1 else 'indices'} \n${', '.join(invalid_indices)}$\n.")
     # Return the letters as a list of TeX strings.
     return letters
 

@@ -1,6 +1,6 @@
 r"""
 # OGRePy: An Object-Oriented General Relativity Package for Python
-v1.2.0 (2024-09-15)
+v1.3.0 (2025-02-04)
 
 By **Barak Shoshany**\
 Email: <baraksh@gmail.com>\
@@ -12,7 +12,7 @@ PyPi project: <https://pypi.org/project/OGRePy/>
 
 Based on the Mathematica package [OGRe](https://github.com/bshoshany/OGRe) by Barak Shoshany.
 
-Copyright (c) 2024 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
+Copyright (c) 2025 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
 
 If you use this package in software of any kind, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
 

@@ -9,11 +9,19 @@ GitHub repository: <https://github.com/bshoshany/OGRePy>\
 PyPi project: <https://pypi.org/project/OGRePy/>
 
 * [Version history](#version-history)
+    * [v1.3.0 (2025-02-04)](#v130-2025-02-04)
     * [v1.2.0 (2024-09-15)](#v120-2024-09-15)
     * [v1.1.0 (2024-09-08)](#v110-2024-09-08)
     * [v1.0.1 (2024-09-04)](#v101-2024-09-04)
 
 ## Version history
+
+### v1.3.0 (2025-02-04)
+
+* Just a small maintenance update; more substantial updates are coming soon.
+* When cleaning up notation, OGRePy now turns derivatives with respect to the coordinates into partial derivatives of the form $\partial_{x^{n}}$ if the order $n$ of the derivative is higher than 1, similarly to the Mathematica package.
+* If the documentation files cannot be found, the welcome message will now link to the files on the GitHub repository instead.
+* Replaced the PowerShell script `update_packages.ps1` in the `tasks` folder with a Python script `update_packages.py`.
 
 ### v1.2.0 (2024-09-15)
 

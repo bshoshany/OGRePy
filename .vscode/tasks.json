@@ -1,8 +1,10 @@
 {
     "tasks": [
         {
-            "args": [],
-            "command": "tasks/update_packages.ps1",
+            "args": [
+                "tasks/update_packages.py"
+            ],
+            "command": "${command:python.interpreterPath}",
             "detail": "Update Python packages in the current environment.",
             "group": "test",
             "label": "Upgrade packages",

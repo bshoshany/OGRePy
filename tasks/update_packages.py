@@ -36,23 +36,45 @@ You can use the following BibTeX entry:
 If you found this project useful, please consider [starring it on GitHub](https://github.com/bshoshany/OGRePy/stargazers)! This allows me to see how many people are using my code, and motivates me to keep working to improve it.
 """
 
-import pathlib
-import shutil
+import json
+import subprocess
+import sys
+from typing import TypedDict
 
 
-def remove_folder_if_exists(
-    *folders: str,
-) -> None:
-    """
-    Remove the given folder, if it exists.
-    #### Parameters:
-    * `folders`: The paths of the folders to remove.
-    """
-    for folder in folders:
-        if pathlib.Path(folder).exists():
-            print(f"Removing folder {folder}...")
-            shutil.rmtree(folder)
+class Package(TypedDict):
+    """A class to store information about a package."""
+
+    name: str
+    version: str
+    latest_version: str
+    latest_filetype: str
 
 
-# Clean up the cache folders.
-remove_folder_if_exists("OGRePy/__pycache__", "OGRePy/docs/.ipynb_checkpoints")
+def main() -> None:
+    """Update the packages."""
+    try:
+        print("=== Updating pip... ===")
+        _ = subprocess.run(args=[sys.executable, "-m", "pip", "install", "--upgrade", "pip"], check=True)
+        print("=== Listing packages... ===")
+        result: subprocess.CompletedProcess[str] = subprocess.run(
+            args=[sys.executable, "-m", "pip", "list", "--outdated", "--format=json"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        packages: list[Package] = json.loads(result.stdout)
+        print(f"=== Found {'no' if len(packages) == 0 else len(packages)} outdated package{'s' if len(packages) != 1 else ''}. ===")
+        for pkg in packages:
+            print(f"=== Updating {pkg['name']}: {pkg['version']} -> {pkg['latest_version']} ({pkg['latest_filetype']})... ===")
+            _ = subprocess.run(
+                args=[sys.executable, "-m", "pip", "install", "--upgrade", pkg["name"]],
+                check=True,
+            )
+        print("=== Done! ===")
+    except Exception as exc:
+        sys.exit(f"=== Error: {exc} ===")
+
+
+if __name__ == "__main__":
+    main()

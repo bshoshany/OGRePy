@@ -21,7 +21,7 @@ GitHub: <https://github.com/bshoshany>
 GitHub repository: <https://github.com/bshoshany/OGRePy>\
 PyPi project: <https://pypi.org/project/OGRePy/>
 
-This is the complete documentation for **v1.2.0** of the package, released on **2024-09-15**.
+This is the complete documentation for **v1.3.0** of the package, released on **2025-02-04**.
 
 <!-- remove-after-compile -->
 <div style="color: red">
@@ -1911,7 +1911,7 @@ Contributions are always welcome. However, I release my projects in cumulative u
 
 To create a development environment for this package, download the source code directly from the [GitHub repository](https://github.com/bshoshany/OGRePy), then create a virtual environment in the root folder of the repository [as explained above](#installing-in-a-virtual-environment), activate it, and run `pip install jupyterlab jupytext playwright sympy` to install the development packages, then run `playwright install` to install the browser binaries for HTML to PDF conversion (if desired).
 
-For your convenience, a PowerShell script, [update_packages.ps1](https://github.com/bshoshany/OGRePy/blob/master/tasks/update_packages.ps1), is provided in the GitHub repository to allow easily updating all outdated packages. A Python script, [compile_docs.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/compile_docs.py), is used to compile the documentation in `README.md` to `.ipynb`, `.html`, and `.pdf` formats. Finally, [cleanup.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/cleanup.py) is used to clean up Python and Jupyter cache folders.
+For your convenience, a Python script, [update_packages.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/update_packages.py), is provided in the GitHub repository to allow easily updating all outdated packages. Another script, [compile_docs.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/compile_docs.py), is used to compile the documentation in `README.md` to `.ipynb`, `.html`, and `.pdf` formats. Finally, [cleanup.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/cleanup.py) is used to clean up Python and Jupyter cache folders.
 
 This package was developed in [Visual Studio Code](https://code.visualstudio.com/). The `.vscode` folder is provided in the GitHub repository for your convenience, including tasks for running the above scripts. It is highly recommended to install the following linters:
 
@@ -1931,7 +1931,7 @@ I would like to thank my student Jared Wogan, whose undergraduate research proje
 
 ### Copyright and citing
 
-Copyright (c) 2024 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
+Copyright (c) 2025 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
 
 If you use this package in software of any kind, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
 
@@ -1958,4 +1958,4 @@ Please note that the paper on [arXiv](https://arxiv.org/abs/2409.03803) is not u
 
 ### Other projects to check out
 
-This package is a Python port of [OGRe](https://github.com/bshoshany/OGRe): An Object-Oriented General Relativity Package for Mathematica. You may also be interested in [`BS::thread_pool`](https://github.com/bshoshany/thread-pool): a fast, lightweight, and easy-to-use C++17 thread pool library for high-performance scientific computing.
+This package is a Python port of [OGRe](https://github.com/bshoshany/OGRe): An Object-Oriented General Relativity Package for Mathematica. You may also be interested in [`BS::thread_pool`](https://github.com/bshoshany/thread-pool): a fast, lightweight, modern, and easy-to-use C++17 / C++20 / C++23 thread pool library.

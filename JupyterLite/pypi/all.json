@@ -1,0 +1,28 @@
+{
+  "ogrepy": {
+    "releases": {
+      "1.3.1": [
+        {
+          "comment_text": "",
+          "digests": {
+            "md5": "7be63005a03972db933252a1efee497a",
+            "sha256": "8789debffe853237d662e5e986bdf433f1249ea34687b28162454c3cb47af70e"
+          },
+          "downloads": -1,
+          "filename": "ogrepy-1.3.1-py3-none-any.whl",
+          "has_sig": false,
+          "md5_digest": "7be63005a03972db933252a1efee497a",
+          "packagetype": "bdist_wheel",
+          "python_version": "py3",
+          "requires_python": ">=3.12",
+          "size": 861047,
+          "upload_time": "2025-08-03T06:09:48.018259Z",
+          "upload_time_iso_8601": "2025-08-03T06:09:48.018259Z",
+          "url": "./ogrepy-1.3.1-py3-none-any.whl",
+          "yanked": false,
+          "yanked_reason": null
+        }
+      ]
+    }
+  }
+}

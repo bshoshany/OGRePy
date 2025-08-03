@@ -1,6 +1,6 @@
 r"""
 # OGRePy: An Object-Oriented General Relativity Package for Python
-v1.3.0 (2025-02-04)
+v1.3.1 (2025-08-03)
 
 By **Barak Shoshany**\
 Email: <baraksh@gmail.com>\
@@ -18,18 +18,23 @@ If you use this package in software of any kind, please provide a link to [the G
 
 If you use this package in published research, please cite it as follows:
 
-* Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [doi:10.48550/arXiv.2409.03803](https://doi.org/10.48550/arXiv.2409.03803), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (September 2024)
+* Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [Journal of Open Research Software 13: 9](https://openresearchsoftware.metajnl.com/articles/10.5334/jors.558), [doi:10.5334/jors.558](https://doi.org/10.5334/jors.558), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (July 2025)
 
 You can use the following BibTeX entry:
 
 ```bibtex
-@article{Shoshany2024_OGRePy,
+@article{ShoshanyOGRePy,
     archiveprefix = {arXiv},
     author        = {Barak Shoshany},
-    doi           = {10.48550/arXiv.2409.03803},
+    doi           = {10.5334/jors.558},
     eprint        = {2409.03803},
+    issn          = {2049-9647},
+    journal       = {Journal of Open Research Software},
+    pages         = {9},
+    publisher     = {Ubiquity Press, Ltd.},
     title         = {{OGRePy: An Object-Oriented General Relativity Package for Python}},
-    year          = {2024}
+    volume        = {13},
+    year          = {2025},
 }
 ```
 
@@ -79,6 +84,7 @@ os.environ["PYTHONPATH"] = pathlib.Path.cwd().as_posix()
 # Look for the virtual environment; if it doesn't exist, fall back to the global environment.
 venv_path: pathlib.Path = pathlib.Path(".OGRePy-env/Scripts")
 if not venv_path.exists():
+    print("Warning: Virtual environment not found. Using the global Python environment.")
     venv_path = pathlib.Path()
 
 

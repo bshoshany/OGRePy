@@ -1,0 +1,71 @@
+{
+  "content": [
+    {
+      "content": null,
+      "created": "2025-08-03T06:09:50.830271Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2025-08-03T06:09:15.776825Z",
+      "mimetype": "text/html",
+      "name": "OGRePy_Documentation.html",
+      "path": "OGRePy_Documentation.html",
+      "size": 778398,
+      "type": "file",
+      "writable": true
+    },
+    {
+      "content": null,
+      "created": "2025-08-03T06:09:51.265409Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2025-08-03T06:09:13.283324Z",
+      "mimetype": null,
+      "name": "OGRePy_Documentation.ipynb",
+      "path": "OGRePy_Documentation.ipynb",
+      "size": 326986,
+      "type": "notebook",
+      "writable": true
+    },
+    {
+      "content": null,
+      "created": "2025-08-03T06:09:51.275409Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2025-08-03T06:09:26.477323Z",
+      "mimetype": "application/pdf",
+      "name": "OGRePy_Documentation.pdf",
+      "path": "OGRePy_Documentation.pdf",
+      "size": 686786,
+      "type": "file",
+      "writable": true
+    },
+    {
+      "content": null,
+      "created": "2025-08-03T06:09:51.292920Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2025-08-02T22:05:10.203590Z",
+      "mimetype": null,
+      "name": "OGRePy_Live.ipynb",
+      "path": "OGRePy_Live.ipynb",
+      "size": 659,
+      "type": "notebook",
+      "writable": true
+    }
+  ],
+  "created": "2025-08-03T06:09:50.830271Z",
+  "format": "json",
+  "hash": null,
+  "hash_algorithm": null,
+  "last_modified": "2025-08-03T06:09:51.292920Z",
+  "mimetype": null,
+  "name": "",
+  "path": "",
+  "size": null,
+  "type": "directory",
+  "writable": true
+}

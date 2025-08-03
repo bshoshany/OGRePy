@@ -9,12 +9,23 @@ GitHub repository: <https://github.com/bshoshany/OGRePy>\
 PyPi project: <https://pypi.org/project/OGRePy/>
 
 * [Version history](#version-history)
+    * [v1.3.1 (2025-08-03)](#v131-2025-08-03)
     * [v1.3.0 (2025-02-04)](#v130-2025-02-04)
     * [v1.2.0 (2024-09-15)](#v120-2024-09-15)
     * [v1.1.0 (2024-09-08)](#v110-2024-09-08)
     * [v1.0.1 (2024-09-04)](#v101-2024-09-04)
 
 ## Version history
+
+### v1.3.1 (2025-08-03)
+
+* New features:
+    * Introducing: [OGRePy Live](https://bshoshany.github.io/OGRePy/lab/index.html?path=OGRePy_Live.ipynb)! You can now run OGRePy directly in your browser - no installation needed, and you don't even need to have Python installed on your computer. See the documentation for details.
+* Citing the package:
+    * This package is now published in the Journal of Open Research Software! If you use this package in published research, please cite it as follows:
+        * Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [Journal of Open Research Software 13: 9](https://openresearchsoftware.metajnl.com/articles/10.5334/jors.558), [doi:10.5334/jors.558](https://doi.org/10.5334/jors.558), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (July 2025)
+    * The `CITATION.cff` and `CITATION.bib` files have been updated accordingly.
+    * For your convenience, the citing information can always be obtained by executing the function `T.cite()`.
 
 ### v1.3.0 (2025-02-04)
 

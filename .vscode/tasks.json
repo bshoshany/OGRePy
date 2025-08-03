@@ -54,6 +54,24 @@
             },
             "type": "shell"
         },
+        {
+            "args": [
+                "tasks/build_jupyterlite.ps1"
+            ],
+            "command": "pwsh",
+            "detail": "Build the JupyterLite site.",
+            "group": "test",
+            "label": "Build JupyterLite site",
+            "presentation": {
+                "clear": false,
+                "echo": true,
+                "focus": true,
+                "panel": "shared",
+                "reveal": "always",
+                "showReuseMessage": true
+            },
+            "type": "shell"
+        },
     ],
     "version": "2.0.0"
 }

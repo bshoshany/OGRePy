@@ -1,6 +1,6 @@
 r"""
 # OGRePy: An Object-Oriented General Relativity Package for Python
-v1.3.0 (2025-02-04)
+v1.3.1 (2025-08-03)
 
 By **Barak Shoshany**\
 Email: <baraksh@gmail.com>\
@@ -18,18 +18,23 @@ If you use this package in software of any kind, please provide a link to [the G
 
 If you use this package in published research, please cite it as follows:
 
-* Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [doi:10.48550/arXiv.2409.03803](https://doi.org/10.48550/arXiv.2409.03803), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (September 2024)
+* Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [Journal of Open Research Software 13: 9](https://openresearchsoftware.metajnl.com/articles/10.5334/jors.558), [doi:10.5334/jors.558](https://doi.org/10.5334/jors.558), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (July 2025)
 
 You can use the following BibTeX entry:
 
 ```bibtex
-@article{Shoshany2024_OGRePy,
+@article{ShoshanyOGRePy,
     archiveprefix = {arXiv},
     author        = {Barak Shoshany},
-    doi           = {10.48550/arXiv.2409.03803},
+    doi           = {10.5334/jors.558},
     eprint        = {2409.03803},
+    issn          = {2049-9647},
+    journal       = {Journal of Open Research Software},
+    pages         = {9},
+    publisher     = {Ubiquity Press, Ltd.},
     title         = {{OGRePy: An Object-Oriented General Relativity Package for Python}},
-    year          = {2024}
+    volume        = {13},
+    year          = {2025},
 }
 ```
 
@@ -107,8 +112,8 @@ class OGRePyError(Exception):
 ####################
 
 
-__version__: str = "1.3.0"
-release_date: str = "2025-02-04"
+__version__: str = "1.3.1"
+release_date: str = "2025-08-03"
 
 
 ####################
@@ -149,18 +154,21 @@ def cite() -> None:
         inspect.cleandoc("""
         If you use this package in published research, please cite it as follows:
 
-        * Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [doi:10.48550/arXiv.2409.03803](https://doi.org/10.48550/arXiv.2409.03803), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (September 2024)
+        * Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [Journal of Open Research Software 13: 9](https://openresearchsoftware.metajnl.com/articles/10.5334/jors.558), [doi:10.5334/jors.558](https://doi.org/10.5334/jors.558), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (July 2025)
 
         You can use the following BibTeX entry:
 
         ```bibtex
-        @article{Shoshany2024_OGRePy,
-            archiveprefix = {arXiv},
-            author        = {Barak Shoshany},
-            doi           = {10.48550/arXiv.2409.03803},
-            eprint        = {2409.03803},
-            title         = {{OGRePy: An Object-Oriented General Relativity Package for Python}},
-            year          = {2024}
+        @article{Shoshany2025_OGRePy,
+            author    = {Barak Shoshany},
+            doi       = {10.5334/jors.558},
+            issn      = {2049-9647},
+            journal   = {Journal of Open Research Software},
+            publisher = {Ubiquity Press, Ltd.},
+            title     = {{OGRePy: An Object-Oriented General Relativity Package for Python}},
+            url       = {http://dx.doi.org/10.5334/jors.558},
+            volume    = {13},
+            year      = {2025},
         }
         ```
 
@@ -378,27 +386,50 @@ def welcome() -> None:
     """
     Print the welcome message.
     """
-    with importlib.resources.as_file(importlib.resources.files().joinpath("docs/OGRePy_Documentation")) as file:
-        # Create links to the bundled documentation files. However, if the files cannot be found, link to the files on the GitHub repository instead.
+    ipynb_filename: str = ""
+    pdf_filename: str = ""
+    html_filename: str = ""
+    if "pyodide" not in sys.modules:
+        # The documentation files are bundled with the package so that they can be viewed offline. We make sure they exist and get their paths.
+        with importlib.resources.as_file(importlib.resources.files().joinpath("docs/OGRePy_Documentation")) as file:
+            ipynb_file: pathlib.Path = file.with_suffix(".ipynb")
+            if ipynb_file.exists():
+                ipynb_filename = ipynb_file.as_posix()
+            pdf_file: pathlib.Path = file.with_suffix(".pdf")
+            if pdf_file.exists():
+                pdf_filename = pdf_file.as_posix()
+            html_file: pathlib.Path = file.with_suffix(".html")
+            if html_file.exists():
+                html_filename = html_file.as_uri()
+    else:
+        # If we're running in a JupyterLite notebook, we will not be able to access the documentation files directly. However, if using OGRePyLive, the files should be available in the same folder as the notebook, so we check for that.
+        file = pathlib.Path("./OGRePy_Documentation")
         ipynb_file: pathlib.Path = file.with_suffix(".ipynb")
-        ipynb_link: str = f"""<a href="{ipynb_file.as_posix() if ipynb_file.exists() else "https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.ipynb"}">.ipynb</a>"""
+        if ipynb_file.exists():
+            ipynb_filename = ipynb_file.as_posix()
         pdf_file: pathlib.Path = file.with_suffix(".pdf")
-        pdf_link: str = f"""<a href="{pdf_file.as_posix() if pdf_file.exists() else "https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.pdf"}">.pdf</a>"""
+        if pdf_file.exists():
+            pdf_filename = pdf_file.as_posix()
         html_file: pathlib.Path = file.with_suffix(".html")
-        html_link: str = f"""<a href="#" onclick="window.open('{html_file.as_uri() if html_file.exists() else "https://raw.githack.com/bshoshany/OGRePy/master/OGRePy/docs/OGRePy_Documentation.html"}', '_blank')">.html</a>"""
-        # Display the welcome message.
-        _display_markdown(
-            inspect.cleandoc(rf"""
-            **OGRePy: An <u>O</u>bject-Oriented <u>G</u>eneral <u>Re</u>lativity Package for <u>Py</u>thon\
-            By [Barak Shoshany](https://github.com/bshoshany) ([baraksh@gmail.com](mailto:baraksh@gmail.com)) ([baraksh.com](https://baraksh.com/))\
-            v{__version__} ({release_date})\
-            GitHub repository: <https://github.com/bshoshany/OGRePy>\
-            Documentation: {ipynb_link}, {pdf_link}, {html_link}**
-            """),
-        )
-        # If we're not in a notebook, warn that the package should be used inside a notebook.
-        if not _in_notebook:
-            _display_markdown("WARNING: No notebook interface detected! This package was designed to be used inside a Jupyter notebook in Visual Studio Code or JupyterLab.")
+        if html_file.exists():
+            html_filename = html_file.as_posix()
+    ipynb_link: str = f"""<a href="{ipynb_filename if ipynb_filename != "" else "https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.ipynb"}">.ipynb</a>"""
+    pdf_link: str = f"""<a href="{pdf_filename if pdf_filename != "" else "https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.pdf"}">.pdf</a>"""
+    html_url: str = html_filename if html_filename != "" else "https://raw.githack.com/bshoshany/OGRePy/master/OGRePy/docs/OGRePy_Documentation.html"
+    html_link: str = f"""<a href="#" onclick="window.open('{html_url}', '_blank')">.html</a>""" if "pyodide" not in sys.modules else f"""<a href="{html_url}">.html</a>"""
+    # Display the welcome message.
+    _display_markdown(
+        inspect.cleandoc(rf"""
+        **OGRePy: An <u>O</u>bject-Oriented <u>G</u>eneral <u>Re</u>lativity Package for <u>Py</u>thon\
+        By [Barak Shoshany](https://github.com/bshoshany) ([baraksh@gmail.com](mailto:baraksh@gmail.com)) ([baraksh.com](https://baraksh.com/))\
+        v{__version__} ({release_date})\
+        GitHub repository: <https://github.com/bshoshany/OGRePy>\
+        Documentation: {ipynb_link}, {pdf_link}, {html_link}**
+        """),
+    )
+    # If we're not in a notebook, warn that the package should be used inside a notebook.
+    if not _in_notebook:
+        _display_markdown("WARNING: No notebook interface detected! This package was designed to be used inside a Jupyter notebook in Visual Studio Code or JupyterLab.")
 
 
 ##################
@@ -841,7 +872,7 @@ class CovariantD:
         dummy_christoffel: str = _to_tex(s.Dummy())
         for pos, (index_letter, index_type) in enumerate(zip(tensor_letters, use_indices, strict=True)):
             # Replace the current index with the dummy index in the tensor's index specification.
-            index_replaced: IndexSpecification = tensor_letters[0:pos] + [dummy_christoffel] + tensor_letters[pos + 1 : rank]
+            index_replaced: IndexSpecification = [*tensor_letters[0:pos], dummy_christoffel, *tensor_letters[pos + 1 : rank]]
             if index_type == 1:
                 # For an upper index, add the Christoffel symbols with their third index contracted with the tensor.
                 out_tensor += other(*index_replaced) @ use_christoffel(index_letter, dummy_covariant, dummy_christoffel)
@@ -1042,7 +1073,7 @@ class Tensor:
         output_tensor._symbol = self._symbol + sign + other_symbol
         return output_tensor
 
-    def __call__(
+    def __call__(  # noqa: RET503
         self: Self,
         *letters: str | s.Symbol,
     ) -> Self | Tensor:
@@ -1064,7 +1095,7 @@ class Tensor:
         if max_duplicates > 2:
             # We can't have more than 2 instances of the same index.
             invalid_indices: IndexSpecification = [letter for letter, count in tally.items() if count > 2]
-            _handle_error(f"The index specification\n${''.join(calc_letters)}$\nis invalid, as it contains more than two instances of the {'index' if len(invalid_indices) == 1 else 'indices'} \n${', '.join(invalid_indices)}$\n.")  # noqa: RET503
+            _handle_error(f"The index specification\n${''.join(calc_letters)}$\nis invalid, as it contains more than two instances of the {'index' if len(invalid_indices) == 1 else 'indices'} \n${', '.join(invalid_indices)}$\n.")
         elif max_duplicates == 2:
             # If any indices appear exactly twice, we need to trace them.
             trace_letters: IndexSpecification = [letter for letter, count in tally.items() if count == 2]
@@ -2266,7 +2297,7 @@ class Einstein(Tensor, FixedDefaultIndices):
         #### Returns:
         The calculated components.
         """
-        return (metric.ricci_tensor("mu nu") - s.Rational(1, 2) * metric.ricci_scalar() @ metric("mu nu"))._calc_representation(indices=(-1, -1), coords=coords)
+        return cast(s.Array, (metric.ricci_tensor("mu nu") - s.Rational(1, 2) * metric.ricci_scalar() @ metric("mu nu"))._calc_representation(indices=(-1, -1), coords=coords))
 
 
 class GeodesicFromChristoffel(Tensor, CleanupCurveParameter, FixedDefaultIndices):
@@ -2481,9 +2512,9 @@ class GeodesicTimeParam(Tensor, CleanupTimeParameter, FixedDefaultIndices):
         # Use the first coordinate as the curve parameter.
         time: s.Symbol = cast(s.Symbol, coords.components()[0])
         # Create a tangent vector whose components are the first derivatives of the coordinates with respect to t (thus the first component will be equal to 1).
-        tangent: s.Array = s.Array([1] + coords.of_param_dot(time)[1:])
+        tangent: s.Array = s.Array([1, *coords.of_param_dot(time)[1:]])
         # Create an acceleration vector whose components are the second derivatives of the coordinates with respect to t (thus the first component will be equal to 0).
-        accel: s.Array = s.Array([0] + coords.of_param_ddot(time)[1:])
+        accel: s.Array = s.Array([0, *coords.of_param_ddot(time)[1:]])
         # Obtain the Christoffel symbols, and replace any instance of the spatial coordinate symbols with coordinate functions of time.
         param_dict: dict[s.Symbol, AppliedUndef] = coords.of_param_dict(time)
         del param_dict[time]

@@ -21,7 +21,7 @@ GitHub: <https://github.com/bshoshany>
 GitHub repository: <https://github.com/bshoshany/OGRePy>\
 PyPi project: <https://pypi.org/project/OGRePy/>
 
-This is the complete documentation for **v1.3.0** of the package, released on **2025-02-04**.
+This is the complete documentation for **v1.3.1** of the package, released on **2025-08-03**.
 
 <!-- remove-after-compile -->
 <div style="color: red">
@@ -36,6 +36,7 @@ This is the complete documentation for **v1.3.0** of the package, released on **
     * [Features](#features)
     * [The object-oriented design philosophy](#the-object-oriented-design-philosophy)
 * [Installing and loading the package](#installing-and-loading-the-package)
+    * [Trying the package without installation using OGRePy Live](#trying-the-package-without-installation-using-ogrepy-live)
     * [Global installation](#global-installation)
     * [Installing in a virtual environment](#installing-in-a-virtual-environment)
     * [Creating a Jupyter notebook](#creating-a-jupyter-notebook)
@@ -137,6 +138,14 @@ As a tensor object holds the components of the same tensor in many different rep
 Since Mathematica is not an object-oriented language, the original OGRe package merely simulated classes and objects using associative arrays, resulting in a somewhat awkward syntax. Python, on the other hand, is an inherently object-oriented language, and the Python package takes full advantage of that. Tensors are objects, and the various tensor operations are done directly on these objects using methods and overloaded operators. Class invariants and encapsulation guarantee that the different representations of the tensor objects are always consistent, and the correct representation is chosen on demand for each calculation using intelligent algorithms.
 
 ## Installing and loading the package
+
+### Trying the package without installation using OGRePy Live
+
+**OGRePy Live** is a JupyterLite-based website which comes with the package pre-installed. This allows you to run OGRePy directly in your browser - no installation needed, and you don't even need to have Python installed on your computer! You can visit OGRePy Live to try out the package before you install it, or even use it at any time for doing quick tensor calculations from any browser.
+
+To access OGRePy Live, simply follow [this link](https://bshoshany.github.io/OGRePy/lab/index.html?path=OGRePy_Live.ipynb). This will open a JupyterLab interface in your browser, with the notebook `OGRePy_Live.ipynb` already opened. Run the first cell to load the package, and then you can start using OGRePy right away. The documentation you are currently reading is also available within this interface, in multiple formats. For your convenience, code completion is enabled in the JupyterLite interface, so you can use it to get help with the package as you type, as [described below](#getting-help).
+
+Please note that any changes you make or files you create in OGRePy Live will only be saved in your browser's local storage, which is not meant for long-term storage. Make sure to save your work by clicking on the "Download" button above the notebook, which will download the notebook file to your computer.
 
 ### Global installation
 
@@ -1909,9 +1918,14 @@ This package is under continuous and active development. If you encounter any bu
 
 Contributions are always welcome. However, I release my projects in cumulative updates after editing and testing them locally on my system, so **my policy is to never accept any pull requests**. If you open a pull request, and I decide to incorporate your suggestion into the project, I will first modify your code to comply with the project's coding conventions (formatting, syntax, naming, comments, programming practices, etc.), and perform some tests to ensure that the change doesn't break anything. I will then merge it into the next release of the project, possibly together with some other changes. The new release will also include a note in `CHANGELOG.md` with a link to your pull request, and modifications to the documentation in `README.md` as needed.
 
-To create a development environment for this package, download the source code directly from the [GitHub repository](https://github.com/bshoshany/OGRePy), then create a virtual environment in the root folder of the repository [as explained above](#installing-in-a-virtual-environment), activate it, and run `pip install jupyterlab jupytext playwright sympy` to install the development packages, then run `playwright install` to install the browser binaries for HTML to PDF conversion (if desired).
+To create a development environment for this package, download the source code directly from the [GitHub repository](https://github.com/bshoshany/OGRePy), then create a virtual environment in the root folder of the repository [as explained above](#installing-in-a-virtual-environment), activate it, and run `pip install build jupyter-server jupyterlab jupyterlite-core jupyterlite-pyodide-kernel jupytext playwright sympy` to install the development packages, then run `playwright install` to install the browser binaries for HTML to PDF conversion (if desired).
 
-For your convenience, a Python script, [update_packages.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/update_packages.py), is provided in the GitHub repository to allow easily updating all outdated packages. Another script, [compile_docs.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/compile_docs.py), is used to compile the documentation in `README.md` to `.ipynb`, `.html`, and `.pdf` formats. Finally, [cleanup.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/cleanup.py) is used to clean up Python and Jupyter cache folders.
+The `tasks` folder in the GitHub repository contains several scripts used to develop and maintain the project:
+
+* [update_packages.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/update_packages.py) updates all outdated packages.
+* [compile_docs.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/compile_docs.py) compiles the documentation in `README.md` to `.ipynb`, `.html`, and `.pdf` formats.
+* [cleanup.py](https://github.com/bshoshany/OGRePy/blob/master/tasks/cleanup.py) cleans up Python and Jupyter cache folders.
+* [build_jupyterlite.ps1](https://github.com/bshoshany/OGRePy/blob/master/tasks/build_jupyterlite.ps1), a PowerShell script, builds the JupyterLite website for OGRePy Live.
 
 This package was developed in [Visual Studio Code](https://code.visualstudio.com/). The `.vscode` folder is provided in the GitHub repository for your convenience, including tasks for running the above scripts. It is highly recommended to install the following linters:
 
@@ -1937,24 +1951,29 @@ If you use this package in software of any kind, please provide a link to [the G
 
 If you use this package in published research, please cite it as follows:
 
-* Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [doi:10.48550/arXiv.2409.03803](https://doi.org/10.48550/arXiv.2409.03803), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (September 2024)
+* Barak Shoshany, *"OGRePy: An Object-Oriented General Relativity Package for Python"*, [Journal of Open Research Software 13: 9](https://openresearchsoftware.metajnl.com/articles/10.5334/jors.558), [doi:10.5334/jors.558](https://doi.org/10.5334/jors.558), [arXiv:2409.03803](https://arxiv.org/abs/2409.03803) (July 2025)
 
 You can use the following BibTeX entry:
 
 ```bibtex
-@article{Shoshany2024_OGRePy,
+@article{ShoshanyOGRePy,
     archiveprefix = {arXiv},
     author        = {Barak Shoshany},
-    doi           = {10.48550/arXiv.2409.03803},
+    doi           = {10.5334/jors.558},
     eprint        = {2409.03803},
+    issn          = {2049-9647},
+    journal       = {Journal of Open Research Software},
+    pages         = {9},
+    publisher     = {Ubiquity Press, Ltd.},
     title         = {{OGRePy: An Object-Oriented General Relativity Package for Python}},
-    year          = {2024}
+    volume        = {13},
+    year          = {2025},
 }
 ```
 
 For your convenience, this citing information can always be obtained by executing the function `T.cite()`.
 
-Please note that the paper on [arXiv](https://arxiv.org/abs/2409.03803) is not up to date with the latest version of the package. It is only intended to facilitate discovery of this package by scientists, and to enable citing it in scientific research. Documentation for the latest version is always available in the [the GitHub repository](https://github.com/bshoshany/OGRePy).
+Please note that the paper cited above is not meant to serve as documentation. It is only intended to facilitate discovery of this package by scientists, and to enable citing it in scientific research. The documentation for the latest version is always bundled with the package itself, accessible via the links in the welcome message, and is also available in [the GitHub repository](https://github.com/bshoshany/OGRePy).
 
 ### Other projects to check out
 

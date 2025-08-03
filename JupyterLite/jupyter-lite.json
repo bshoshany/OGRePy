@@ -1,0 +1,331 @@
+{
+  "jupyter-config-data": {
+    "appName": "JupyterLite",
+    "appUrl": "./lab",
+    "appVersion": "0.6.3",
+    "baseUrl": "./",
+    "defaultKernelName": "python",
+    "faviconUrl": "./lab/favicon.ico",
+    "federated_extensions": [
+      {
+        "extension": "./extension",
+        "load": "static/remoteEntry.3745c44cbbd62cec9a73.js",
+        "name": "@jupyterlite/pyodide-kernel-extension"
+      },
+      {
+        "extension": "./extension",
+        "load": "static/remoteEntry.c9b453deb22b48d355e2.js",
+        "name": "jupyterlab-jupytext"
+      },
+      {
+        "extension": "./extension",
+        "load": "static/remoteEntry.5cbb9d2323598fbda535.js",
+        "name": "jupyterlab_pygments",
+        "style": "./style"
+      }
+    ],
+    "fileTypes": {
+      "css": {
+        "extensions": [
+          ".css"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/css"
+        ],
+        "name": "css"
+      },
+      "csv": {
+        "extensions": [
+          ".csv"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/csv"
+        ],
+        "name": "csv"
+      },
+      "fasta": {
+        "extensions": [
+          ".fasta"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/plain"
+        ],
+        "name": "fasta"
+      },
+      "geojson": {
+        "extensions": [
+          ".geojson"
+        ],
+        "fileFormat": "json",
+        "mimeTypes": [
+          "application/geo+json"
+        ],
+        "name": "geojson"
+      },
+      "gzip": {
+        "extensions": [
+          ".tgz",
+          ".gz",
+          ".gzip"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "application/gzip"
+        ],
+        "name": "gzip"
+      },
+      "html": {
+        "extensions": [
+          ".html"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/html"
+        ],
+        "name": "html"
+      },
+      "ical": {
+        "extensions": [
+          ".ical",
+          ".ics",
+          ".ifb",
+          ".icalendar"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/calendar"
+        ],
+        "name": "ical"
+      },
+      "ico": {
+        "extensions": [
+          ".ico"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "image/x-icon"
+        ],
+        "name": "ico"
+      },
+      "ipynb": {
+        "extensions": [
+          ".ipynb"
+        ],
+        "fileFormat": "json",
+        "mimeTypes": [
+          "application/x-ipynb+json"
+        ],
+        "name": "ipynb"
+      },
+      "jpeg": {
+        "extensions": [
+          ".jpeg",
+          ".jpg"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "image/jpeg"
+        ],
+        "name": "jpeg"
+      },
+      "js": {
+        "extensions": [
+          ".js",
+          ".mjs"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "application/javascript"
+        ],
+        "name": "js"
+      },
+      "jsmap": {
+        "extensions": [
+          ".map"
+        ],
+        "fileFormat": "json",
+        "mimeTypes": [
+          "application/json"
+        ],
+        "name": "jsmap"
+      },
+      "json": {
+        "extensions": [
+          ".json"
+        ],
+        "fileFormat": "json",
+        "mimeTypes": [
+          "application/json"
+        ],
+        "name": "json"
+      },
+      "manifest": {
+        "extensions": [
+          ".manifest"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/cache-manifest"
+        ],
+        "name": "manifest"
+      },
+      "md": {
+        "extensions": [
+          ".md",
+          ".markdown"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/markdown"
+        ],
+        "name": "md"
+      },
+      "pdf": {
+        "extensions": [
+          ".pdf"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "application/pdf"
+        ],
+        "name": "pdf"
+      },
+      "plain": {
+        "extensions": [
+          ".txt"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/plain"
+        ],
+        "name": "plain"
+      },
+      "png": {
+        "extensions": [
+          ".png"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "image/png"
+        ],
+        "name": "png"
+      },
+      "py": {
+        "extensions": [
+          ".py"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/x-python",
+          "application/x-python-code"
+        ],
+        "name": "py"
+      },
+      "svg": {
+        "extensions": [
+          ".svg"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "image/svg+xml"
+        ],
+        "name": "svg"
+      },
+      "toml": {
+        "extensions": [
+          ".toml"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "application/toml"
+        ],
+        "name": "toml"
+      },
+      "vue": {
+        "extensions": [
+          ".vue"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "text/plain"
+        ],
+        "name": "vue"
+      },
+      "wasm": {
+        "extensions": [
+          ".wasm"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "application/wasm"
+        ],
+        "name": "wasm"
+      },
+      "wheel": {
+        "extensions": [
+          ".whl"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "octet/stream",
+          "application/x-wheel+zip"
+        ],
+        "name": "wheel"
+      },
+      "xml": {
+        "extensions": [
+          ".xml"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "application/xml"
+        ],
+        "name": "xml"
+      },
+      "yaml": {
+        "extensions": [
+          ".yaml",
+          ".yml"
+        ],
+        "fileFormat": "text",
+        "mimeTypes": [
+          "application/x-yaml"
+        ],
+        "name": "yaml"
+      }
+    },
+    "fullLabextensionsUrl": "./extensions",
+    "fullStaticUrl": "./build",
+    "licensesUrl": "./lab/api/licenses",
+    "litePluginSettings": {
+      "@jupyterlite/pyodide-kernel-extension:kernel": {
+        "pipliteUrls": [
+          "./pypi/all.json?sha256=dd7b939f26f3c1ffcd16127651b5a1429cb63d2be267a00248b6e35214cbbc58",
+          "./extensions/@jupyterlite/pyodide-kernel-extension/static/pypi/all.json?sha256=6428e372c283ca4b67a641295c5d9c8abeed5cf341b24ffe41b313fcdcaf9be4"
+        ]
+      }
+    },
+    "settingsOverrides": {
+      "@jupyterlab/completer-extension:manager": {
+        "autoCompletion": true,
+        "showDocumentationPanel": true
+      },
+      "@jupyterlab/notebook-extension:panel": {
+        "toolbar": [
+          {
+            "args": {},
+            "command": "docmanager:download",
+            "icon": "ui-components:download",
+            "label": "Download",
+            "name": "download",
+            "rank": 50
+          }
+        ]
+      }
+    }
+  },
+  "jupyter-lite-schema-version": 0
+}

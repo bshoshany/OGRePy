@@ -45,7 +45,7 @@
         "baseUrl": {
           "description": "base URL of this JupyterLite, must end in `/`, will be expanded by `config-utils.js` to include a leading `/`",
           "type": "string",
-          "format": "uri",
+          "format": "uri-reference",
           "default": "./",
           "pattern": ".*/$"
         },
@@ -62,7 +62,7 @@
         "faviconUrl": {
           "description": "browser tab icon to show",
           "type": "string",
-          "format": "uri",
+          "format": "uri-reference",
           "default": "./lab/favicon.ico"
         },
         "settingsOverrides": {
@@ -86,6 +86,11 @@
           "default": "./extensions",
           "$ref": "#/definitions/non-trailing-slash-uri"
         },
+        "workspacesApiUrl": {
+          "description": "path to workspaces",
+          "default": "./api/workspaces",
+          "$ref": "#/definitions/non-trailing-slash-uri"
+        },
         "fullStaticUrl": {
           "description": "relative path to built static assets",
           "default": "./build",
@@ -102,6 +107,15 @@
         },
         "contentsStorageName": {
           "description": "Name used to store Jupyter contents in the browser. The baseUrl is appended to the default value",
+          "type": "string",
+          "default": "JupyterLite Storage"
+        },
+        "workspacesStorageDrivers": {
+          "description": "names of the localforage driver for workspaces, or `null` for the best available",
+          "$ref": "#/definitions/localforage-driver-set"
+        },
+        "workspacesStorageName": {
+          "description": "Name used to store Jupyter workspaces in the browser. The baseUrl is appended to the default value",
           "type": "string",
           "default": "JupyterLite Storage"
         },
@@ -184,7 +198,7 @@
     "non-trailing-slash-uri": {
       "title": "A URI what doesn't end in /",
       "type": "string",
-      "format": "uri",
+      "format": "uri-reference",
       "pattern": ".*[^/]$"
     },
     "federated-extension": {
@@ -194,17 +208,17 @@
       "properties": {
         "extension": {
           "type": "string",
-          "format": "uri",
+          "format": "uri-reference",
           "description": "path to the extension module to load, relative to the extension's `package.json`"
         },
         "mimeExtension": {
           "type": "string",
-          "format": "uri",
+          "format": "uri-reference",
           "description": "path to the mime extension module to load, relative to the extension's `package.json`"
         },
         "load": {
           "type": "string",
-          "format": "uri",
+          "format": "uri-reference",
           "description": "path to the WebPack 5-compatible `remoteEntry*.js` file describing the bundle"
         },
         "name": {
@@ -212,7 +226,7 @@
         },
         "style": {
           "type": "string",
-          "format": "uri",
+          "format": "uri-reference",
           "description": "path to the optional style module provided by the extension"
         }
       }

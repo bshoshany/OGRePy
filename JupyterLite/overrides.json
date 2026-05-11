@@ -14,5 +14,10 @@
     "@jupyterlab/completer-extension:manager": {
         "autoCompletion": true,
         "showDocumentationPanel": true
+    },
+    "@jupyterlab/notebook-extension:tracker": {
+        "codeCellConfig": {
+            "lineWrap": true
+        }
     }
 }

@@ -55,5 +55,8 @@
         "unhashable",
         "venv",
         "wogan"
-    ]
+    ],
+    "files.associations": {
+        "OGRePy_Documentation.html": "plaintext"
+    }
 }

@@ -1,9 +1,9 @@
 <!-- remove-after-compile -->
 [![Author: Barak Shoshany](https://img.shields.io/badge/author-Barak_Shoshany-009933)](https://baraksh.com/)
-[![DOI: 10.48550/arXiv.2409.03803](https://img.shields.io/badge/DOI-10.48550%2FarXiv.2409.03803-b31b1b)](https://doi.org/10.48550/arXiv.2409.03803)
+[![DOI: 10.5334/jors.558](https://img.shields.io/badge/DOI-10.5334%2Fjors.558-b31b1b)](https://doi.org/10.5334/jors.558)
 [![arXiv:2409.03803](https://img.shields.io/badge/arXiv-2409.03803-b31b1b)](https://arxiv.org/abs/2409.03803)
 [![License: MIT](https://img.shields.io/github/license/bshoshany/OGRePy)](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt)
-[![Language: Python 3.12](https://img.shields.io/badge/Language-Python_3.12-yellow)](https://python.org/)
+[![Language: Python 3.14](https://img.shields.io/badge/Language-Python_3.14-yellow)](https://python.org/)
 [![GitHub stars](https://img.shields.io/github/stars/bshoshany/OGRePy?style=flat&color=009999)](https://github.com/bshoshany/OGRePy/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/bshoshany/OGRePy?style=flat&color=009999)](https://github.com/bshoshany/OGRePy/forks)
 [![GitHub release](https://img.shields.io/github/v/release/bshoshany/OGRePy?color=660099)](https://github.com/bshoshany/OGRePy/releases)
@@ -19,9 +19,9 @@ Website: <https://baraksh.com/>\
 GitHub: <https://github.com/bshoshany>
 
 GitHub repository: <https://github.com/bshoshany/OGRePy>\
-PyPi project: <https://pypi.org/project/OGRePy/>
+PyPI project: <https://pypi.org/project/OGRePy/>
 
-This is the complete documentation for **v1.3.1** of the package, released on **2025-08-03**.
+This is the complete documentation for **v2.0.0** of the package, released on **2026-05-11**.
 
 <!-- remove-after-compile -->
 <div style="color: red">
@@ -74,12 +74,13 @@ This is the complete documentation for **v1.3.1** of the package, released on **
     * [The Kretschmann scalar](#the-kretschmann-scalar)
     * [The Ricci tensor and scalar](#the-ricci-tensor-and-scalar)
     * [The Einstein tensor](#the-einstein-tensor)
+    * [The Weyl tensor](#the-weyl-tensor)
     * [Covariant derivatives](#covariant-derivatives)
 * [Curves and geodesics](#curves-and-geodesics)
     * [The curve Lagrangian](#the-curve-lagrangian)
     * [Geodesic equations from the Lagrangian](#geodesic-equations-from-the-lagrangian)
     * [Geodesic equations from the Christoffel symbols](#geodesic-equations-from-the-christoffel-symbols)
-    * [Geodesics equations in terms of the time coordinate](#geodesics-equations-in-terms-of-the-time-coordinate)
+    * [Geodesic equations in terms of the time coordinate](#geodesic-equations-in-terms-of-the-time-coordinate)
     * [Changing the curve parameter](#changing-the-curve-parameter)
 * [About the project](#about-the-project)
     * [Bug reports and feature requests](#bug-reports-and-feature-requests)
@@ -111,19 +112,23 @@ The Python port was specifically designed to mimic as much of the original Mathe
 
 ### Features
 
-* Define coordinate systems and the transformation rules between them. The Jacobians are automatically calculated. Tensor components are then transformed automatically between coordinates behind the scenes as needed.
+* Define coordinate systems and the transformation rules between them. Tensor components are then transformed automatically between coordinates behind the scenes as needed.
 * Each tensor is associated with a specific metric. Tensor components are then transformed automatically between different index configurations, raising and lowering indices behind the scenes as needed.
-* Display any tensor in any index configuration and coordinate system, either in vector/matrix form or as a list of all unique non-zero elements. Metrics can also be displayed as a line element.
+* Get the components of any tensor in any index configuration and coordinate system. Display or generate TeX code for the components, either in vector/matrix form or as a list of all unique non-zero elements. Metrics can also be displayed as a line element. Arbitrary functions or replacement rules can easily be applied to the components before they are displayed.
 * Automatically simplify tensor components, optionally with a user-defined simplification function.
-* Easily calculate arbitrary tensor formulas using any combination of addition, multiplication by scalar, trace, contraction, partial derivative, covariant derivative, and permutation of indices.
-* Built-in methods for calculating the Christoffel symbols (Levi-Civita connection), Riemann tensor, Ricci tensor and scalar, Einstein tensor, Kretschmann scalar, curve Lagrangian, and volume element from a metric.
-* Calculate the geodesic equations in terms of an affine curve parameter, in two different ways: from the Christoffel symbols or from the curve Lagrangian. For spacetime metrics, the geodesic equations can be calculated in terms of the time coordinate.
+* Highly customizable. Users may easily set options via the built-in `options` object.
+* Easily calculate arbitrary tensor formulas using any combination of addition, multiplication by a scalar, trace, contraction, partial derivative, covariant derivative, and permutation of indices.
+* Built-in methods for calculating the Christoffel symbols (Levi-Civita connection), Riemann tensor, Ricci tensor and scalar, Kretschmann scalar, Einstein tensor, Weyl tensor, and curve Lagrangian from a metric.
+* Calculate the determinant and volume element of any metric.
+* Calculate the geodesic equations in terms of a user-defined affine curve parameter, in two different ways: from the Christoffel symbols or from the curve Lagrangian. For spacetime metrics, the geodesic equations can be calculated in terms of the time coordinate.
 * Easily keep track of all tensors created in a notebook session, including the relations between them - for example, see which metrics were created and which tensors are associated with each metric.
 * Export tensor components in TeX or Mathematica format.
-* Designed with speed and performance in mind, using optimized algorithms developed specifically for this package.
-* Clear and detailed documentation, with many examples, in [Jupyter Notebook](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.ipynb), [HTML](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.html), and [PDF](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.pdf) formats.
+* Designed with speed and performance in mind, using optimized algorithms developed specifically for this package. Derived tensors are cached on first use to avoid recalculating.
+* Tensor objects and methods are auto-completed in the notebook interface when using Visual Studio Code or a properly configured JupyterLab.
+* Clear and detailed documentation, with many examples, in [Jupyter Notebook](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.ipynb), [HTML](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.html), and [PDF](https://github.com/bshoshany/OGRePy/blob/master/OGRePy/docs/OGRePy_Documentation.pdf) formats. Detailed docstrings are also provided.
 * Open source. The code is extensively documented; please feel free to fork and modify it as you see fit.
 * Under continuous and active development. Bug reports and feature requests are welcome, and should be made via [GitHub issues](https://github.com/bshoshany/OGRePy/issues).
+* Thoroughly tested. A comprehensive internal test suite thoroughly tests all OGRePy functions, classes, and methods and verifies that it accurately reproduces a wide variety of known results from differential geometry and general relativity, ensuring users can fully trust OGRePy as a reliable tool for research and pedagogy.
 
 ### The object-oriented design philosophy
 
@@ -155,9 +160,9 @@ To install OGRePy from [PyPI](https://pypi.org/project/OGRePy/) using `pip`, sim
 pip install OGRePy
 ```
 
-The current version of OGRePy officially supports only **Python v3.12 and above**. It may also work with older versions of Python 3, but this is not guaranteed, as development and testing was only done with the indicated Python version. If your global Python installation is an older version, and you cannot upgrade it, consider using [pyenv](https://github.com/pyenv/pyenv) or [pyenv-win](https://github.com/pyenv-win/pyenv-win) to install multiple Python versions in parallel, or use a portable local installation to run OGRePy.
+The current version of OGRePy officially supports only **Python v3.14 or later**. It may also work with older versions of Python 3, but this is not guaranteed, as development and testing was only done with the indicated Python version. If your global Python installation is an older version, and you cannot upgrade it, consider using [pyenv](https://github.com/pyenv/pyenv) or [pyenv-win](https://github.com/pyenv-win/pyenv-win) to install multiple Python versions in parallel, or use a portable local installation to run OGRePy.
 
-Installing OGRePy using `pip` will also automatically install its dependent packages, [ipykernel](https://pypi.org/project/ipykernel/) and [sympy](https://pypi.org/project/sympy/), if they are not already installed. The current version of OGRePy officially supports only **ipykernel v6.29 and above** and **sympy v1.13 and above**, so if you are still using older versions, you should upgrade these packages using the command `pip install --upgrade ipykernel sympy`.
+Installing OGRePy using `pip` will also automatically install its dependencies, [ipykernel](https://pypi.org/project/ipykernel/) and [sympy](https://pypi.org/project/sympy/), if they are not already installed. The current version of OGRePy officially supports only **ipykernel v7.2.0 or later** and **sympy v1.14.0 or later**, so if you are still using older versions, you should upgrade these packages using the command `pip install --upgrade ipykernel sympy`.
 
 ### Installing in a virtual environment
 
@@ -180,13 +185,13 @@ OGRePy is designed to run within a [Jupyter](https://jupyter.org/) notebook. It 
 
 OGRePy supports two Jupyter notebook interfaces:
 
-* [Visual Studio Code](https://code.visualstudio.com/): **This is the officially recommended way to use OGRePy, due to helpful features such as IntelliSense, tooltips, and type checking.** Download and install from the [official website](https://code.visualstudio.com/). Run VS Code, then create a new file with the `.ipynb` extension and open it, or press F1 to open the Command Pallette and choose the option "Create: New Jupyter Notebook". This will prompt you to automatically install the required VS Code extensions and Python packages if they are not already installed.
-* [JupyterLab](https://jupyter.org/): Install with `pip install jupyterlab`. Run by executing `jupyter-lab` in the terminal, and then create a new notebook in the web browser. **Please note that JupyterLab is not officially supported, as development and testing was only done with VS Code, although I have verified that the package does work in JupyterLab.**
+* [Visual Studio Code](https://code.visualstudio.com/): **This is the officially recommended way to use OGRePy, due to helpful features such as IntelliSense, tooltips, and type checking.** Download and install from the [official website](https://code.visualstudio.com/). Run VS Code, then create a new file with the `.ipynb` extension and open it, or press F1 to open the Command Palette and choose the option "Create: New Jupyter Notebook". This will prompt you to automatically install the required VS Code extensions and Python packages if they are not already installed.
+* [JupyterLab](https://jupyter.org/): Install with `pip install jupyterlab`. Run by executing `jupyter lab` in the terminal, and then create a new notebook in the web browser. **Please note that JupyterLab is not officially supported, as development and testing was only done with VS Code, although I have verified that the package does work in JupyterLab.**
 
 If you are running OGRePy in a virtual environment:
 
-* With Visual Studio Code, open the folder where you create the virtual environment, press F1 to open the Command Pallette, choose the option "Python: Select Interpreter", and select the `.OGRePy-env` environment. The interpreter can also be selected for individual Jupyter notebooks in VS Code using the "Select Kernel" button at the top right of the notebook.
-* With JupyterLab, first activate the virtual environment in the terminal as explained above, and then run `jupyter-lab` from the same terminal.
+* With Visual Studio Code, open the folder where you create the virtual environment, press F1 to open the Command Palette, choose the option "Python: Select Interpreter", and select the `.OGRePy-env` environment. The interpreter can also be selected for individual Jupyter notebooks in VS Code using the "Select Kernel" button at the top right of the notebook.
+* With JupyterLab, first activate the virtual environment in the terminal as explained above, and then run `jupyter lab` from the same terminal.
 
 ### Importing the package
 
@@ -488,24 +493,30 @@ args[0] + args[1] + args[3] + T.s.factor(args[2] + args[4] + args[5])
 
 In this form, it is immediately clear that the metric is flat outside the warp bubble (where $f$ is $0$), and inside the warp bubble (when $f$ is $1$) it is a flat metric translated by an amount $v\left(t\right)\mathrm{d}t$ in the $z$ direction.
 
-Another thing we can do with a metric is calculate its volume elements squared, which is simply the determinant of the metric, using the method `volume_element_squared()`. For example:
+Another thing we can do with a metric is calculate its **volume element**, defined as
+
+$$
+\mathrm{d}V = \sqrt{|\det(g)|} \, {\mathrm{d}x}^{0} \wedge \cdots \wedge {\mathrm{d}x}^{n-1},
+$$
+
+where $n$ is the number of dimensions. This can be done using the method `volume_element()`. For example:
 
 ```python
-Minkowski.volume_element_squared()
+Minkowski.volume_element()
 ```
 
 ```python
-Schwarzschild.volume_element_squared()
+Schwarzschild.volume_element()
 ```
 
 ```python
-Alcubierre.volume_element_squared()
+Alcubierre.volume_element()
 ```
 
-As with the line elements, these are SymPy expressions, so they can be modified just like any other expression. Therefore, to calculate the volume element itself, we can just take the square root (adding a minus sign if the metric is Lorentzian):
+Note that the volume element involves the square root of the absolute value of the determinant of the metric. If we want the determinant itself, we can use the method `det()`, for example:
 
 ```python
-T.s.simplify(T.s.sqrt(-Schwarzschild.volume_element_squared()))
+Schwarzschild.det()
 ```
 
 ### Choosing index letters
@@ -703,18 +714,18 @@ The components of any tensor may be transformed from one coordinate system $x^{\
 For example, given a tensor with components $T_ {\alpha\beta}$ in a coordinate system $x^{\mu}$, we can transform to components $T_ {\alpha'\beta'}$ in another coordinate system $x^{\mu'}$ as follows:
 
 $$
-T_ {\alpha'\beta'}(x^{\mu'}) = \frac{\partial x^{\alpha}}{\partial x^{\alpha'}} / \frac{\partial x^{\beta}}{\partial x^{\beta'}}
+T_ {\alpha'\beta'}(x^{\mu'}) = \frac{\partial x^{\alpha}}{\partial x^{\alpha'}} \frac{\partial x^{\beta}}{\partial x^{\beta'}} T_ {\alpha\beta}(x^{\mu})
 $$
 
 For a general rank $(p, q)$ tensor with $p$ upper indices $\alpha_ {1}, \ldots, \alpha_ {p}$ and $q$ lower indices $\beta_ {1}, \ldots, \beta_ {q}$, the transformation takes the form
 
 $$
-T_ {\beta_ {1}^{\prime}\cdots\beta_ {q}^{\prime}}^{\alpha_ {1}^{\prime}\cdots\alpha_ {p}^{\prime}}(x^{\mu'})=\left(\frac{\partial x^{\alpha_ {1}^{\prime}}}{\partial x^{\alpha_ {1}}}\cdots\frac{\partial x^{\alpha_ {p}^{\prime}}}{\partial x^{\alpha_ {p}}}\right)\left(\frac{\partial x^{\beta_ {1}^{\prime}}}{\partial x^{\beta_ {1}}}\cdots\frac{\partial x^{\beta_ {q}^{\prime}}}{\partial x^{\beta_ {q}}}\right)T_ {\beta_ {1}\cdots\beta_ {q}}^{\alpha_ {1}\cdots\alpha_ {p}}(x^{\mu})
+T_ {\beta_ {1}^{\prime}\cdots\beta_ {q}^{\prime}}^{\alpha_ {1}^{\prime}\cdots\alpha_ {p}^{\prime}}(x^{\mu'})=\left(\frac{\partial x^{\alpha_ {1}^{\prime}}}{\partial x^{\alpha_ {1}}}\cdots\frac{\partial x^{\alpha_ {p}^{\prime}}}{\partial x^{\alpha_ {p}}}\right)\left(\frac{\partial x^{\beta_ {1}}}{\partial x^{\beta_ {1}^{\prime}}}\cdots\frac{\partial x^{\beta_ {q}}}{\partial x^{\beta_ {q}^{\prime}}}\right)T_ {\beta_ {1}\cdots\beta_ {q}}^{\alpha_ {1}\cdots\alpha_ {p}}(x^{\mu})
 $$
 
 As a mnemonic for this formula, recall that two indices may only be contracted if one of them is an upper index and the other is a lower index. If an index is in the denominator of a derivative, then its role is reversed (upper $\leftrightarrow$ lower). Thus the old (non-primed) and new (primed) indices can only be in places that allow properly contracting the Jacobian or inverse Jacobian with the tensor. For example, $\alpha_ {1}$ is an upper index in $T$ and therefore must be contracted with a lower index. Thus, $\partial x^{\alpha_ {1}}$ must be in the denominator, to lower its index and allow it to be contracted with the tensor.
 
-As we saw above, OGRePy automatically knows how to raise or lower indices as needed using the appropriate metric. Similarly, any operation that requires transforming to another coordinate system will preform the transformation automatically behind the scenes. However, for this to happen, OGRePy needs to know the appropriate transformation rules. These are defined between the tensor objects representing the coordinates, which were created as `Coordinates` objects. The rules for transforming from a source coordinate system to a target coordinate system are stored within the tensor object representing the source. This is done using the method `set_coord_transformation()`. To illustrate, let us define transformations from `Cartesian` to `Spherical` and back:
+As we saw above, OGRePy automatically knows how to raise or lower indices as needed using the appropriate metric. Similarly, any operation that requires transforming to another coordinate system will perform the transformation automatically behind the scenes. However, for this to happen, OGRePy needs to know the appropriate transformation rules. These are defined between the tensor objects representing the coordinates, which were created as `Coordinates` objects. The rules for transforming from a source coordinate system to a target coordinate system are stored within the tensor object representing the source. This is done using the method `set_coord_transformation()`. To illustrate, let us define transformations from `Cartesian` to `Spherical` and back:
 
 ```python
 Cartesian.set_coord_transformation(
@@ -816,7 +827,7 @@ Another, more advanced, thing we can do with `list()` and `show()` is to pass a 
 
 ### Customizing the simplification function
 
-Whenever OGRePy performs an operation that creates or modifies tensor components, such as converting between index representations or coordinate systems, it automatically simplifies the result using SymPy's `simplify()`. However, advanced users may want to have more control over this simplification process. This can be done using by setting `T.options.simplify_func` to a function of your choice.
+Whenever OGRePy performs an operation that creates or modifies tensor components, such as converting between index representations or coordinate systems, it automatically simplifies the result using SymPy's `simplify()`. However, advanced users may want to have more control over this simplification process. This can be done by setting `T.options.simplify_func` to a function of your choice.
 
 For example, you may want to customize the arguments passed to simplify (such as `ratio` or `inverse`, see [here](https://docs.sympy.org/latest/modules/simplify/simplify.html) for more information), or you may want to use specific SymPy simplification functions such as `powsimp()` or `logcombine()` in a specific combination, or even `refine()` with specific assumptions.
 
@@ -829,6 +840,7 @@ Note that changing the simplification function will **not** automatically apply 
 We can force re-simplification of the stored components of a specific tensor using the method `simplify()`. This will return a new tensor with its components simplified; the original tensor will remain unchanged. However, you can write `MyTensor = MyTensor.simplify()` to store the simplified tensor under the same name.
 
 ### Getting information about tensors
+
 The `info()` method can be used to display the information encoded in a tensor object in human-readable form. Here is an example:
 
 ```python
@@ -934,11 +946,11 @@ Spherical.components()
 `Tensor` objects can be compared using the function `T.compare()`. Two tensors are considered equal if:
 
 1. Their components are the same, and
-2. They are associated with the same metric.
+2. Their associated metrics are equal.
 
-Internally, the comparison is only done in a single representation (if not specified, the default representation of the first tensor will be used), because if the two tensors have the same metric then it is guaranteed that if they are equal in one representation, they will be equal in all representations.
+Internally, the comparison is only done in a single representation (if not specified, the default representation of the first tensor will be used), because if the two tensors have equal associated metrics then it is guaranteed that if they are equal in one representation, they are equal in all representations.
 
-Conversely, tensors with different metrics are always considered not equal, since even if they happen to have the same components in one representation, they will necessarily have different components in another representation. (Also, if two tensors have different metrics then they exist on different manifolds, and therefore cannot be compared.)
+Conversely, tensors whose associated metrics are not equal are always considered not equal, since even if they happen to have the same components in one representation, they will necessarily have different components in another representation. (Also, if two tensors have different metrics then they exist on different manifolds, and therefore cannot be compared.)
 
 As an example, let us create copies of the Minkowski metric and the perfect fluid tensor, and then compare the latter with the original perfect fluid tensor:
 
@@ -976,7 +988,7 @@ You may be wondering why the `==` operator is equivalent to the `is` operator, a
 
 ## Calculations with tensors
 
-Now that we have all the bookkeeping of tensors out of the way, we can finally discuss how to use those tensors in calculations. In OGRePy, all tensor calculations are performed by simply using normal operations such as addition and multiplications on the tensors. However, this does not work the same as operating, for example, on integers; in most tensor operations, we also have to specify **indices**. Some of these indices will be *free indices**, which will remain in the final result, while others may be **contraction indices**, which will be contracted upon.
+Now that we have all the bookkeeping of tensors out of the way, we can finally discuss how to use those tensors in calculations. In OGRePy, all tensor calculations are performed by simply using normal operations such as addition and multiplications on the tensors. However, this does not work the same as operating, for example, on integers; in most tensor operations, we also have to specify **indices**. Some of these indices will be **free indices**, which will remain in the final result, while others may be **contraction indices**, which will be contracted upon.
 
 OGRePy supports a comprehensive collection of tensor operations. A tensor calculation in OGRePy can involve any number of tensor objects and can contain any combination of addition, multiplication by scalar, trace, contraction, partial derivative, and covariant derivative. The result will be stored in a new tensor object. Let us now go over these operations one by one, and give some examples.
 
@@ -1285,7 +1297,7 @@ Due to the extra transformation term, the tensor object `WrongSchwarzschildChris
 ~Schwarzschild.christoffel()
 ```
 
-These are the same components we got before, as can be seen by explicitly comparing the components of the two tensor objects using the `T.compare()` operator:
+These are the same components we got before, as can be verified by explicitly comparing the components of the two tensor objects using the `T.compare()` function:
 
 ```python
 T.compare(Schwarzschild.christoffel(), WrongSchwarzschildChristoffel)
@@ -1364,16 +1376,39 @@ Here, $a(t)$ is the **scale factor**. This metric has the line element:
 FLRW.line_element()
 ```
 
-and the volume element squared:
+and the volume element:
 
 ```python
-FLRW.volume_element_squared()
+FLRW.volume_element()
 ```
 
 Its Christoffel symbols can be easily calculated using `christoffel()`:
 
 ```python
 ~FLRW.christoffel()
+```
+
+Notice how the derivatives of the function $a(t)$ are shown by `list()` in the notation ${\partial}_{t}a$ instead of the usual SymPy notation, which would be $\frac{d}{d t} a$, which is a bit awkward. This can especially improve readability in the case of partial derivatives of functions of many arguments. Here is a simple example:
+
+```python
+f_x_y_z = T.func("f")(x, y, z)
+PartialDerivatives = T.Tensor(
+    metric=FLRW,
+    coords=Cartesian,
+    indices=(1,),
+    components=[
+        f_x_y_z.diff(x),
+        f_x_y_z.diff(x, y),
+        f_x_y_z.diff(x, y, z),
+        f_x_y_z.diff(x, y, (z, 2)),
+    ],
+)
+```
+
+Compare this with the raw components:
+
+```python
+PartialDerivatives.components()
 ```
 
 ### The Riemann tensor
@@ -1434,7 +1469,7 @@ Normally, `list()` doesn't do this for every single component of the tensor, sin
 SchwarzschildRiemann.list(exact=True)
 ```
 
-You can see that now `list()` correctly identifies all of the components that are negatives of each other, resulting in a much shorter list. If you're wondering why this option only applies to comparing components that are the negative of each other, rather than all comparison - that is because OGRePy automatically simplifies all tensor components in advance, so if two components are the same, they should already be simplified to the exact same expression.
+You can see that now `list()` correctly identifies all the components that are negatives of each other, resulting in a much shorter list.
 
 The Riemann tensor with all its indices lowered satisfies the following symmetry and anti-symmetry relations:
 
@@ -1546,11 +1581,75 @@ As with all other curvature tensors, we can calculate it by combining the previo
 ~(FLRW.ricci_tensor(mu, nu) - T.s.Rational(1, 2) * FLRW.ricci_scalar() @ FLRW(mu, nu))
 ```
 
-Or we can use the built-in module `einstein()`:
+Or we can use the built-in method `einstein()`:
 
 ```python
 ~FLRW.einstein()
 ```
+
+### The Weyl tensor
+
+The **Weyl tensor** ${C}^{\rho}{}_{\sigma\mu\nu}$ is the trace-free part of the Riemann tensor, given by:
+
+$$
+C^{\rho}{}_{\sigma\mu\nu} = R^{\rho}{}_{\sigma\mu\nu} - \frac{1}{n - 2} \left( \delta^{\rho}{}_{\mu} R_{\nu\sigma} - \delta^{\rho}{}_{\nu} R_{\mu\sigma} - g_{\sigma\mu} R^{\rho}{}_{\nu} + g_{\sigma\nu} R^{\rho}{}_{\mu} \right) + \frac{R}{(n - 1)(n - 2)} \left( \delta^{\rho}{}_{\mu} g_{\nu\sigma} - \delta^{\rho}{}_{\nu} g_{\mu\sigma} \right),
+$$
+
+where $n$ is the dimension. In dimensions $n \leq 3$, the Weyl tensor vanishes identically. We can calculate it in OGRePy using the built-in method `weyl()`. The FLRW metric is conformally flat, so its Weyl tensor vanishes:
+
+```python
+FLRW.weyl().list(function=lambda x: x.rewrite(T.s.sin).trigsimp())
+```
+
+(We had to apply a function here to simplify the components, since two of them contain trigonometric functions that, at the time of writing, SymPy does not know how to simplify to zero automatically. The function first uses `rewrite()` to rewrite the trigonometric functions in terms of `sin`, and then uses `trigsimp()` to simplify the result.)
+
+Since the Schwarzschild metric is Ricci-flat, the Weyl tensor is equal to the Riemann tensor, as we can verify using the `compare()` function:
+
+```python
+T.compare(Schwarzschild.riemann(), Schwarzschild.weyl())
+```
+
+For an example where the Weyl tensor is non-zero but differs from the Riemann tensor, let us define the **Schwarzschild-de Sitter metric**:
+
+```python
+from OGRePy.abc import Lamda
+
+SchwarzschildDeSitter = T.Metric(
+    coords=Spherical,
+    components=T.diag(
+        -(1 - 2 * M / r - Lamda * r**2 / 3),
+        1 / (1 - 2 * M / r - Lamda * r**2 / 3),
+        r**2,
+        r**2 * T.s.sin(theta)**2,
+    ),
+)
+```
+
+Its line element is:
+
+```python
+SchwarzschildDeSitter.line_element()
+```
+
+Calculating the Weyl tensor, we find:
+
+```python
+~SchwarzschildDeSitter.weyl()
+```
+
+To see explicitly how it differs from the Riemann tensor, compare the Kretschmann scalar:
+
+```python
+SchwarzschildDeSitter.kretschmann()
+```
+
+With the norm-squared of the Weyl tensor:
+
+```python
+SchwarzschildDeSitter.weyl(rho, sigma, mu, nu) @ SchwarzschildDeSitter.weyl()(rho, sigma, mu, nu)
+```
+
+The Kretschmann scalar contains both the Schwarzschild mass term and the cosmological constant term, while the norm-squared of the Weyl tensor contains only the mass term.
 
 ### Covariant derivatives
 
@@ -1697,7 +1796,7 @@ we can obtain the geodesic equations for our spacetime. This is done using the m
 ~Minkowski.geodesic_from_lagrangian()
 ```
 
-Note that this method only calculates the left-hand side of the Euler-Lagrange equations; if we equate the result to zero, we will get the actual geodesics equations. This is hinted at visually by setting the resulting tensor's symbol to 0, so that you actually see the equations when using `list()`. It is trivial to see that the solution to these equations is simply a curve with a constant velocity; in a flat Minkowski spacetime, particles experience no gravitational force, and thus no acceleration (unless some other force acts on them, of course).
+Note that this method only calculates the left-hand side of the Euler-Lagrange equations; if we equate the result to zero, we will get the actual geodesic equations. This is hinted at visually by setting the resulting tensor's symbol to 0, so that you actually see the equations when using `list()`. It is trivial to see that the solution to these equations is simply a curve with a constant velocity; in a flat Minkowski spacetime, particles experience no gravitational force, and thus no acceleration (unless some other force acts on them, of course).
 
 The derivatives with respect to the curve parameter $\lambda$ are kept unevaluated in the output of `geodesic_from_lagrangian()`, by using the SymPy `Derivative` class and passing `doit=False` to `simplify()`. This simplifies the equations, and can sometimes help solve them by inspection. In this simple example, since SymPy simplifies the second derivatives even if `doit=False` is used, the second derivatives are actually evaluated (except from the first one, due to the minus sign), but in more complicated metrics they will remain unevaluated.
 
@@ -1803,7 +1902,7 @@ Let us define a dictionary of replacements which maps each derivative of the coo
 solution = {dot[t]: 1, dot[x]: 0, dot[y]: 0, dot[z]: v_t.subs(param) * f_t_x_y_z.subs(param)}
 ```
 
-Now all we need to do is perform these substitution, and then simplify. We can do this by passing the dictionary as the value of the `replace` argument to instruct `list()`, and setting `simplify=True` to the expression after doing the replacement. Note that `simplify()` will also automatically call `doit()` to evaluate the derivatives with respect to $\lambda$:
+Now all we need to do is perform these substitutions, and then simplify. We can do this by passing the dictionary as the value of the `replace` argument to `list()`, and setting `simplify=True` to simplify the expression after doing the replacement. Note that `simplify()` will also automatically call `doit()` to evaluate the derivatives with respect to $\lambda$:
 
 ```python
 Alcubierre.geodesic_from_lagrangian().list(replace=solution, simplify=True)
@@ -1830,11 +1929,11 @@ In OGRePy, we can calculate the left-hand side of this equation using the `geode
 ~Alcubierre.geodesic_from_christoffel()
 ```
 
-Often, you will find that the Lagrangian method produces simpler equations, which can even be solved by inspection, as we did for the Alcubierre metric. This is due to the possibility of leaving the $\lambda$ derivative unevaluated. However, in other cases, the Christoffel method might produce simpler equations. We can clearly see that by comparing the geodesics equations for the Schwarzschild metric obtained via the Lagrangian vs. Christoffel methods.
+Often, you will find that the Lagrangian method produces simpler equations, which can even be solved by inspection, as we did for the Alcubierre metric. This is due to the possibility of leaving the $\lambda$ derivative unevaluated. However, in other cases, the Christoffel method might produce simpler equations. We can clearly see that by comparing the geodesic equations for the Schwarzschild metric obtained via the Lagrangian and Christoffel methods.
 
 The best thing to do is to try both methods and see which one produces simpler or nicer results for the specific metric in question. Note that the system of equations obtained using `geodesic_from_lagrangian()` will often be different from the one obtained using `geodesic_from_christoffel()`, but both systems will always have the same solutions.
 
-### Geodesics equations in terms of the time coordinate
+### Geodesic equations in terms of the time coordinate
 
 If the metric is a spacetime metric, it is often convenient to obtain the geodesic equations in terms of the time parameter, instead of an affine curve parameter. It can be shown that the geodesic equations in terms of the time coordinate are given by
 
@@ -1876,7 +1975,7 @@ If we now substitute $\dot{y}(t) = \dot{z}(t) = 0$ in the equation, it simplifie
 FLRW_eq.subs({dot[y]: 0, dot[z]: 0})
 ```
 
-The solution can be obtained using `dsolve()` in terms of an integral over $a(t)$, passing $x(t)$ in the second argument as the function to solve for. The command to do that is `all_solutions = T.s.Array(T.s.dsolve(FLRWEq.subs({dot[y]: 0, dot[z]: 0}), param[x]))`, but I did not include it in the notebook because it takes a very long time to run. The solution found by SymPy is (after some beautification):
+The solution can be obtained using `dsolve()` in terms of an integral over $a(t)$, passing $x(t)$ in the second argument as the function to solve for. The command to do that is `all_solutions = T.s.Array(T.s.dsolve(FLRW_eq.subs({dot[y]: 0, dot[z]: 0}), param[x]))`, but I did not include it in the notebook because it takes a very long time to run. The solution found by SymPy is (after some beautification):
 
 $$
 x(t) = C_ {1} \pm \int \frac{1}{a(t) \sqrt{1 + C_ {2} a^{2}(t)}} \mathrm{d}t
@@ -1929,7 +2028,7 @@ The `tasks` folder in the GitHub repository contains several scripts used to dev
 
 This package was developed in [Visual Studio Code](https://code.visualstudio.com/). The `.vscode` folder is provided in the GitHub repository for your convenience, including tasks for running the above scripts. It is highly recommended to install the following linters:
 
-* [Pyright](https://github.com/microsoft/pyright): install the Pylance [VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance).
+* [Pyright](https://github.com/microsoft/pyright): install the Pylance [VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance). To use Pyright from the command line, install it using `npm install -g pyright` (requires [Node.js](https://nodejs.org/en)) and obtain the SymPy type stubs with `pip install git+https://github.com/microsoft/python-type-stubs.git`.
 * [Ruff](https://github.com/astral-sh/ruff): `pip install ruff` and install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff).
 * [Pylint](https://www.pylint.org/): `pip install pylint` and install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.pylint).
 
@@ -1945,7 +2044,7 @@ I would like to thank my student Jared Wogan, whose undergraduate research proje
 
 ### Copyright and citing
 
-Copyright (c) 2025 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
+Copyright (c) 2024-2026 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
 
 If you use this package in software of any kind, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
 
@@ -1977,4 +2076,6 @@ Please note that the paper cited above is not meant to serve as documentation. I
 
 ### Other projects to check out
 
-This package is a Python port of [OGRe](https://github.com/bshoshany/OGRe): An Object-Oriented General Relativity Package for Mathematica. You may also be interested in [`BS::thread_pool`](https://github.com/bshoshany/thread-pool): a fast, lightweight, modern, and easy-to-use C++17 / C++20 / C++23 thread pool library.
+This package is a Python port of [OGRe: An Object-Oriented General Relativity Package for Mathematica](https://github.com/bshoshany/OGRe). If you are interested in doing tensor calculations in Mathematica, please check it out!
+
+If you are interested in high-performance scientific computing with C++, and want to get the maximum performance possible from multi-core CPUs, please check out [`BS::thread_pool`: a fast, lightweight, modern, and easy-to-use C++17 / C++20 / C++23 thread pool library](https://github.com/bshoshany/thread-pool).

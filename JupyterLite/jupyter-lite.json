@@ -2,19 +2,19 @@
   "jupyter-config-data": {
     "appName": "JupyterLite",
     "appUrl": "./lab",
-    "appVersion": "0.6.3",
+    "appVersion": "0.7.6",
     "baseUrl": "./",
     "defaultKernelName": "python",
     "faviconUrl": "./lab/favicon.ico",
     "federated_extensions": [
       {
         "extension": "./extension",
-        "load": "static/remoteEntry.3745c44cbbd62cec9a73.js",
+        "load": "static/remoteEntry.75ddd7589fd94926c419.js",
         "name": "@jupyterlite/pyodide-kernel-extension"
       },
       {
         "extension": "./extension",
-        "load": "static/remoteEntry.c9b453deb22b48d355e2.js",
+        "load": "static/remoteEntry.94495aac41d2fef6ad41.js",
         "name": "jupyterlab-jupytext"
       },
       {
@@ -25,6 +25,16 @@
       }
     ],
     "fileTypes": {
+      "avi": {
+        "extensions": [
+          ".avi"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "video/x-msvideo"
+        ],
+        "name": "avi"
+      },
       "css": {
         "extensions": [
           ".css"
@@ -54,6 +64,16 @@
           "text/plain"
         ],
         "name": "fasta"
+      },
+      "flac": {
+        "extensions": [
+          ".flac"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "audio/flac"
+        ],
+        "name": "flac"
       },
       "geojson": {
         "extensions": [
@@ -162,6 +182,16 @@
         ],
         "name": "json"
       },
+      "jupyterlab_workspace": {
+        "extensions": [
+          ".jupyterlab-workspace"
+        ],
+        "fileFormat": "json",
+        "mimeTypes": [
+          "application/json"
+        ],
+        "name": "jupyterlab_workspace"
+      },
       "manifest": {
         "extensions": [
           ".manifest"
@@ -182,6 +212,56 @@
           "text/markdown"
         ],
         "name": "md"
+      },
+      "mkv": {
+        "extensions": [
+          ".mkv"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "video/x-matroska"
+        ],
+        "name": "mkv"
+      },
+      "mov": {
+        "extensions": [
+          ".mov"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "video/quicktime"
+        ],
+        "name": "mov"
+      },
+      "mp3": {
+        "extensions": [
+          ".mp3"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "audio/mpeg"
+        ],
+        "name": "mp3"
+      },
+      "mp4": {
+        "extensions": [
+          ".mp4"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "video/mp4"
+        ],
+        "name": "mp4"
+      },
+      "ogg": {
+        "extensions": [
+          ".ogg"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "audio/ogg"
+        ],
+        "name": "ogg"
       },
       "pdf": {
         "extensions": [
@@ -264,6 +344,26 @@
         ],
         "name": "wasm"
       },
+      "wav": {
+        "extensions": [
+          ".wav"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "audio/wav"
+        ],
+        "name": "wav"
+      },
+      "webm": {
+        "extensions": [
+          ".webm"
+        ],
+        "fileFormat": "base64",
+        "mimeTypes": [
+          "video/webm"
+        ],
+        "name": "webm"
+      },
       "wheel": {
         "extensions": [
           ".whl"
@@ -303,8 +403,8 @@
     "litePluginSettings": {
       "@jupyterlite/pyodide-kernel-extension:kernel": {
         "pipliteUrls": [
-          "./pypi/all.json?sha256=dd7b939f26f3c1ffcd16127651b5a1429cb63d2be267a00248b6e35214cbbc58",
-          "./extensions/@jupyterlite/pyodide-kernel-extension/static/pypi/all.json?sha256=6428e372c283ca4b67a641295c5d9c8abeed5cf341b24ffe41b313fcdcaf9be4"
+          "./pypi/all.json?sha256=625c8d66d453cbcbf7c7091bf6d1ed4e9c6efd2e214eb9942c0a6d9483e83c90",
+          "./extensions/@jupyterlite/pyodide-kernel-extension/static/pypi/all.json?sha256=d4147101a35e1f311a860b1b8976d601b6afcad0e777ffb7946bd9ca3fdefbd6"
         ]
       }
     },
@@ -324,6 +424,11 @@
             "rank": 50
           }
         ]
+      },
+      "@jupyterlab/notebook-extension:tracker": {
+        "codeCellConfig": {
+          "lineWrap": true
+        }
       }
     }
   },

@@ -72,6 +72,47 @@
             },
             "type": "shell"
         },
+        {
+            "args": [
+                "-Command",
+                "Remove-Item -Path 'temp/*' -Force -Recurse"
+            ],
+            "command": "pwsh",
+            "detail": "Delete all files in the temp folder.",
+            "group": "test",
+            "label": "Clear temp folder",
+            "presentation": {
+                "clear": false,
+                "echo": true,
+                "focus": false,
+                "panel": "shared",
+                "reveal": "always",
+                "revealProblems": "onProblem",
+                "showReuseMessage": true
+            },
+            "type": "shell"
+        },
+        {
+            "args": [
+                "../tests/OGRePy_Tests.py"
+            ],
+            "command": "${command:python.interpreterPath}",
+            "detail": "Run the OGRePy automated test suite.",
+            "group": "test",
+            "label": "Run tests",
+            "options": {
+                "cwd": "${workspaceFolder}/temp"
+            },
+            "presentation": {
+                "clear": false,
+                "echo": true,
+                "focus": true,
+                "panel": "shared",
+                "reveal": "always",
+                "showReuseMessage": true
+            },
+            "type": "shell"
+        }
     ],
     "version": "2.0.0"
 }

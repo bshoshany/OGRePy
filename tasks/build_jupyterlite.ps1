@@ -1,6 +1,6 @@
 <#
 # OGRePy: An Object-Oriented General Relativity Package for Python
-v1.3.1 (2025-08-03)
+v2.0.0 (2026-05-11)
 
 By **Barak Shoshany**\
 Email: <baraksh@gmail.com>\
@@ -8,11 +8,11 @@ Website: <https://baraksh.com/>\
 GitHub: <https://github.com/bshoshany>
 
 GitHub repository: <https://github.com/bshoshany/OGRePy>\
-PyPi project: <https://pypi.org/project/OGRePy/>
+PyPI project: <https://pypi.org/project/OGRePy/>
 
 Based on the Mathematica package [OGRe](https://github.com/bshoshany/OGRe) by Barak Shoshany.
 
-Copyright (c) 2025 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
+Copyright (c) 2024-2026 [Barak Shoshany](https://baraksh.com/). Licensed under the [MIT license](https://github.com/bshoshany/OGRePy/blob/master/LICENSE.txt).
 
 If you use this package in software of any kind, please provide a link to [the GitHub repository](https://github.com/bshoshany/OGRePy) in the source code and documentation.
 
@@ -80,4 +80,12 @@ jupyter lite build --output-dir ../$OutFolder
 Set-Location ../$OutFolder
 Remove-Item ../$TempFolder -Recurse -Force
 
-Write-Output "`nDone! Run`n    jupyter lite serve`nin the JupyterLite folder and visit`n    http://127.0.0.1:8000/lab/index.html?path=OGRePy_Live.ipynb`nto test the site."
+Write-Host @'
+
+Done! Visit
+    http://127.0.0.1:4242/lab/index.html?path=OGRePy_Live.ipynb
+to test the site. Press Ctrl+C to stop the server.
+
+'@ -ForegroundColor Yellow
+
+python -m http.server 4242
